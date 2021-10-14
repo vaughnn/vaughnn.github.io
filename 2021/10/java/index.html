@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="vaughn">
+  
+  
+  
+  <link rel="prev" href="https://vaughnn.github.io/2021/10/design/" />
+  
+  <link rel="canonical" href="https://vaughnn.github.io/2021/10/java/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="https://vaughnn.github.io/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://vaughnn.github.io/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://vaughnn.github.io/favicon-16x16.png">
+  <link rel="manifest" href="https://vaughnn.github.io/site.webmanifest">
+  <link rel="mask-icon" href="https://vaughnn.github.io/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           Cglib与JDK动态代理 | vaughn
+       
+  </title>
+  <meta name="title" content="Cglib与JDK动态代理 | vaughn">
+    
+  
+  <link rel="stylesheet" href="https://vaughnn.github.io/font/iconfont.css">
+  <link rel="stylesheet" href="https://vaughnn.github.io/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/vaughnn.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "Cglib与JDK动态代理",
+    "headline" : "Cglib与JDK动态代理",
+    "description" : "AOP 代理的两种实现 jdk是代理接口，私有方法必然不会存在在接口里，所以就不会被拦截到 cglib是子类，private的方法照样不会出现在子类里",
+    "inLanguage" : "zh-cn",
+    "author" : "vaughn",
+    "creator" : "vaughn",
+    "publisher": "vaughn",
+    "accountablePerson" : "vaughn",
+    "copyrightHolder" : "vaughn",
+    "copyrightYear" : "2021",
+    "datePublished": "2021-10-14 00:00:00 \u002b0000 UTC",
+    "dateModified" : "2021-10-14 00:00:00 \u002b0000 UTC",
+    "url" : "https:\/\/vaughnn.github.io\/2021\/10\/java\/",
+    "wordCount" : "3509",
+    "keywords" : [ "Help","Hugo", "vaughn"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://vaughnn.github.io">vaughn</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="https://vaughnn.github.io/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="https://vaughnn.github.io/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="https://vaughnn.github.io/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="https://vaughnn.github.io/about/" title="About Hugo">About Hugo</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://vaughnn.github.io">vaughn</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="https://vaughnn.github.io/posts/" title="">Blog</a>
+                
+                <a class="menu-item" href="https://vaughnn.github.io/categories/" title="">Categories</a>
+                
+                <a class="menu-item" href="https://vaughnn.github.io/tags/" title="">Tags</a>
+                
+                <a class="menu-item" href="https://vaughnn.github.io/about/" title="About Hugo">About Hugo</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">Cglib与JDK动态代理</h1>
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://vaughnn.github.io" rel="author">vaughn</a>
+                <span class="post-time">
+                on <time datetime=2021-10-14 itemprop="datePublished">October 14, 2021</time>
+                </span>
+                in
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://vaughnn.github.io/categories/help/"> Help </a>
+                        
+                </span>
+                
+                <div class="post-meta">
+                    <span id="busuanzi_container_page_pv">|<span id="busuanzi_value_page_pv"></span>
+                    <span class="post-date">共3509字</span>，阅读约
+                    <span class="more-meta"> 8 分钟</span>
+                </div>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+
+          
+          
+          
+
+          
+          
+          
+
+          <h2 id="aop-代理的两种实现">AOP 代理的两种实现</h2>
+<ul>
+<li>jdk是代理接口，私有方法必然不会存在在接口里，所以就不会被拦截到</li>
+<li>cglib是子类，private的方法照样不会出现在子类里，也不能被拦截</li>
+</ul>
+<h3 id="jdk-动态代理">JDK 动态代理</h3>
+<blockquote>
+<p>具体有如下四步骤:</p>
+</blockquote>
+<ol>
+<li>通过实现 InvocationHandler 接口创建自己的调用处理器；</li>
+<li>通过为 Proxy 类指定 ClassLoader 对象和一组 interface 来创建动态代理类；</li>
+<li>通过反射机制获得动态代理类的构造函数，其唯一参数类型是调用处理器接口类型；</li>
+<li>通过构造函数创建动态代理类实例，构造时调用处理器对象作为参数被传入。</li>
+</ol>
+<h4 id="示例">示例</h4>
+<blockquote>
+<p>创建业务接口</p>
+</blockquote>
+<pre tabindex="0"><code>public interface UserService {
+    /**
+     * 需要增强的方法
+     */
+    void add();
+}
+</code></pre><blockquote>
+<p>创建业务接口 实现类</p>
+</blockquote>
+<pre tabindex="0"><code>public class UserServiceImpl implements UserService {
+    @Override
+    public void add() {
+        System.out.println(&quot;-------------业务逻辑方法 add ------------&quot;);
+    }
+}
+</code></pre><blockquote>
+<p>创建自定义的 InvocationHandler，用于对接口提供的方法进行增强</p>
+</blockquote>
+<pre tabindex="0"><code>public class MyInvocationHandler implements InvocationHandler {
+    /**
+     * 需要增强的对象
+     */
+    private Object target;
+    public MyInvocationHandler(Object target) {
+        this.target = target;
+    }
+    /**
+     * 执行目标对象
+     */
+    @Override
+    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        System.out.println(&quot;-------------方法执行前的增强逻辑 ------------&quot;);
+        Object result = method.invoke(target, args);
+        System.out.println(&quot;-------------方法执行后的增强逻辑 ------------&quot;);
+        return result;
+    }
+    public Object getProxy() {
+        return Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(), target.getClass().getInterfaces(), this);
+    }
+}
+
+</code></pre><blockquote>
+<p>测试类</p>
+</blockquote>
+<pre tabindex="0"><code>public class ProxyTest {
+    @Test
+    public void contextTest() {
+        // 实例化目标对象
+        UserService userService = new UserServiceImpl();
+        // 实例化 InvocationHandler
+        MyInvocationHandler invocationHandler = new MyInvocationHandler(userService);
+        // 生成代理对象
+        UserService proxy = (UserService) invocationHandler.getProxy();
+        // 输出代理类的class
+        ProxySourceClassUtil.writeClassToDisk(&quot;C:\\Users\\Fcant\\Desktop\\&quot; + proxy.getClass().getSimpleName() + &quot;.class&quot;, proxy.getClass().getSimpleName(), UserService.class);
+        // 调用代理对象的方法
+        proxy.add();
+    }
+}
+</code></pre><blockquote>
+<p>输出结果：</p>
+</blockquote>
+<pre tabindex="0"><code>-------------方法执行前的增强逻辑 ------------
+-------------业务逻辑方法 add ------------
+-------------方法执行后的增强逻辑 ------------
+</code></pre><blockquote>
+<p>用起来很简单，其实，这基本上就 AOP 的一个简单实现了，在目标对象的方法执行之前和执行之后进行了增强。Spring的AOP实现其实也是用了 Proxy 和 InvocationHandler。在整个创建过程中InvocationHandler的创建最为核心，在自定义的InvocationHandler中需要重新3个函数：</p>
+</blockquote>
+<ol>
+<li>构造函数，将代理的对象传入。</li>
+<li>invoke方法，此方法中实现了AOP增强的所有逻辑。</li>
+<li>getProxy方法，此方千篇一律，但是必不可少。</li>
+</ol>
+<blockquote>
+<p>代理类会实现我们的接口，并会实现我们接口中的方法。然后通过InvocationHandler的invoke方法去执行增强逻辑和原有方法逻辑。在invoke中可以使用反射去执行原有逻辑，并在方法执行前后加上自己的增强逻辑。</p>
+</blockquote>
+<h4 id="jdkdynamicaopproxy">JdkDynamicAopProxy</h4>
+<p>JdkDynamicAopProxy是Spring中JDK动态代理的实现，它也实现了InvocationHandler接口。核心方法：</p>
+<ol>
+<li>getProxy：获取代理对象，这个和上面的示例几乎是一样的</li>
+<li>invoke：实现了AOP的核心逻辑</li>
+</ol>
+<pre tabindex="0"><code>final class JdkDynamicAopProxy implements AopProxy, InvocationHandler, Serializable {
+    ...
+    /** Config used to configure this proxy(对增强器的支持) */
+    private final AdvisedSupport advised;
+    ...
+    public JdkDynamicAopProxy(AdvisedSupport config) throws AopConfigException {
+        Assert.notNull(config, &quot;AdvisedSupport must not be null&quot;);
+        if (config.getAdvisors().length == 0 &amp;&amp; config.getTargetSource() == AdvisedSupport.EMPTY_TARGET_SOURCE) {
+            throw new AopConfigException(&quot;No advisors and no TargetSource specified&quot;);
+        }
+        this.advised = config;
+    }
+    @Override
+    public Object getProxy() {
+        return getProxy(ClassUtils.getDefaultClassLoader());
+    }
+    @Override
+    public Object getProxy(ClassLoader classLoader) {
+        if (logger.isDebugEnabled()) {
+            logger.debug(&quot;Creating JDK dynamic proxy: target source is &quot; + this.advised.getTargetSource());
+        }
+        // 获取目标类接口
+        Class&lt;?&gt;[] proxiedInterfaces = AopProxyUtils.completeProxiedInterfaces(this.advised, true);
+        findDefinedEqualsAndHashCodeMethods(proxiedInterfaces);
+        // 返回代理对象
+        return Proxy.newProxyInstance(classLoader, proxiedInterfaces, this);
+    }
+    ...
+    /**
+      * Implementation of {@code InvocationHandler.invoke}.
+      * &lt;p&gt;Callers will see exactly the exception thrown by the target,
+      * unless a hook method throws an exception.
+      */
+        @Override
+        public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        MethodInvocation invocation;
+        Object oldProxy = null;
+        boolean setProxyContext = false;
+        TargetSource targetSource = this.advised.targetSource;
+        Class&lt;?&gt; targetClass = null;
+        Object target = null;
+        try {
+            // equals 方法处理
+            if (!this.equalsDefined &amp;&amp; AopUtils.isEqualsMethod(method)) {
+                // The target does not implement the equals(Object) method itself.
+                return equals(args[0]);
+            }
+            // hashCode 方法处理
+            else if (!this.hashCodeDefined &amp;&amp; AopUtils.isHashCodeMethod(method)) {
+                // The target does not implement the hashCode() method itself.
+                return hashCode();
+            }
+            else if (method.getDeclaringClass() == DecoratingProxy.class) {
+                // There is only getDecoratedClass() declared -&gt; dispatch to proxy config.
+                return AopProxyUtils.ultimateTargetClass(this.advised);
+            }
+            else if (!this.advised.opaque &amp;&amp; method.getDeclaringClass().isInterface() &amp;&amp;
+                     method.getDeclaringClass().isAssignableFrom(Advised.class)) {
+                // Service invocations on ProxyConfig with the proxy config...
+                return AopUtils.invokeJoinpointUsingReflection(this.advised, method, args);
+            }
+            Object retVal;
+
+            // 有时候目标对象内部的自我调用无法实施切面中的增强则需要通过此属性暴露代理
+            if (this.advised.exposeProxy) {
+                // Make invocation available if necessary.
+                oldProxy = AopContext.setCurrentProxy(proxy);
+                setProxyContext = true;
+            }
+            // May be null. Get as late as possible to minimize the time we &quot;own&quot; the target,
+            // in case it comes from a pool.
+            target = targetSource.getTarget();
+            if (target != null) {
+                targetClass = target.getClass();
+            }
+            // 获取当前方法的拦截链
+            List&lt;Object&gt; chain = this.advised.getInterceptorsAndDynamicInterceptionAdvice(method, targetClass);
+            if (chain.isEmpty()) {
+                // 如果没有拦截链那么直接调用切点方法
+                Object[] argsToUse = AopProxyUtils.adaptArgumentsIfNecessary(method, args);
+                retVal = AopUtils.invokeJoinpointUsingReflection(target, method, argsToUse);
+            }
+            else {
+                // 将拦截器封装在ReflectiveMethodInvocation中，以便使用proceed方法执行拦截链
+                invocation = new ReflectiveMethodInvocation(proxy, target, method, args, targetClass, chain);
+                // 执行拦截链
+                retVal = invocation.proceed();
+            }
+            // Massage return value if necessary.
+            Class&lt;?&gt; returnType = method.getReturnType();
+            if (retVal != null &amp;&amp; retVal == target &amp;&amp;
+                returnType != Object.class &amp;&amp; returnType.isInstance(proxy) &amp;&amp;
+                !RawTargetAccess.class.isAssignableFrom(method.getDeclaringClass())) {
+                // Special case: it returned &quot;this&quot; and the return type of the method
+                // is type-compatible. Note that we can't help if the target sets
+                // a reference to itself in another returned object.
+                retVal = proxy;
+            }
+            else if (retVal == null &amp;&amp; returnType != Void.TYPE &amp;&amp; returnType.isPrimitive()) {
+                throw new AopInvocationException(
+                    &quot;Null return value from advice does not match primitive return type for: &quot; + method);
+            }
+            return retVal;
+        }
+        finally {
+            if (target != null &amp;&amp; !targetSource.isStatic()) {
+                // Must have come from TargetSource.
+                targetSource.releaseTarget(target);
+            }
+            if (setProxyContext) {
+                // Restore old proxy.
+                AopContext.setCurrentProxy(oldProxy);
+            }
+        }
+    }
+    ...
+}
+</code></pre><h3 id="gclib代理">GCLIB代理</h3>
+<blockquote>
+<p>cglib（Code Generation Library）是一个强大的,高性能,高质量的Code生成类库。它可以在运行期扩展Java类与实现Java接口。</p>
+</blockquote>
+<ul>
+<li>cglib封装了asm，可以在运行期动态生成新的class（子类）。</li>
+<li>cglib用于AOP，jdk中的proxy必须基于接口，cglib却没有这个限制。</li>
+</ul>
+<h4 id="示例-1">示例</h4>
+<blockquote>
+<p>需要代理的类</p>
+</blockquote>
+<pre tabindex="0"><code>public class EnhancerDemo {
+    public void test() {
+        System.out.println(&quot;-------------业务逻辑方法 test ------------&quot;);
+    }
+}
+</code></pre><blockquote>
+<p>MethodInterceptor的实现类（增强器）</p>
+</blockquote>
+<pre tabindex="0"><code>import org.springframework.cglib.proxy.MethodInterceptor;
+import org.springframework.cglib.proxy.MethodProxy;
+import java.lang.reflect.Method;
+public class MethodInterceptorImpl implements MethodInterceptor {
+    @Override
+    public Object intercept(Object object, Method method, Object[] args, MethodProxy methodProxy) throws Throwable {
+        System.out.println(&quot;-------------方法执行前的增强逻辑 ------------&quot; + method);
+        Object result = methodProxy.invokeSuper(object, args);
+        System.out.println(&quot;-------------方法执行后的增强逻辑 ------------&quot; + method);
+        return result;
+    }
+}
+</code></pre><blockquote>
+<p>测试类</p>
+</blockquote>
+<pre tabindex="0"><code>public class EnhancerTest {
+    @Test
+    public void contextTest() {
+        System.setProperty(DebuggingClassWriter.DEBUG_LOCATION_PROPERTY, &quot;D:\\class&quot;);
+        Enhancer enhancer = new Enhancer();
+        enhancer.setSuperclass(EnhancerDemo.class);
+        enhancer.setCallback(new MethodInterceptorImpl());
+        EnhancerDemo proxy = (EnhancerDemo) enhancer.create();
+        proxy.test();
+        System.out.println(proxy);
+    }
+}
+</code></pre><blockquote>
+<p>执行结果</p>
+</blockquote>
+<pre tabindex="0"><code>-------------方法执行前的增强逻辑 ------------public void com.fcant.aop.cglib.EnhancerDemo.test()
+-------------业务逻辑方法 test ------------
+-------------方法执行后的增强逻辑 ------------public void com.fcant.aop.cglib.EnhancerDemo.test()
+-------------方法执行前的增强逻辑 ------------public java.lang.String java.lang.Object.toString()
+-------------方法执行前的增强逻辑 ------------public native int java.lang.Object.hashCode()
+-------------方法执行后的增强逻辑 ------------public native int java.lang.Object.hashCode()
+-------------方法执行后的增强逻辑 ------------public java.lang.String java.lang.Object.toString()
+com.fcant.aop.cglib.EnhancerDemo$$EnhancerByCGLIB$$da6c48f9@7a187f14
+</code></pre><blockquote>
+<p>可以看到 System.out.println(porxy); 首先调用了 toString() 方法，然后又调用了 hashCode() ，生成的对象为 EnhancerDemo$$EnhancerByCGLIB$$da6c48f9@7a187f14 的实例，这个类是运行时由 CGLIB 产生。</p>
+</blockquote>
+<blockquote>
+<p>从上面的代码可以发现方法的执行会委托给MethodInterceptor的intercept方法。从而实现对方法的增强。</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">由于 Cglib 是使用继承方式，所有final类是不能使用cglib代理的，会直接抛出异常，final方法也将不会被代理，因为不能覆盖，不会直接抛出异常
+</code></pre></div><h4 id="cglibaopproxy">CglibAopProxy</h4>
+<blockquote>
+<p>CglibAopProxy是Spring中Cglib动态代理的实现，在getProxy方法中完成了对Enhancer的创建和封装。在getProxy方法中getCallbacks(rootClass);方法会将拦截链封装成DynamicAdvisedInterceptor对象，并放到Cglib的回调函数中。源码如下：</p>
+</blockquote>
+<pre tabindex="0"><code>@Override
+public Object getProxy(ClassLoader classLoader) {
+    if (logger.isDebugEnabled()) {
+        logger.debug(&quot;Creating CGLIB proxy: target source is &quot; + this.advised.getTargetSource());
+    }
+    try {
+        Class&lt;?&gt; rootClass = this.advised.getTargetClass();
+        Assert.state(rootClass != null, &quot;Target class must be available for creating a CGLIB proxy&quot;);
+        Class&lt;?&gt; proxySuperClass = rootClass;
+        if (ClassUtils.isCglibProxyClass(rootClass)) {
+            proxySuperClass = rootClass.getSuperclass();
+            Class&lt;?&gt;[] additionalInterfaces = rootClass.getInterfaces();
+            for (Class&lt;?&gt; additionalInterface : additionalInterfaces) {
+                this.advised.addInterface(additionalInterface);
+            }
+        }
+        // 验证Class
+        validateClassIfNecessary(proxySuperClass, classLoader);
+        // 创建以及配置Enhancer
+        Enhancer enhancer = createEnhancer();
+        if (classLoader != null) {
+            enhancer.setClassLoader(classLoader);
+            if (classLoader instanceof SmartClassLoader &amp;&amp;
+                ((SmartClassLoader) classLoader).isClassReloadable(proxySuperClass)) {
+                enhancer.setUseCache(false);
+            }
+        }
+        enhancer.setSuperclass(proxySuperClass);
+        enhancer.setInterfaces(AopProxyUtils.completeProxiedInterfaces(this.advised));
+        enhancer.setNamingPolicy(SpringNamingPolicy.INSTANCE);
+        enhancer.setStrategy(new ClassLoaderAwareUndeclaredThrowableStrategy(classLoader));
+        // 将拦截链放到回调中
+        Callback[] callbacks = getCallbacks(rootClass);
+        Class&lt;?&gt;[] types = new Class&lt;?&gt;[callbacks.length];
+        for (int x = 0; x &lt; types.length; x++) {
+            types[x] = callbacks[x].getClass();
+        }
+        // fixedInterceptorMap only populated at this point, after getCallbacks call above
+        enhancer.setCallbackFilter(new ProxyCallbackFilter(
+            this.advised.getConfigurationOnlyCopy(), this.fixedInterceptorMap, this.fixedInterceptorOffset));
+        enhancer.setCallbackTypes(types);
+        // 生成代理类并创建代理实例
+        return createProxyClassAndInstance(enhancer, callbacks);
+    }
+    ...
+    }
+private Callback[] getCallbacks(Class&lt;?&gt; rootClass) throws Exception {
+    // Parameters used for optimization choices...
+    boolean exposeProxy = this.advised.isExposeProxy();
+    boolean isFrozen = this.advised.isFrozen();
+    boolean isStatic = this.advised.getTargetSource().isStatic();
+    // Choose an &quot;aop&quot; interceptor (used for AOP calls).
+    // 将拦截链封装到DynamicAdvisedInterceptor中
+    Callback aopInterceptor = new DynamicAdvisedInterceptor(this.advised);
+    // Choose a &quot;straight to target&quot; interceptor. (used for calls that are
+    // unadvised but can return this). May be required to expose the proxy.
+    Callback targetInterceptor;
+    if (exposeProxy) {
+        targetInterceptor = isStatic ?
+            new StaticUnadvisedExposedInterceptor(this.advised.getTargetSource().getTarget()) :
+        new DynamicUnadvisedExposedInterceptor(this.advised.getTargetSource());
+    }
+    else {
+        targetInterceptor = isStatic ?
+            new StaticUnadvisedInterceptor(this.advised.getTargetSource().getTarget()) :
+        new DynamicUnadvisedInterceptor(this.advised.getTargetSource());
+    }
+    // Choose a &quot;direct to target&quot; dispatcher (used for
+    // unadvised calls to static targets that cannot return this).
+    Callback targetDispatcher = isStatic ?
+        new StaticDispatcher(this.advised.getTargetSource().getTarget()) : new SerializableNoOp();
+    Callback[] mainCallbacks = new Callback[] {
+        // 将拦截链加入到CallBack中
+        aopInterceptor,  // for normal advice
+        targetInterceptor,  // invoke target without considering advice, if optimized
+        new SerializableNoOp(),  // no override for methods mapped to this
+        targetDispatcher, this.advisedDispatcher,
+        new EqualsInterceptor(this.advised),
+        new HashCodeInterceptor(this.advised)
+        };
+    Callback[] callbacks;
+    // If the target is a static one and the advice chain is frozen,
+    // then we can make some optimizations by sending the AOP calls
+    // direct to the target using the fixed chain for that method.
+    if (isStatic &amp;&amp; isFrozen) {
+        Method[] methods = rootClass.getMethods();
+        Callback[] fixedCallbacks = new Callback[methods.length];
+        this.fixedInterceptorMap = new HashMap&lt;String, Integer&gt;(methods.length);
+        // TODO: small memory optimization here (can skip creation for methods with no advice)
+        for (int x = 0; x &lt; methods.length; x++) {
+            List&lt;Object&gt; chain = this.advised.getInterceptorsAndDynamicInterceptionAdvice(methods[x], rootClass);
+            fixedCallbacks[x] = new FixedChainStaticTargetInterceptor(
+                chain, this.advised.getTargetSource().getTarget(), this.advised.getTargetClass());
+            this.fixedInterceptorMap.put(methods[x].toString(), x);
+        }
+        // Now copy both the callbacks from mainCallbacks
+        // and fixedCallbacks into the callbacks array.
+        callbacks = new Callback[mainCallbacks.length + fixedCallbacks.length];
+        System.arraycopy(mainCallbacks, 0, callbacks, 0, mainCallbacks.length);
+        System.arraycopy(fixedCallbacks, 0, callbacks, mainCallbacks.length, fixedCallbacks.length);
+        this.fixedInterceptorOffset = mainCallbacks.length;
+    }
+    else {
+        callbacks = mainCallbacks;
+    }
+    return callbacks;
+}
+
+</code></pre><h2 id="原理区别">原理区别</h2>
+<blockquote>
+<p>java动态代理是利用反射机制生成一个实现代理接口的匿名类，在调用具体方法前调用InvokeHandler来处理。而cglib动态代理是利用asm开源包，对代理对象类的class文件加载进来，通过修改其字节码生成子类来处理。</p>
+</blockquote>
+<ol>
+<li>如果目标对象实现了接口，默认情况下会采用JDK的动态代理实现AOP</li>
+<li>如果目标对象实现了接口，可以强制使用CGLIB实现AOP</li>
+<li>如果目标对象没有实现了接口，必须采用CGLIB库，Spring会自动在JDK动态代理和CGLIB之间转换</li>
+</ol>
+<h2 id="cglib-与-jdk动态代理的运行性能比较">Cglib 与 JDK动态代理的运行性能比较</h2>
+<blockquote>
+<p>结论：从 jdk6 到 jdk7、jdk8 ，动态代理的性能得到了显著的提升，尤其是JDK7和JDK8性能表现都比cglib好，而 cglib 的表现并未跟上，甚至可能会略微下降。所以建议尽量使用 JDK 的动态代理</p>
+</blockquote>
+
+    </div>
+
+    <div class="post-copyright">
+            
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>vaughn </span>
+                </p>
+            
+
+            
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://vaughnn.github.io/2021/10/java/>https://vaughnn.github.io/2021/10/java/</span>
+            </p>
+            
+            
+            <p class="copyright-item lincese">
+                How far are you from me,O Fruit? I am hidden in your heart,O Flower.
+            </p>
+            
+    </div>
+
+
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s):
+            
+            <span class="tag"><a href="https://vaughnn.github.io/tags/help/">
+                    #Help</a></span>
+            
+            <span class="tag"><a href="https://vaughnn.github.io/tags/hugo/">
+                    #Hugo</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> ·
+                <span><a href="https://vaughnn.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://vaughnn.github.io/2021/10/design/" class="prev" rel="prev" title="API接口鉴权安全设计"><i class="iconfont icon-left"></i>&nbsp;API接口鉴权安全设计</a>
+        
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2021 - 2021</span>
+        
+
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://vaughnn.github.io">vaughn</a> | </span>
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span>
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="https://vaughnn.github.io/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+
+     </div>
+  </body>
+</html>
