@@ -8,6 +8,15 @@
     <language>zh-cn</language>
     <lastBuildDate>Wed, 03 Jun 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://vaughnn.github.io/tags/hugo/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>你好啊</title>
+      <link>https://vaughnn.github.io/2020/06/show-use/</link>
+      <pubDate>Wed, 03 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://vaughnn.github.io/2020/06/show-use/</guid>
+      <description>update 使用hugo LeaveIt主题，并做了自定义的微调。 一个已经配置好了的Hugo + LeaveIt的博客网站源码 Demo: https://star-royce.github.io/royce.blog.io 使用方式: 本地下载安装好h</description>
+    </item>
+    
+    <item>
       <title>如何使用?</title>
       <link>https://vaughnn.github.io/2020/06/show-use/</link>
       <pubDate>Wed, 03 Jun 2020 00:00:00 +0000</pubDate>
