@@ -6,11 +6,11 @@
     <description>Recent content in API on Vaughn</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 11 Oct 2021 11:22:44 +0000</lastBuildDate><atom:link href="https://vaughnn.github.io/tags/api/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 12 Oct 2021 11:22:44 +0000</lastBuildDate><atom:link href="https://vaughnn.github.io/tags/api/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>API接口鉴权安全设计</title>
       <link>https://vaughnn.github.io/2021/10/design/</link>
-      <pubDate>Mon, 11 Oct 2021 11:22:44 +0000</pubDate>
+      <pubDate>Tue, 12 Oct 2021 11:22:44 +0000</pubDate>
       
       <guid>https://vaughnn.github.io/2021/10/design/</guid>
       <description>一、摘要 在实际的业务开发过程中，常常会碰到需要与第三方互联网公司进行技术对接，例如支付宝支付对接、微信支付对接、高德地图查询对接等等服务，如</description>
