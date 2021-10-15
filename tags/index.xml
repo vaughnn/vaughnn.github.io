@@ -44,15 +44,6 @@
     </item>
     
     <item>
-      <title>Redis</title>
-      <link>https://vaughnn.github.io/tags/redis/</link>
-      <pubDate>Fri, 30 Jul 2021 14:25:32 +0000</pubDate>
-      
-      <guid>https://vaughnn.github.io/tags/redis/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>linux</title>
       <link>https://vaughnn.github.io/tags/linux/</link>
       <pubDate>Tue, 20 Jul 2021 00:00:00 +0000</pubDate>
@@ -67,6 +58,15 @@
       <pubDate>Tue, 20 Jul 2021 00:00:00 +0000</pubDate>
       
       <guid>https://vaughnn.github.io/tags/shell/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Redis</title>
+      <link>https://vaughnn.github.io/tags/redis/</link>
+      <pubDate>Wed, 30 Jun 2021 11:22:48 +0000</pubDate>
+      
+      <guid>https://vaughnn.github.io/tags/redis/</guid>
       <description></description>
     </item>
     

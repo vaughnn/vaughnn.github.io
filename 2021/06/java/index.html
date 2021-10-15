@@ -9,9 +9,9 @@
   
   
   
-  <link rel="prev" href="https://vaughnn.github.io/2021/07/%E8%BF%90%E7%BB%B4/" />
-  <link rel="next" href="https://vaughnn.github.io/2021/10/design/" />
-  <link rel="canonical" href="https://vaughnn.github.io/2021/07/java/" />
+  
+  <link rel="next" href="https://vaughnn.github.io/2021/07/%E8%BF%90%E7%BB%B4/" />
+  <link rel="canonical" href="https://vaughnn.github.io/2021/06/java/" />
   <link rel="apple-touch-icon" sizes="180x180" href="https://vaughnn.github.io/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="https://vaughnn.github.io/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="https://vaughnn.github.io/favicon-16x16.png">
@@ -22,10 +22,10 @@
   <title>
        
        
-           Nginx502,Java调试排错 | Vaughn
+           Redis同步原理 | Vaughn
        
   </title>
-  <meta name="title" content="Nginx502,Java调试排错 | Vaughn">
+  <meta name="title" content="Redis同步原理 | Vaughn">
     
   
   <link rel="stylesheet" href="https://vaughnn.github.io/font/iconfont.css">
@@ -44,9 +44,9 @@
          "@id": "https:\/\/vaughnn.github.io"
     },
     "articleSection" : "posts",
-    "name" : "Nginx502,Java调试排错",
-    "headline" : "Nginx502,Java调试排错",
-    "description" : "前段时间突然nginx大量502,没有日志 top -H -p pid，查看该进程的子线程，可以看到有部分线程CPU占用较高 jstack -l pid \u0026gt; \/tmp\/jstack_",
+    "name" : "Redis同步原理",
+    "headline" : "Redis同步原理",
+    "description" : "主从同步原理 刚开始 mater 与 salve 数据是不不同步的 过一段时间后就同步了 就是所谓的最终一致性 第一次同步 主节点做一次bgsave 同时将后续操作记录到内存b",
     "inLanguage" : "zh-cn",
     "author" : "vaughn",
     "creator" : "vaughn",
@@ -54,11 +54,11 @@
     "accountablePerson" : "vaughn",
     "copyrightHolder" : "vaughn",
     "copyrightYear" : "2021",
-    "datePublished": "2021-07-30 14:25:32 \u002b0000 UTC",
-    "dateModified" : "2021-07-30 14:25:32 \u002b0000 UTC",
-    "url" : "https:\/\/vaughnn.github.io\/2021\/07\/java\/",
-    "wordCount" : "1041",
-    "keywords" : [ "Nginx","Java", "Vaughn"]
+    "datePublished": "2021-06-30 11:22:48 \u002b0000 UTC",
+    "dateModified" : "2021-06-30 11:22:48 \u002b0000 UTC",
+    "url" : "https:\/\/vaughnn.github.io\/2021\/06\/java\/",
+    "wordCount" : "748",
+    "keywords" : [ "Redis", "Vaughn"]
 }
 </script>
 
@@ -116,13 +116,23 @@
       		
 <article class="post-warp" itemscope itemtype="http://schema.org/Article">
     <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">Nginx502,Java调试排错</h1>
+        <h1 class="post-title" itemprop="name headline">Redis同步原理</h1>
         
         <div class="post-toc" id="post-toc">
     <h2 class="post-toc-title"></h2>
     
     <div class="post-toc-content always-active">
-        <nav id="TableOfContents"></nav>
+        <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+        <li><a href="#全同步全同步"><a href="#%E5%85%A8%E5%90%8C%E6%AD%A5"></a>全同步</a></li>
+        <li><a href="#增量同步增量同步"><a href="#%E5%A2%9E%E9%87%8F%E5%90%8C%E6%AD%A5"></a>增量同步</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
     </div>
 </div>
 <script type="text/javascript">
@@ -157,19 +167,19 @@
         <div class="post-meta">
                 Written by <a itemprop="name" href="https://vaughnn.github.io" rel="author">vaughn</a>
                 <span class="post-time">
-                on <time>2021-07-30 14:25:32</time>
+                on <time>2021-06-30 11:22:48</time>
                 </span>
                 in
                 <i class="iconfont icon-folder"></i>
                 <span class="post-category">
-                        <a href="https://vaughnn.github.io/categories/java/"> Java </a>
+                        <a href="https://vaughnn.github.io/categories/redis/"> Redis </a>
                         
                 </span>
                 
                 <div class="post-meta">
                     <span id="busuanzi_container_page_pv">|<span id="busuanzi_value_page_pv"></span>
-                    <span class="post-date">共1041字</span>，阅读约
-                    <span class="more-meta"> 3 分钟</span>
+                    <span class="post-date">共748字</span>，阅读约
+                    <span class="more-meta"> 2 分钟</span>
                 </div>
         </div>
     </header>
@@ -189,86 +199,40 @@
           
           
 
-          <p>前段时间突然nginx大量502,没有日志
-top -H -p pid，查看该进程的子线程，可以看到有部分线程CPU占用较高</p>
+          <h4 id="主从同步原理">主从同步原理</h4>
 <ol>
-<li>
-<p>jstack -l pid &gt; /tmp/jstack_pid.log，看线程栈。线程ID转16进制（<a href="https://tool.lu/hexconvert/">在线工具</a>），搜索这几个CPU占用高的线程（线程栈平时更多的是用于排查死锁或其他异常等待的问题，分析线程栈还有一个在线的工具：fastThread.io）。
-例如，&ldquo;810&quot;转16进制为&quot;32a&rdquo;，发现这是GC的线程，其他的线程&quot;812&quot;， &ldquo;808&quot;等，经查看，也是GC线程。</p>
-</li>
-<li>
-<p>有点Tricky？第三步，看内存。jstat -gcutil pid 1000 5 。上面的线索对应上了，目前总结到的现象是：Eden区和Old区都是100%，GC线程CPU占用高</p>
-</li>
-<li>
-<p>初步锁定问题出在内存上。dump堆内存：jmap -dump:format=b,file=/tmp/ServiceName_pid.hprof 。这一步，java进程分配的内存越大，要等待的时间越长，耐心等待吧。把生成好的.hprof文件拷贝下来，好进行后续的分析。</p>
-</li>
-<li>
-<p>用 jvisualvm 打开我们的.hprof文件，查看top对象。排名第一的对象是 byte[]，内存占用30%+，这个姑且算正常，不去深究。排名第二的对象是……BigDecimal，内存占用20%+（这个java进程分配了4G内存），这明显是有问题的。由于jvisualvm 太卡，换了个工具，继续死磕我们的 .hprof。</p>
-</li>
-<li>
-<p>用 mat（官网）打开我们的.hprof继续分析。
-5.1 这会基本已经可以找到问题了</p>
-<ul>
-<li>top</li>
-<li>jstat</li>
-<li>jstack</li>
-<li>jmap</li>
-</ul>
-</li>
+<li>刚开始 mater 与 salve 数据是不不同步的 过一段时间后就同步了 就是所谓的最终一致性</li>
+<li>第一次同步 主节点做一次bgsave 同时将后续操作记录到内存buffer中去 待完成后 将rdb文件全量同步到从节点，从节点接收后，将数据加载到内存中，加载完成后，再通知主节点将期间修改的操作以及数据同步到从节点</li>
 </ol>
-<pre tabindex="0"><code>#!/bin/sh
-clear
-echo &quot;########################################&quot;
-echo &quot; 收集java进程诊断信息&quot;
-echo &quot;########################################&quot;
+<p>按照同步内容的多少 分为全同步 与增量同步</p>
+<h3 id="全同步全同步"><a href="#%E5%85%A8%E5%90%8C%E6%AD%A5"></a>全同步</h3>
+<ol>
+<li>Slave发送sync命令到Master</li>
+<li>master启动一个后台进程，将redis中的快照数据保存到文件中 就是bgsave</li>
+<li>master将保存快照数据期间接收到的写命令缓存起来</li>
+<li>master完成写文件操作后，将文件发送给savle</li>
+<li>savle接收到新的文件后，使用新的aof文件替换掉旧的aof文件</li>
+<li>master将期间收集的增量命令发送给salve端</li>
+</ol>
+<p>全量同步完成后 后续的写命令都是在master上 读命令都是在savle上 读写分离场景 当然 master也可以读 一般为了提升性能 都只写 所以用户的写操作要及时的扩散到savle 以便保持数据最大程度上的同步</p>
+<h3 id="增量同步增量同步"><a href="#%E5%A2%9E%E9%87%8F%E5%90%8C%E6%AD%A5"></a>增量同步</h3>
+<ol>
+<li>master接收到用户的操作命令 判断是否需要传播到salve</li>
+<li>如果是写命令 追加到aof文件</li>
+<li>将操作传播到其他savle
+1&gt; 对齐主从库 确保数据库是该操作数据库
+2&gt; 往相应缓存写入指令</li>
+<li>将缓存中的数据发送给salve</li>
+</ol>
+<p>主从模式的弊端就是 不具备高可用 当master挂掉之后 redis将不能对外提供服务</p>
+<p>Redis Sentinel 解决master宕机后主从切换问题 监控：检查主服务器是否运行正常 提醒：通过api向管理员或其他应用程序发送故障通知 自动故障迁移：主从切换</p>
+<p>流言协议 Gossip 在杂乱无章中寻求一致</p>
+<ol>
+<li>每个节点都随机的与对方通信 最终所有节点的状态达成一致</li>
+<li>种子节点定期随机的向其他节点列表发送节点列表以及需要传播的信息</li>
+<li>不保证所有信息一定可以传递到所有节点，但是最终会趋于一致</li>
+</ol>
 
-echo &quot;请输入jar包名称以获得pid (ps -ef | grep YourInput):&quot;
-
-read jar_name
-
-ps_line=`ps -ef | grep $jar_name | grep -v grep`
-pid=`echo $ps_line | awk '{print $2}'`
-
-echo &quot;-----------------------------&quot;
-echo &quot;pid: $pid&quot;
-echo &quot;ps命令输出(如果未找到唯一行，请退出并重新出入jar包名称)：&quot;
-echo &quot;$ps_line&quot;
-echo &quot;-----------------------------&quot;
-
-echo &quot;是否对当前进程收集诊断信息？(y/n):&quot;
-
-read choice
-
-if [ $choice != 'y' -a $choice != 'Y' ]; then
-  echo &quot;退出，请重新执行。&quot;
-  exit 0
-fi
-
-dir_name=&quot;jvm_trace_${jar_name}_`date '+%Y%m%d_%H_%M_%S'`&quot;
-
-
-echo &quot;创建文件夹：$dir_name&quot;
-mkdir $dir_name
-
-echo &quot;打印top信息…………&quot;
-top -H -p $pid -b -n 1 &gt; $dir_name/top.log
-
-echo &quot;打印GC信息…………&quot;
-jstat -gccause $pid &gt; $dir_name/gc.log
-echo &quot;&quot; &gt;&gt; $dir_name/gc.log
-echo &quot;----------------------------------------------------&quot; &gt;&gt; $dir_name/gc.log
-echo &quot;&quot; &gt;&gt; $dir_name/gc.log
-jstat -gc $pid &gt;&gt; $dir_name/gc.log
-
-echo &quot;打印线程栈信息(时间较长，请稍候)…………&quot;
-jstack -l $pid &gt; $dir_name/jstack.log
-
-echo &quot;收集堆内存信息(时间很长，请稍候)…………&quot;
-jmap -dump:format=b,file=$dir_name/dump_heap.hprof $pid
-
-echo &quot;已完成收集，请查看${dir_name}目录&quot;
-
-</code></pre>
     </div>
 
     <div class="post-copyright">
@@ -282,7 +246,7 @@ echo &quot;已完成收集，请查看${dir_name}目录&quot;
             
             <p class="copyright-item">
                     <span>Link:</span>
-                    <a href=https://vaughnn.github.io/2021/07/java/>https://vaughnn.github.io/2021/07/java/</span>
+                    <a href=https://vaughnn.github.io/2021/06/java/>https://vaughnn.github.io/2021/06/java/</span>
             </p>
             
             
@@ -298,11 +262,8 @@ echo &quot;已完成收集，请查看${dir_name}目录&quot;
             <section>
             <i class="iconfont icon-tag"></i>Tag(s):
             
-            <span class="tag"><a href="https://vaughnn.github.io/tags/nginx/">
-                    #Nginx</a></span>
-            
-            <span class="tag"><a href="https://vaughnn.github.io/tags/java/">
-                    #Java</a></span>
+            <span class="tag"><a href="https://vaughnn.github.io/tags/redis/">
+                    #Redis</a></span>
             
             </section>
         
@@ -314,10 +275,8 @@ echo &quot;已完成收集，请查看${dir_name}目录&quot;
 
     <div class="post-nav">
         
-        <a href="https://vaughnn.github.io/2021/07/%E8%BF%90%E7%BB%B4/" class="prev" rel="prev" title="Linux启动Java程序jar包Shell脚本"><i class="iconfont icon-left"></i>&nbsp;Linux启动Java程序jar包Shell脚本</a>
         
-        
-        <a href="https://vaughnn.github.io/2021/10/design/" class="next" rel="next" title="API接口鉴权安全设计">API接口鉴权安全设计&nbsp;<i class="iconfont icon-right"></i></a>
+        <a href="https://vaughnn.github.io/2021/07/%E8%BF%90%E7%BB%B4/" class="next" rel="next" title="Linux启动Java程序jar包Shell脚本">Linux启动Java程序jar包Shell脚本&nbsp;<i class="iconfont icon-right"></i></a>
         
     </div>
 
