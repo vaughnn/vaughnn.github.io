@@ -22,10 +22,10 @@
   <title>
        
        
-           API接口鉴权安全设计 | vaughn
+           API接口鉴权安全设计 | Vaughn
        
   </title>
-  <meta name="title" content="API接口鉴权安全设计 | vaughn">
+  <meta name="title" content="API接口鉴权安全设计 | Vaughn">
     
   
   <link rel="stylesheet" href="https://vaughnn.github.io/font/iconfont.css">
@@ -54,11 +54,11 @@
     "accountablePerson" : "vaughn",
     "copyrightHolder" : "vaughn",
     "copyrightYear" : "2021",
-    "datePublished": "2021-10-11 00:00:00 \u002b0000 UTC",
-    "dateModified" : "2021-10-11 00:00:00 \u002b0000 UTC",
+    "datePublished": "2021-10-11 11:22:44 \u002b0000 UTC",
+    "dateModified" : "2021-10-11 11:22:44 \u002b0000 UTC",
     "url" : "https:\/\/vaughnn.github.io\/2021\/10\/design\/",
     "wordCount" : "3296",
-    "keywords" : [ "API", "vaughn"]
+    "keywords" : [ "API", "Vaughn"]
 }
 </script>
 
@@ -72,7 +72,7 @@
         <nav class="navbar">
     <div class="container">
         <div class="navbar-header header-logo">
-        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://vaughnn.github.io">vaughn</a>
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://vaughnn.github.io">Vaughn</a>
         </div>
         <div class="menu navbar-right">
                 
@@ -91,7 +91,7 @@
 <nav class="navbar-mobile" id="nav-mobile" style="display: none">
      <div class="container">
         <div class="navbar-header">
-            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://vaughnn.github.io">vaughn</a></div>
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://vaughnn.github.io">Vaughn</a></div>
             <div class="menu-toggle">
                 <span></span><span></span><span></span>
             </div>
@@ -155,44 +155,30 @@
           
 
           <h3 id="一摘要">一、摘要</h3>
-<blockquote>
 <p>在实际的业务开发过程中，常常会碰到需要与第三方互联网公司进行技术对接，例如支付宝支付对接、微信支付对接、高德地图查询对接等等服务，如果是一个创业型互联网，大部分可能都是对接别的公司api接口。</p>
-</blockquote>
 <h3 id="二方案介绍">二、方案介绍</h3>
-<blockquote>
 <p>当业务体量上来了时候，这个时候可能有一些公司开始进行技术对接了，转变成由你来提供api接口，那这个时候，应该如何设计并保证API接口安全呢？</p>
-</blockquote>
 <p>最常用的方案，主要有两种：</p>
 <ul>
 <li>token方案</li>
 <li>接口签名</li>
 </ul>
 <h4 id="21token方案">2.1、token方案</h4>
-<blockquote>
 <p>其中 token 方案，是一种在web端使用最广的接口鉴权方案，简单的介绍一下 token 方案。
 <img src="https://nasimobi-view.oss-cn-zhangjiakou.aliyuncs.com/articles/1419482050010202114.png" alt="token.png">
 从上图可以很清晰的看到，token 方案的实现主要有以下几个步骤：</p>
-</blockquote>
 <ul>
 <li>1、用户登录成功之后，服务端会给用户生成一个唯一有效的凭证，这个有效值被称为token</li>
 <li>2、当用户每次请求其他的业务接口时，需要在请求头部带上token</li>
-<li>3、服务端接受到客户端业务接口请求时，会验证token的合法性，如果不合法会提示给客户端；如果合法，才会进入业务处理流程。</li>
+<li>3、服务端接受到客户端业务接口请求时，会验证token的合法性，如果不合法会提示给客户端；如果合法，才会进入业务处理流程。
+在实际使用过程中，当用户登录成功之后，生成的token存放在redis中时是有时效的，一般设置为2个小时，过了2个小时之后会自动失效，这个时候就需要重新登录，然后再次获取有效token。</li>
 </ul>
-<blockquote>
-<p>在实际使用过程中，当用户登录成功之后，生成的token存放在redis中时是有时效的，一般设置为2个小时，过了2个小时之后会自动失效，这个时候就需要重新登录，然后再次获取有效token。</p>
-</blockquote>
-<blockquote>
 <p>token方案，是目前业务类型的项目当中使用最广的方案，而且实用性非常高，可以很有效的防止黑客们进行抓包、爬取数据。</p>
-</blockquote>
-<blockquote>
 <p>但是 token 方案也有一些缺点！最明显的就是与第三方公司进行接口对接的时候，当接口请求量非常大，这个时候 token 突然失效了，会有大量的接口请求失败。因此在实际API对接过程中，不推荐大家采用 token方案。</p>
-</blockquote>
 <h4 id="22接口签名">2.2、接口签名</h4>
-<blockquote>
 <p>接口签名，顾名思义，就是通过一些签名规则对参数进行签名，然后把签名的信息放入请求头部，服务端收到客户端请求之后，同样的只需要按照已定的规则生产对应的签名串与客户端的签名信息进行对比，如果一致，就进入业务处理流程；如果不通过，就提示签名验证失败。
 <img src="https://nasimobi-view.oss-cn-zhangjiakou.aliyuncs.com/articles/1419483057318445057.jpeg" alt="sign.jpeg">
 在接口签名方案中，主要有四个核心参数：</p>
-</blockquote>
 <ul>
 <li>1、appid表示应用ID，其中与之匹配的还有appsecret，表示应用密钥，用于数据的签名加密，不同的对接项目分配不同的appid和appsecret，保证数据安全</li>
 <li>2、timestamp 表示时间戳，当请求的时间戳与服务器中的时间戳，差值在5分钟之内，属于有效请求，不在此范围内，属于无效请求</li>
@@ -210,27 +196,21 @@ String 参数1加密结果= md5(参数1)
 <pre tabindex="0"><code>//步骤二
 String 参数2 = appsecret + timestamp + nonce + 参数1加密结果;
 String 参数2加密结果= md5(参数2)
-</code></pre><blockquote>
-<p>参数2加密结果，就是要的最终签名串。
+</code></pre><p>参数2加密结果，就是要的最终签名串。
 接口签名方案，尤其是在接口请求量很大的情况下，依然很稳定。
 换句话说，可以将接口签名看作成对token方案的一种补充。
 但是如果想把接口签名方案，推广到前后端对接，答案是：不适合。
 因为签名计算非常复杂，其次，就是容易泄漏appsecret！</p>
-</blockquote>
 <h3 id="三程序实践">三、程序实践</h3>
 <h4 id="21token方案-1">2.1、token方案</h4>
-<blockquote>
 <p>就像上文所说，token方案重点在于，当用户登录成功之后，只需要生成好对应的token，然后将其返回给前端，在下次请求业务接口的时候，需要把token带上。
 具体的实践，也可以分两种：</p>
-</blockquote>
 <ul>
 <li>第一种：采用uuid生成token，然后将token存放在redis中，同时设置有效期2小时</li>
-<li>第二种：采用JWT工具来生成token，这种token是可以跨平台的，天然支持分布式，其实本质也是采用时间戳+密钥，来生成一个token。</li>
+<li>第二种：采用JWT工具来生成token，这种token是可以跨平台的，天然支持分布式，其实本质也是采用时间戳+密钥，来生成一个token。
+下面介绍的是第二种实现方式。
+首先，编写一个jwt 工具。</li>
 </ul>
-<blockquote>
-<p>下面介绍的是第二种实现方式。
-首先，编写一个jwt 工具。</p>
-</blockquote>
 <pre tabindex="0"><code>public class JwtTokenUtil {
     //定义token返回头部
     public static final String AUTH_HEADER_KEY = &quot;Authorization&quot;;
@@ -268,9 +248,7 @@ String 参数2加密结果= md5(参数2)
         }
     }
 }
-</code></pre><blockquote>
-<p>接着，在登录的时候，生成一个token，然后返回给客户端。</p>
-</blockquote>
+</code></pre><p>接着，在登录的时候，生成一个token，然后返回给客户端。</p>
 <pre tabindex="0"><code>@RequestMapping(value = &quot;/login&quot;, method = RequestMethod.POST, produces = {&quot;application/json;charset=UTF-8&quot;})
 public UserVo login(@RequestBody UserDto userDto, HttpServletResponse response){
     //...参数合法性验证
@@ -287,9 +265,7 @@ public UserVo login(@RequestBody UserDto userDto, HttpServletResponse response){
     BeanUtils.copyProperties(dbUser,result);
     return result;
 }
-</code></pre><blockquote>
-<p>最后，编写一个统一拦截器，用于验证客户端传入的token是否有效。</p>
-</blockquote>
+</code></pre><p>最后，编写一个统一拦截器，用于验证客户端传入的token是否有效。</p>
 <pre tabindex="0"><code>@Slf4j
 public class AuthenticationInterceptor implements HandlerInterceptor {
     @Override
@@ -327,15 +303,11 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
         WebContextUtil.removeUserToken();
     }
 }
-</code></pre><blockquote>
-<p>在生成token的时候，可以将一些基本的用户信息，例如用户ID、用户姓名，存入token中，这样当token鉴权通过之后，只需要通过解析里面的信息，即可获取对应的用户ID，可以省下去数据库查询一些基本信息的操作。
+</code></pre><p>在生成token的时候，可以将一些基本的用户信息，例如用户ID、用户姓名，存入token中，这样当token鉴权通过之后，只需要通过解析里面的信息，即可获取对应的用户ID，可以省下去数据库查询一些基本信息的操作。
 同时，使用的过程中，尽量不要存放敏感信息，因为很容易被黑客解析！</p>
-</blockquote>
 <h4 id="22接口签名-1">2.2、接口签名</h4>
-<blockquote>
 <p>同样的思路，站在服务端验证的角度，可以先编写一个签名拦截器，验证客户端传入的参数是否合法，只要有一项不合法，就提示错误。
 具体代码实践如下：</p>
-</blockquote>
 <pre tabindex="0"><code>public class SignInterceptor implements HandlerInterceptor {
 
     @Autowired
@@ -403,9 +375,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
         }
     }
 }
-</code></pre><blockquote>
-<p>签名工具类SignUtil：</p>
-</blockquote>
+</code></pre><p>签名工具类SignUtil：</p>
 <pre tabindex="0"><code>public class SignUtil {
 
     /**
@@ -432,18 +402,10 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 <p>签名计算，可以换成hamc方式进行计算，思路大致一样。</p>
 </blockquote>
 <h3 id="四小结">四、小结</h3>
-<blockquote>
 <p>上面介绍的token和接口签名方案，对外都可以对提供的接口起到保护作用，防止别人篡改请求，或者模拟请求。</p>
-</blockquote>
-<blockquote>
 <p>但是缺少对数据自身的安全保护，即请求的参数和返回的数据都是有可能被别人拦截获取的，而这些数据又是明文的，所以只要被拦截，就能获得相应的业务数据。</p>
-</blockquote>
-<blockquote>
 <p>对于这种情况，推荐大家对请求参数和返回参数进行加密处理，例如RSA、AES等加密工具。</p>
-</blockquote>
-<blockquote>
 <p>同时，在生产环境，采用https方式进行传输，可以起到很好的安全保护作用！</p>
-</blockquote>
 
     </div>
 

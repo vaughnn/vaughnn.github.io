@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Java on vaughn</title>
+    <title>Java on Vaughn</title>
     <link>https://vaughnn.github.io/categories/java/</link>
-    <description>Recent content in Java on vaughn</description>
+    <description>Recent content in Java on Vaughn</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <lastBuildDate>Thu, 14 Oct 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://vaughnn.github.io/categories/java/index.xml" rel="self" type="application/rss+xml" />

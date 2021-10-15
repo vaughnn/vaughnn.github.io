@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Categories on vaughn</title>
+    <title>Categories on Vaughn</title>
     <link>https://vaughnn.github.io/categories/</link>
-    <description>Recent content in Categories on vaughn</description>
+    <description>Recent content in Categories on Vaughn</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <lastBuildDate>Thu, 14 Oct 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://vaughnn.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
@@ -19,7 +19,7 @@
     <item>
       <title>设计</title>
       <link>https://vaughnn.github.io/categories/%E8%AE%BE%E8%AE%A1/</link>
-      <pubDate>Mon, 11 Oct 2021 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 11 Oct 2021 11:22:44 +0000</pubDate>
       
       <guid>https://vaughnn.github.io/categories/%E8%AE%BE%E8%AE%A1/</guid>
       <description></description>
