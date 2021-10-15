@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>运维 on Vaughn</title>
+    <link>https://vaughnn.github.io/categories/%E8%BF%90%E7%BB%B4/</link>
+    <description>Recent content in 运维 on Vaughn</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 20 Jul 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://vaughnn.github.io/categories/%E8%BF%90%E7%BB%B4/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Linux启动Java程序jar包Shell脚本</title>
+      <link>https://vaughnn.github.io/2021/07/%E8%BF%90%E7%BB%B4/</link>
+      <pubDate>Tue, 20 Jul 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://vaughnn.github.io/2021/07/%E8%BF%90%E7%BB%B4/</guid>
+      <description>V1 #!/bin/sh # 该脚本为Linux下启动java程序的脚本 # # # 特别注意： # 该脚本使用系统kill命令来强制终止指定的java程序进程。 # 所以在杀死进</description>
+    </item>
+    
+  </channel>
+</rss>

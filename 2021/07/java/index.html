@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="vaughn">
+  
+  
+  
+  <link rel="prev" href="https://vaughnn.github.io/2021/07/java/" />
+  <link rel="next" href="https://vaughnn.github.io/2021/10/design/" />
+  <link rel="canonical" href="https://vaughnn.github.io/2021/07/java/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="https://vaughnn.github.io/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://vaughnn.github.io/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://vaughnn.github.io/favicon-16x16.png">
+  <link rel="manifest" href="https://vaughnn.github.io/site.webmanifest">
+  <link rel="mask-icon" href="https://vaughnn.github.io/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           Nginx502,Java调试排错 | Vaughn
+       
+  </title>
+  <meta name="title" content="Nginx502,Java调试排错 | Vaughn">
+    
+  
+  <link rel="stylesheet" href="https://vaughnn.github.io/font/iconfont.css">
+  <link rel="stylesheet" href="https://vaughnn.github.io/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/vaughnn.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "Nginx502,Java调试排错",
+    "headline" : "Nginx502,Java调试排错",
+    "description" : "前段时间突然nginx大量502,没有日志 top -H -p pid，查看该进程的子线程，可以看到有部分线程CPU占用较高 jstack -l pid \u0026gt; \/tmp\/jstack_",
+    "inLanguage" : "zh-cn",
+    "author" : "vaughn",
+    "creator" : "vaughn",
+    "publisher": "vaughn",
+    "accountablePerson" : "vaughn",
+    "copyrightHolder" : "vaughn",
+    "copyrightYear" : "2021",
+    "datePublished": "2021-07-30 14:25:32 \u002b0000 UTC",
+    "dateModified" : "2021-07-30 14:25:32 \u002b0000 UTC",
+    "url" : "https:\/\/vaughnn.github.io\/2021\/07\/java\/",
+    "wordCount" : "1041",
+    "keywords" : [ "Nginx","Java", "Vaughn"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://vaughnn.github.io">Vaughn</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="https://vaughnn.github.io/posts/" title="">主页</a>
+                
+                <a class="menu-item" href="https://vaughnn.github.io/categories/" title="">分类</a>
+                
+                <a class="menu-item" href="https://vaughnn.github.io/tags/" title="">标签</a>
+                
+                <a class="menu-item" href="https://vaughnn.github.io/about/" title="关于">关于</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://vaughnn.github.io">Vaughn</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="https://vaughnn.github.io/posts/" title="">主页</a>
+                
+                <a class="menu-item" href="https://vaughnn.github.io/categories/" title="">分类</a>
+                
+                <a class="menu-item" href="https://vaughnn.github.io/tags/" title="">标签</a>
+                
+                <a class="menu-item" href="https://vaughnn.github.io/about/" title="关于">关于</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">Nginx502,Java调试排错</h1>
+        
+        <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title"></h2>
+    
+    <div class="post-toc-content always-active">
+        <nav id="TableOfContents"></nav>
+    </div>
+</div>
+<script type="text/javascript">
+    window.onload = function () {
+        var fix = $('.post-toc');
+        var end = $('.post-comment');
+        var fixTop = fix.offset().top, fixHeight = fix.height();
+        var endTop, miss;
+        var offsetTop = fix[0].offsetTop;
+        $(window).scroll(function () {
+            var docTop = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
+            if (end.length > 0) {
+                endTop = end.offset().top;
+                miss = endTop - docTop - fixHeight;
+            }
+            if (fixTop < docTop) {
+                fix.css({ 'position': 'fixed' });
+                if ((end.length > 0) && (endTop < (docTop + fixHeight))) {
+                    fix.css({ top: miss });
+                } else {
+                    fix.css({ top: 0 });
+                }
+            } else {
+                fix.css({ 'position': 'absolute' });
+                fix.css({ top: offsetTop });
+            }
+        })
+    }
+</script>
+
+        
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://vaughnn.github.io" rel="author">vaughn</a>
+                <span class="post-time">
+                on <time>2021-07-30 14:25:32</time>
+                </span>
+                in
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://vaughnn.github.io/categories/java/"> Java </a>
+                        
+                </span>
+                
+                <div class="post-meta">
+                    <span id="busuanzi_container_page_pv">|<span id="busuanzi_value_page_pv"></span>
+                    <span class="post-date">共1041字</span>，阅读约
+                    <span class="more-meta"> 3 分钟</span>
+                </div>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+
+          
+          
+          
+
+          
+          
+          
+
+          <p>前段时间突然nginx大量502,没有日志
+top -H -p pid，查看该进程的子线程，可以看到有部分线程CPU占用较高</p>
+<ol>
+<li>
+<p>jstack -l pid &gt; /tmp/jstack_pid.log，看线程栈。线程ID转16进制（<a href="https://tool.lu/hexconvert/">在线工具</a>），搜索这几个CPU占用高的线程（线程栈平时更多的是用于排查死锁或其他异常等待的问题，分析线程栈还有一个在线的工具：fastThread.io）。
+例如，&ldquo;810&quot;转16进制为&quot;32a&rdquo;，发现这是GC的线程，其他的线程&quot;812&quot;， &ldquo;808&quot;等，经查看，也是GC线程。</p>
+</li>
+<li>
+<p>有点Tricky？第三步，看内存。jstat -gcutil pid 1000 5 。上面的线索对应上了，目前总结到的现象是：Eden区和Old区都是100%，GC线程CPU占用高</p>
+</li>
+<li>
+<p>初步锁定问题出在内存上。dump堆内存：jmap -dump:format=b,file=/tmp/ServiceName_pid.hprof 。这一步，java进程分配的内存越大，要等待的时间越长，耐心等待吧。把生成好的.hprof文件拷贝下来，好进行后续的分析。</p>
+</li>
+<li>
+<p>用 jvisualvm 打开我们的.hprof文件，查看top对象。排名第一的对象是 byte[]，内存占用30%+，这个姑且算正常，不去深究。排名第二的对象是……BigDecimal，内存占用20%+（这个java进程分配了4G内存），这明显是有问题的。由于jvisualvm 太卡，换了个工具，继续死磕我们的 .hprof。</p>
+</li>
+<li>
+<p>用 mat（官网）打开我们的.hprof继续分析。
+5.1 这会基本已经可以找到问题了</p>
+<ul>
+<li>top</li>
+<li>jstat</li>
+<li>jstack</li>
+<li>jmap</li>
+</ul>
+</li>
+</ol>
+<pre tabindex="0"><code>#!/bin/sh
+clear
+echo &quot;########################################&quot;
+echo &quot; 收集java进程诊断信息&quot;
+echo &quot;########################################&quot;
+
+echo &quot;请输入jar包名称以获得pid (ps -ef | grep YourInput):&quot;
+
+read jar_name
+
+ps_line=`ps -ef | grep $jar_name | grep -v grep`
+pid=`echo $ps_line | awk '{print $2}'`
+
+echo &quot;-----------------------------&quot;
+echo &quot;pid: $pid&quot;
+echo &quot;ps命令输出(如果未找到唯一行，请退出并重新出入jar包名称)：&quot;
+echo &quot;$ps_line&quot;
+echo &quot;-----------------------------&quot;
+
+echo &quot;是否对当前进程收集诊断信息？(y/n):&quot;
+
+read choice
+
+if [ $choice != 'y' -a $choice != 'Y' ]; then
+  echo &quot;退出，请重新执行。&quot;
+  exit 0
+fi
+
+dir_name=&quot;jvm_trace_${jar_name}_`date '+%Y%m%d_%H_%M_%S'`&quot;
+
+
+echo &quot;创建文件夹：$dir_name&quot;
+mkdir $dir_name
+
+echo &quot;打印top信息…………&quot;
+top -H -p $pid -b -n 1 &gt; $dir_name/top.log
+
+echo &quot;打印GC信息…………&quot;
+jstat -gccause $pid &gt; $dir_name/gc.log
+echo &quot;&quot; &gt;&gt; $dir_name/gc.log
+echo &quot;----------------------------------------------------&quot; &gt;&gt; $dir_name/gc.log
+echo &quot;&quot; &gt;&gt; $dir_name/gc.log
+jstat -gc $pid &gt;&gt; $dir_name/gc.log
+
+echo &quot;打印线程栈信息(时间较长，请稍候)…………&quot;
+jstack -l $pid &gt; $dir_name/jstack.log
+
+echo &quot;收集堆内存信息(时间很长，请稍候)…………&quot;
+jmap -dump:format=b,file=$dir_name/dump_heap.hprof $pid
+
+echo &quot;已完成收集，请查看${dir_name}目录&quot;
+
+</code></pre>
+    </div>
+
+    <div class="post-copyright">
+            
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>vaughn </span>
+                </p>
+            
+
+            
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://vaughnn.github.io/2021/07/java/>https://vaughnn.github.io/2021/07/java/</span>
+            </p>
+            
+            
+            <p class="copyright-item lincese">
+                How far are you from me,O Fruit? I am hidden in your heart,O Flower.
+            </p>
+            
+    </div>
+
+
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s):
+            
+            <span class="tag"><a href="https://vaughnn.github.io/tags/nginx/">
+                    #Nginx</a></span>
+            
+            <span class="tag"><a href="https://vaughnn.github.io/tags/java/">
+                    #Java</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> ·
+                <span><a href="https://vaughnn.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://vaughnn.github.io/2021/07/java/" class="prev" rel="prev" title="Redis同步原理"><i class="iconfont icon-left"></i>&nbsp;Redis同步原理</a>
+        
+        
+        <a href="https://vaughnn.github.io/2021/10/design/" class="next" rel="next" title="API接口鉴权安全设计">API接口鉴权安全设计&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+        
+<div id="gitalk-container"></div>
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<script>
+    const gitalk = new Gitalk({
+        clientID: 'c5728414aa682c1e3857',
+        clientSecret: '8c906f0037f05cb689be4eefe1cf83c49fd3863a',
+        repo: 'vaughnn.github.io',
+        owner: 'vaughnn',
+        admin: ['vaughnn'],
+        id: location.pathname, 
+        distractionFreeMode: false 
+    });
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) !== -1) {
+            document.getElementById('gitalk-container').innerHTML = 'Gitalk comments not available by default when the website is previewed locally.';
+            return;
+        }
+        gitalk.render('gitalk-container');
+    })();
+</script>
+
+
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2016 - 2021</span>
+        
+
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://vaughnn.github.io">vaughn</a> | </span>
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span>
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="https://vaughnn.github.io/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+
+     </div>
+  </body>
+</html>

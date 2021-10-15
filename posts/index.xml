@@ -25,5 +25,32 @@
       <description>一、摘要 在实际的业务开发过程中，常常会碰到需要与第三方互联网公司进行技术对接，例如支付宝支付对接、微信支付对接、高德地图查询对接等等服务，如</description>
     </item>
     
+    <item>
+      <title>Nginx502,Java调试排错</title>
+      <link>https://vaughnn.github.io/2021/07/java/</link>
+      <pubDate>Fri, 30 Jul 2021 14:25:32 +0000</pubDate>
+      
+      <guid>https://vaughnn.github.io/2021/07/java/</guid>
+      <description>前段时间突然nginx大量502,没有日志 top -H -p pid，查看该进程的子线程，可以看到有部分线程CPU占用较高 jstack -l pid &amp;gt; /tmp/jstack_</description>
+    </item>
+    
+    <item>
+      <title>Redis同步原理</title>
+      <link>https://vaughnn.github.io/2021/07/java/</link>
+      <pubDate>Fri, 30 Jul 2021 14:25:32 +0000</pubDate>
+      
+      <guid>https://vaughnn.github.io/2021/07/java/</guid>
+      <description>主从同步原理 刚开始 mater 与 salve 数据是不不同步的 过一段时间后就同步了 就是所谓的最终一致性 第一次同步 主节点做一次bgsave 同时将后续操作记录到内存b</description>
+    </item>
+    
+    <item>
+      <title>Linux启动Java程序jar包Shell脚本</title>
+      <link>https://vaughnn.github.io/2021/07/%E8%BF%90%E7%BB%B4/</link>
+      <pubDate>Tue, 20 Jul 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://vaughnn.github.io/2021/07/%E8%BF%90%E7%BB%B4/</guid>
+      <description>V1 #!/bin/sh # 该脚本为Linux下启动java程序的脚本 # # # 特别注意： # 该脚本使用系统kill命令来强制终止指定的java程序进程。 # 所以在杀死进</description>
+    </item>
+    
   </channel>
 </rss>

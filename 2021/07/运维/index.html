@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="vaughn">
+  
+  
+  
+  
+  <link rel="next" href="https://vaughnn.github.io/2021/07/java/" />
+  <link rel="canonical" href="https://vaughnn.github.io/2021/07/%E8%BF%90%E7%BB%B4/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="https://vaughnn.github.io/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://vaughnn.github.io/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://vaughnn.github.io/favicon-16x16.png">
+  <link rel="manifest" href="https://vaughnn.github.io/site.webmanifest">
+  <link rel="mask-icon" href="https://vaughnn.github.io/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           Linux启动Java程序jar包Shell脚本 | Vaughn
+       
+  </title>
+  <meta name="title" content="Linux启动Java程序jar包Shell脚本 | Vaughn">
+    
+  
+  <link rel="stylesheet" href="https://vaughnn.github.io/font/iconfont.css">
+  <link rel="stylesheet" href="https://vaughnn.github.io/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/vaughnn.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "Linux启动Java程序jar包Shell脚本",
+    "headline" : "Linux启动Java程序jar包Shell脚本",
+    "description" : "V1 #!\/bin\/sh # 该脚本为Linux下启动java程序的脚本 # # # 特别注意： # 该脚本使用系统kill命令来强制终止指定的java程序进程。 # 所以在杀死进",
+    "inLanguage" : "zh-cn",
+    "author" : "vaughn",
+    "creator" : "vaughn",
+    "publisher": "vaughn",
+    "accountablePerson" : "vaughn",
+    "copyrightHolder" : "vaughn",
+    "copyrightYear" : "2021",
+    "datePublished": "2021-07-20 00:00:00 \u002b0000 UTC",
+    "dateModified" : "2021-07-20 00:00:00 \u002b0000 UTC",
+    "url" : "https:\/\/vaughnn.github.io\/2021\/07\/%E8%BF%90%E7%BB%B4\/",
+    "wordCount" : "1584",
+    "keywords" : [ "shell","linux", "Vaughn"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://vaughnn.github.io">Vaughn</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="https://vaughnn.github.io/posts/" title="">主页</a>
+                
+                <a class="menu-item" href="https://vaughnn.github.io/categories/" title="">分类</a>
+                
+                <a class="menu-item" href="https://vaughnn.github.io/tags/" title="">标签</a>
+                
+                <a class="menu-item" href="https://vaughnn.github.io/about/" title="关于">关于</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://vaughnn.github.io">Vaughn</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="https://vaughnn.github.io/posts/" title="">主页</a>
+                
+                <a class="menu-item" href="https://vaughnn.github.io/categories/" title="">分类</a>
+                
+                <a class="menu-item" href="https://vaughnn.github.io/tags/" title="">标签</a>
+                
+                <a class="menu-item" href="https://vaughnn.github.io/about/" title="关于">关于</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">Linux启动Java程序jar包Shell脚本</h1>
+        
+        <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title"></h2>
+    
+    <div class="post-toc-content always-active">
+        <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#v1">V1</a></li>
+        <li><a href="#v2">V2</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+</div>
+<script type="text/javascript">
+    window.onload = function () {
+        var fix = $('.post-toc');
+        var end = $('.post-comment');
+        var fixTop = fix.offset().top, fixHeight = fix.height();
+        var endTop, miss;
+        var offsetTop = fix[0].offsetTop;
+        $(window).scroll(function () {
+            var docTop = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
+            if (end.length > 0) {
+                endTop = end.offset().top;
+                miss = endTop - docTop - fixHeight;
+            }
+            if (fixTop < docTop) {
+                fix.css({ 'position': 'fixed' });
+                if ((end.length > 0) && (endTop < (docTop + fixHeight))) {
+                    fix.css({ top: miss });
+                } else {
+                    fix.css({ top: 0 });
+                }
+            } else {
+                fix.css({ 'position': 'absolute' });
+                fix.css({ top: offsetTop });
+            }
+        })
+    }
+</script>
+
+        
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://vaughnn.github.io" rel="author">vaughn</a>
+                <span class="post-time">
+                on <time>2021-07-20 00:00:00</time>
+                </span>
+                in
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://vaughnn.github.io/categories/%E8%BF%90%E7%BB%B4/"> 运维 </a>
+                        
+                </span>
+                
+                <div class="post-meta">
+                    <span id="busuanzi_container_page_pv">|<span id="busuanzi_value_page_pv"></span>
+                    <span class="post-date">共1584字</span>，阅读约
+                    <span class="more-meta"> 4 分钟</span>
+                </div>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+
+          
+          
+          
+
+          
+          
+          
+
+          <h3 id="v1">V1</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Bash" data-lang="Bash"><span style="color:#75715e">#!/bin/sh
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e"># 该脚本为Linux下启动java程序的脚本</span>
+<span style="color:#75715e">#</span>
+<span style="color:#75715e">#</span>
+<span style="color:#75715e"># 特别注意：</span>
+<span style="color:#75715e"># 该脚本使用系统kill命令来强制终止指定的java程序进程。</span>
+<span style="color:#75715e"># 所以在杀死进程前，可能会造成数据丢失或数据不完整。如果必须要考虑到这类情况，则需要改写此脚本，</span>
+<span style="color:#75715e">#</span>
+<span style="color:#75715e"># </span>
+<span style="color:#75715e"># 根据实际情况来修改以下配置信息 ##################################</span>
+
+<span style="color:#75715e"># JAVA应用程序的名称</span>
+APP_NAME<span style="color:#f92672">=</span>uid-consumer
+<span style="color:#75715e"># JAVA应用程序端口号</span>
+SERVER_PORT<span style="color:#f92672">=</span><span style="color:#ae81ff">9999</span>
+<span style="color:#75715e"># jar包存放路径</span>
+JAR_PATH<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;/app/uid-consumer&#39;</span>
+<span style="color:#75715e"># jar包名称</span>
+JAR_NAME<span style="color:#f92672">=</span>uid-consumer-1.1.0-SNAPSHOT.jar
+<span style="color:#75715e"># PID 代表是PID文件</span>
+JAR_PID<span style="color:#f92672">=</span>$JAR_NAME<span style="color:#ae81ff">\.</span>pid
+<span style="color:#75715e"># 日志输出文件</span>
+LOG_FILE<span style="color:#f92672">=</span>logs
+
+<span style="color:#75715e"># java虚拟机启动参数</span>
+JAVA_OPTS<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;-Xms512m -Xmx512m -XX:MetaspaceSize=512m -XX:MaxMetaspaceSize=1024m -XX:ParallelGCThreads=4 -XX:+PrintGCDateStamps -XX:+PrintGCDetails -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=utf-8&#34;</span>
+
+<span style="color:#75715e"># 根据实际情况来修改以上配置信息 ##################################</span>
+
+
+<span style="color:#75715e"># 检查程序是否处于运行状态</span>
+is_exist<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+  <span style="color:#75715e"># 查询出应用服务的进程id，grep -v 是反向查询的意思，查找除了grep操作的run.jar的进程之外的所有进程</span>
+  pid<span style="color:#f92672">=</span><span style="color:#e6db74">`</span>ps -ef|grep $JAR_NAME|grep -v grep|awk <span style="color:#e6db74">&#39;{print $2}&#39;</span> <span style="color:#e6db74">`</span>
+
+  <span style="color:#75715e"># [ ]表示条件测试。注意这里的空格很重要。要注意在&#39;[&#39;后面和&#39;]&#39;前面都必须要有空格</span>
+  <span style="color:#75715e"># [ -z STRING ] 如果STRING的长度为零则返回为真，即空是真</span>
+  <span style="color:#75715e"># 如果不存在返回0，存在返回1</span>
+  <span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> -z <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>pid<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
+   <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+  <span style="color:#66d9ef">else</span>
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>
+  <span style="color:#66d9ef">fi</span>
+<span style="color:#f92672">}</span>
+
+<span style="color:#75715e"># ######### Shell脚本中$0、$?、$!、$$、$*、$#、$@等的说明 #########</span>
+
+<span style="color:#75715e"># $$ Shell本身的PID（ProcessID，即脚本运行的当前 进程ID号）</span>
+<span style="color:#75715e"># $! Shell最后运行的后台Process的PID(后台运行的最后一个进程的 进程ID号)</span>
+<span style="color:#75715e"># $? 最后运行的命令的结束代码（返回值）即执行上一个指令的返回值 (显示最后命令的退出状态。0表示没有错误，其他任何值表明有错误)</span>
+<span style="color:#75715e"># $- 显示shell使用的当前选项，与set命令功能相同</span>
+<span style="color:#75715e"># $* 所有参数列表。如&#34;$*&#34;用「&#34;」括起来的情况、以&#34;$1 $2 … $n&#34;的形式输出所有参数，此选项参数可超过9个。</span>
+<span style="color:#75715e"># $@ 所有参数列表。如&#34;$@&#34;用「&#34;」括起来的情况、以&#34;$1&#34; &#34;$2&#34; … &#34;$n&#34; 的形式输出所有参数。</span>
+<span style="color:#75715e"># $# 添加到Shell的参数个数</span>
+<span style="color:#75715e"># $0 Shell本身的文件名</span>
+<span style="color:#75715e"># $1～$n 添加到Shell的各参数值。$1是第1参数、$2是第2参数…。</span>
+
+<span style="color:#75715e"># 服务启动方法</span>
+start<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+  is_exist
+  <span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> $? -eq <span style="color:#e6db74">&#34;1&#34;</span> <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
+    echo <span style="color:#e6db74">&#34;</span>$APP_NAME<span style="color:#e6db74"> is already running pid is </span><span style="color:#e6db74">${</span>pid<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+  <span style="color:#66d9ef">else</span>
+    <span style="color:#75715e"># jar服务启动脚本</span>
+    nohup java $JAVA_OPTS -Xloggc:$LOG_FILE/gc/gclog.log -XX:HeapDumpPath<span style="color:#f92672">=</span>$LOG_FILE/gc/HeapDump.hprof -jar $JAR_PATH/$JAR_NAME &gt;./$LOG_FILE/run.log 2&gt;&amp;<span style="color:#ae81ff">1</span> &amp;
+    echo $! &gt; $JAR_PID
+    echo <span style="color:#e6db74">&#34;start </span>$APP_NAME<span style="color:#e6db74"> successed pid is </span>$!<span style="color:#e6db74"> &#34;</span>
+    tail -1000f $LOG_FILE/run.log
+   <span style="color:#66d9ef">fi</span>
+<span style="color:#f92672">}</span>
+
+<span style="color:#75715e"># 服务停止方法</span>
+stop<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+  <span style="color:#75715e"># is_exist</span>
+  pidf<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>cat $JAR_PID<span style="color:#66d9ef">)</span>
+  <span style="color:#75715e"># echo &#34;$pidf&#34; </span>
+  echo <span style="color:#e6db74">&#34;pid = </span>$pidf<span style="color:#e6db74"> begin kill </span>$pidf<span style="color:#e6db74">&#34;</span>
+  kill $pidf
+  rm -rf $JAR_PID
+  sleep <span style="color:#ae81ff">2</span>
+  <span style="color:#75715e"># 判断服务进程是否存在</span>
+  is_exist
+  <span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> $? -eq <span style="color:#e6db74">&#34;1&#34;</span> <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
+    echo <span style="color:#e6db74">&#34;pid = </span>$pid<span style="color:#e6db74"> begin kill -9 </span>$pid<span style="color:#e6db74">&#34;</span>
+    kill -9  $pid
+    sleep <span style="color:#ae81ff">2</span>
+    echo <span style="color:#e6db74">&#34;</span>$APP_NAME<span style="color:#e6db74"> process stopped！&#34;</span> 
+  <span style="color:#66d9ef">else</span>
+    echo <span style="color:#e6db74">&#34;</span>$APP_NAME<span style="color:#e6db74"> is not running！&#34;</span>
+  <span style="color:#66d9ef">fi</span> 
+<span style="color:#f92672">}</span>
+
+<span style="color:#75715e"># 服务运行状态查看方法</span>
+status<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+  is_exist
+  <span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> $? -eq <span style="color:#e6db74">&#34;1&#34;</span> <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
+    echo <span style="color:#e6db74">&#34;</span>$APP_NAME<span style="color:#e6db74"> is running，pid is </span><span style="color:#e6db74">${</span>pid<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+  <span style="color:#66d9ef">else</span>
+    echo <span style="color:#e6db74">&#34;</span>$APP_NAME<span style="color:#e6db74"> is not running！&#34;</span>
+  <span style="color:#66d9ef">fi</span>
+<span style="color:#f92672">}</span>
+
+<span style="color:#75715e"># 重启服务方法</span>
+restart<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+  <span style="color:#75715e"># 调用服务停止命令</span>
+  stop
+  <span style="color:#75715e"># 调用服务启动命令</span>
+  start
+<span style="color:#f92672">}</span>
+
+<span style="color:#75715e"># 帮助说明，用于提示输入参数信息</span>
+usage<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+    echo <span style="color:#e6db74">&#34;Usage: sh run-service.sh [ start | stop | restart | status ]&#34;</span>
+    exit <span style="color:#ae81ff">1</span>
+<span style="color:#f92672">}</span>
+
+<span style="color:#75715e">###################################</span>
+<span style="color:#75715e"># 读取脚本的第一个参数($1)，进行判断</span>
+<span style="color:#75715e"># 参数取值范围：{ start | stop | restart | status }</span>
+<span style="color:#75715e"># 如参数不在指定范围之内，则打印帮助信息</span>
+<span style="color:#75715e">###################################</span>
+<span style="color:#75715e">#根据输入参数，选择执行对应方法，不输入则执行使用说明</span>
+<span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;</span>$1<span style="color:#e6db74">&#34;</span> in
+  <span style="color:#e6db74">&#39;start&#39;</span><span style="color:#f92672">)</span>
+    start
+    ;;
+  <span style="color:#e6db74">&#39;stop&#39;</span><span style="color:#f92672">)</span>
+    stop
+    ;;
+  <span style="color:#e6db74">&#39;restart&#39;</span><span style="color:#f92672">)</span>
+    restart
+    ;;
+  <span style="color:#e6db74">&#39;status&#39;</span><span style="color:#f92672">)</span>
+    status
+    ;;
+  *<span style="color:#f92672">)</span>
+    usage
+    ;;
+<span style="color:#66d9ef">esac</span>
+exit <span style="color:#ae81ff">0</span>
+
+</code></pre></div><h3 id="v2">V2</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Bash" data-lang="Bash"><span style="color:#75715e">#!/bin/bash 
+</span><span style="color:#75715e"></span><span style="color:#75715e">#这里可替换为jar包名字</span>
+APP_NAME<span style="color:#f92672">=</span>xxx-1.0.jar
+<span style="color:#75715e">#根据实际情况修改参数</span>
+JVM<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;-server -Xms2g -Xmx2g -Xmn512m -XX:PermSize=128M -XX:MaxNewSize=128m -XX:MaxPermSize=25zh6m -Xss256k  -Djava.awt.headless=true -XX:+CMSClassUnloadingEnabled -XX:+CMSPermGenSweepingEnabled -Xloggc:/logs/xxx-server/GC/xxx-gc.log&#34;</span>
+<span style="color:#75715e">#APPFILE_PATH=&#34;-Dspring.config.location=/usr/local/config/application.properties&#34;</span>
+<span style="color:#75715e">#使用说明,用来提示输入参数 </span>
+usage<span style="color:#f92672">()</span> <span style="color:#f92672">{</span> 
+    echo <span style="color:#e6db74">&#34;Usage: sh 执行脚本.sh [start|stop|restart|status|log|backup]&#34;</span> 
+    exit <span style="color:#ae81ff">1</span> 
+<span style="color:#f92672">}</span> 
+<span style="color:#75715e">#检查程序是否在运行 </span>
+is_exist<span style="color:#f92672">(){</span> 
+    pid<span style="color:#f92672">=</span><span style="color:#e6db74">`</span>ps -ef|grep $APP_NAME|grep -v grep|awk <span style="color:#e6db74">&#39;{print $2}&#39;</span> <span style="color:#e6db74">`</span> 
+    <span style="color:#75715e">#如果不存在返回1,存在返回0 </span>
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> -z <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>pid<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span> 
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> 
+    <span style="color:#66d9ef">else</span> 
+        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span> 
+    <span style="color:#66d9ef">fi</span> 
+<span style="color:#f92672">}</span> 
+
+<span style="color:#75715e">#启动方法 </span>
+start<span style="color:#f92672">(){</span> 
+    is_exist 
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> $? -eq <span style="color:#e6db74">&#34;0&#34;</span> <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span> 
+        echo <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>APP_NAME<span style="color:#e6db74">}</span><span style="color:#e6db74"> is already running. pid=</span><span style="color:#e6db74">${</span>pid<span style="color:#e6db74">}</span><span style="color:#e6db74"> .&#34;</span> 
+    <span style="color:#66d9ef">else</span> 
+        <span style="color:#75715e">#nohup java $JVM -jar $APPFILE_PATH $APP_NAME &gt; /dev/null 2&gt;&amp;1 </span>
+                <span style="color:#75715e">#后台启动jar包，且控制环境变量，根据实际情况修改吧。</span>
+        nohup java $JVM -jar $APP_NAME --spring.profiles.active<span style="color:#f92672">=</span>prod &gt; /dev/null 2&gt;&amp;<span style="color:#ae81ff">1</span> &amp; 
+    <span style="color:#66d9ef">fi</span>
+<span style="color:#f92672">}</span> 
+
+<span style="color:#75715e">#停止方法 </span>
+stop<span style="color:#f92672">(){</span> 
+    is_exist 
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> $? -eq <span style="color:#e6db74">&#34;0&#34;</span> <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span> 
+        kill -9 $pid 
+    <span style="color:#66d9ef">else</span> 
+        echo <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>APP_NAME<span style="color:#e6db74">}</span><span style="color:#e6db74"> is not running&#34;</span> 
+    <span style="color:#66d9ef">fi</span> 
+<span style="color:#f92672">}</span> 
+
+<span style="color:#75715e">#输出运行状态 </span>
+status<span style="color:#f92672">(){</span> 
+    is_exist 
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> $? -eq <span style="color:#e6db74">&#34;0&#34;</span> <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span> 
+        echo <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>APP_NAME<span style="color:#e6db74">}</span><span style="color:#e6db74"> is running. Pid is </span><span style="color:#e6db74">${</span>pid<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span> 
+    <span style="color:#66d9ef">else</span> 
+        echo <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>APP_NAME<span style="color:#e6db74">}</span><span style="color:#e6db74"> is NOT running.&#34;</span> 
+    <span style="color:#66d9ef">fi</span> 
+<span style="color:#f92672">}</span> 
+<span style="color:#75715e">#重启 </span>
+restart<span style="color:#f92672">(){</span> 
+    stop 
+    start 
+<span style="color:#f92672">}</span> 
+
+<span style="color:#75715e">#日志</span>
+log<span style="color:#f92672">(){</span>
+        <span style="color:#75715e"># 输出实时日志</span>
+    tail -n <span style="color:#ae81ff">100</span> -f /logs/fdc-server/fdc-server.log
+<span style="color:#f92672">}</span>
+
+<span style="color:#75715e">#备份</span>
+backup<span style="color:#f92672">(){</span>
+        <span style="color:#75715e">#根据需求自定义备份文件路径。</span>
+    BACKUP_PATH<span style="color:#f92672">=</span>/usr/local/webapps/backup/xxx-server/
+        <span style="color:#75715e">#获取当前时间作为备份文件名</span>
+    BACKUP_DATE<span style="color:#f92672">=</span><span style="color:#e6db74">`</span>date +<span style="color:#e6db74">&#34;%Y%m%d(%H:%M:%S)&#34;</span><span style="color:#e6db74">`</span>
+    echo <span style="color:#e6db74">&#39;backup file -&gt;&#39;</span>$BACKUP_PATH$BACKUP_DATE<span style="color:#e6db74">&#39;.jar&#39;</span>
+        <span style="color:#75715e">#备份当前jar包</span>
+    cp -r /usr/local/webapps/$APP_NAME  $BACKUP_PATH$BACKUP_DATE<span style="color:#e6db74">&#39;.jar&#39;</span>
+<span style="color:#f92672">}</span>
+
+<span style="color:#75715e">#根据输入参数,选择执行对应方法,不输入则执行使用说明 </span>
+<span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;</span>$1<span style="color:#e6db74">&#34;</span> in 
+    <span style="color:#e6db74">&#34;start&#34;</span><span style="color:#f92672">)</span> 
+        start 
+        ;; 
+    <span style="color:#e6db74">&#34;stop&#34;</span><span style="color:#f92672">)</span> 
+        stop 
+        ;; 
+    <span style="color:#e6db74">&#34;status&#34;</span><span style="color:#f92672">)</span> 
+        status 
+        ;; 
+    <span style="color:#e6db74">&#34;restart&#34;</span><span style="color:#f92672">)</span> 
+        restart 
+        ;; 
+    <span style="color:#e6db74">&#34;log&#34;</span><span style="color:#f92672">)</span> 
+        log 
+        ;; 
+    <span style="color:#e6db74">&#34;backup&#34;</span><span style="color:#f92672">)</span> 
+        backup 
+        ;; 
+    *<span style="color:#f92672">)</span> 
+usage 
+;; 
+<span style="color:#66d9ef">esac</span>
+</code></pre></div>
+    </div>
+
+    <div class="post-copyright">
+            
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>vaughn </span>
+                </p>
+            
+
+            
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://vaughnn.github.io/2021/07/%E8%BF%90%E7%BB%B4/>https://vaughnn.github.io/2021/07/%E8%BF%90%E7%BB%B4/</span>
+            </p>
+            
+            
+            <p class="copyright-item lincese">
+                How far are you from me,O Fruit? I am hidden in your heart,O Flower.
+            </p>
+            
+    </div>
+
+
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s):
+            
+            <span class="tag"><a href="https://vaughnn.github.io/tags/shell/">
+                    #shell</a></span>
+            
+            <span class="tag"><a href="https://vaughnn.github.io/tags/linux/">
+                    #linux</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> ·
+                <span><a href="https://vaughnn.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        
+        <a href="https://vaughnn.github.io/2021/07/java/" class="next" rel="next" title="Redis同步原理">Redis同步原理&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+        
+<div id="gitalk-container"></div>
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<script>
+    const gitalk = new Gitalk({
+        clientID: 'c5728414aa682c1e3857',
+        clientSecret: '8c906f0037f05cb689be4eefe1cf83c49fd3863a',
+        repo: 'vaughnn.github.io',
+        owner: 'vaughnn',
+        admin: ['vaughnn'],
+        id: location.pathname, 
+        distractionFreeMode: false 
+    });
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) !== -1) {
+            document.getElementById('gitalk-container').innerHTML = 'Gitalk comments not available by default when the website is previewed locally.';
+            return;
+        }
+        gitalk.render('gitalk-container');
+    })();
+</script>
+
+
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2016 - 2021</span>
+        
+
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://vaughnn.github.io">vaughn</a> | </span>
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span>
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="https://vaughnn.github.io/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+
+     </div>
+  </body>
+</html>

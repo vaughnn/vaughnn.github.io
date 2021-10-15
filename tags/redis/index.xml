@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Redis on Vaughn</title>
+    <link>https://vaughnn.github.io/tags/redis/</link>
+    <description>Recent content in Redis on Vaughn</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 30 Jul 2021 14:25:32 +0000</lastBuildDate><atom:link href="https://vaughnn.github.io/tags/redis/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Redis同步原理</title>
+      <link>https://vaughnn.github.io/2021/07/java/</link>
+      <pubDate>Fri, 30 Jul 2021 14:25:32 +0000</pubDate>
+      
+      <guid>https://vaughnn.github.io/2021/07/java/</guid>
+      <description>主从同步原理 刚开始 mater 与 salve 数据是不不同步的 过一段时间后就同步了 就是所谓的最终一致性 第一次同步 主节点做一次bgsave 同时将后续操作记录到内存b</description>
+    </item>
+    
+  </channel>
+</rss>

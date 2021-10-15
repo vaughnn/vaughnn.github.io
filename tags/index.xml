@@ -25,5 +25,50 @@
       <description></description>
     </item>
     
+    <item>
+      <title>Java</title>
+      <link>https://vaughnn.github.io/tags/java/</link>
+      <pubDate>Fri, 30 Jul 2021 14:25:32 +0000</pubDate>
+      
+      <guid>https://vaughnn.github.io/tags/java/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Nginx</title>
+      <link>https://vaughnn.github.io/tags/nginx/</link>
+      <pubDate>Fri, 30 Jul 2021 14:25:32 +0000</pubDate>
+      
+      <guid>https://vaughnn.github.io/tags/nginx/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Redis</title>
+      <link>https://vaughnn.github.io/tags/redis/</link>
+      <pubDate>Fri, 30 Jul 2021 14:25:32 +0000</pubDate>
+      
+      <guid>https://vaughnn.github.io/tags/redis/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>linux</title>
+      <link>https://vaughnn.github.io/tags/linux/</link>
+      <pubDate>Tue, 20 Jul 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://vaughnn.github.io/tags/linux/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>shell</title>
+      <link>https://vaughnn.github.io/tags/shell/</link>
+      <pubDate>Tue, 20 Jul 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://vaughnn.github.io/tags/shell/</guid>
+      <description></description>
+    </item>
+    
   </channel>
 </rss>
