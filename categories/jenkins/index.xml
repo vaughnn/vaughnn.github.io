@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Jenkins on Vaughn</title>
+    <link>https://vaughnn.github.io/categories/jenkins/</link>
+    <description>Recent content in Jenkins on Vaughn</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Wed, 01 Sep 2021 13:21:42 +0000</lastBuildDate><atom:link href="https://vaughnn.github.io/categories/jenkins/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Jenkins前端项目部署</title>
+      <link>https://vaughnn.github.io/2021/09/java/</link>
+      <pubDate>Wed, 01 Sep 2021 13:21:42 +0000</pubDate>
+      
+      <guid>https://vaughnn.github.io/2021/09/java/</guid>
+      <description>部署到远程机器需要下载插件 Publish Over SSH 下载完成需要重启Jenkins(在jenkins地址后添加/restart) 在系统设置中添加账号密码 部署时候</description>
+    </item>
+    
+  </channel>
+</rss>

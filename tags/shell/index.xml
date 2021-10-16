@@ -6,11 +6,20 @@
     <description>Recent content in shell on Vaughn</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 20 Jul 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://vaughnn.github.io/tags/shell/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 01 Sep 2021 17:47:48 +0000</lastBuildDate><atom:link href="https://vaughnn.github.io/tags/shell/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>启动Java应用程序shell</title>
+      <link>https://vaughnn.github.io/2021/09/java/</link>
+      <pubDate>Wed, 01 Sep 2021 17:47:48 +0000</pubDate>
+      
+      <guid>https://vaughnn.github.io/2021/09/java/</guid>
+      <description>#!/bin/bash project=*.jar echo &amp;#34;拷贝文件&amp;#34; rm -rf /data/jar/$project cp /root/jenkins/workspace/*/target/$project /data/jar echo &amp;#34;切换路径&amp;#34; cd /data/jar pid=`ps aux | grep java| grep $project | awk &amp;#39;{print $2}&amp;#39;` if [ -n &amp;#34;$pid&amp;#34; ] then kill -9 $pid echo &amp;#34;杀死存在</description>
+    </item>
+    
     <item>
       <title>Linux启动Java程序jar包Shell脚本</title>
       <link>https://vaughnn.github.io/2021/07/%E8%BF%90%E7%BB%B4/</link>
-      <pubDate>Tue, 20 Jul 2021 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 20 Jul 2021 10:29:35 +0000</pubDate>
       
       <guid>https://vaughnn.github.io/2021/07/%E8%BF%90%E7%BB%B4/</guid>
       <description>V1 #!/bin/sh # 该脚本为Linux下启动java程序的脚本 # # # 特别注意： # 该脚本使用系统kill命令来强制终止指定的java程序进程。 # 所以在杀死进</description>

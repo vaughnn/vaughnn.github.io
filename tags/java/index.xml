@@ -6,11 +6,11 @@
     <description>Recent content in Java on Vaughn</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 30 Jul 2021 14:25:32 +0000</lastBuildDate><atom:link href="https://vaughnn.github.io/tags/java/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 31 Jul 2021 14:25:32 +0000</lastBuildDate><atom:link href="https://vaughnn.github.io/tags/java/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Nginx502,Java调试排错</title>
       <link>https://vaughnn.github.io/2021/07/java/</link>
-      <pubDate>Fri, 30 Jul 2021 14:25:32 +0000</pubDate>
+      <pubDate>Sat, 31 Jul 2021 14:25:32 +0000</pubDate>
       
       <guid>https://vaughnn.github.io/2021/07/java/</guid>
       <description>前段时间突然nginx大量502,没有日志 top -H -p pid，查看该进程的子线程，可以看到有部分线程CPU占用较高 jstack -l pid &amp;gt; /tmp/jstack_</description>

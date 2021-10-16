@@ -130,7 +130,11 @@
         <li><a href="#gclib代理">GCLIB代理</a></li>
       </ul>
     </li>
-    <li><a href="#原理区别">原理区别</a></li>
+    <li><a href="#原理区别">原理区别</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
     <li><a href="#cglib-与-jdk动态代理的运行性能比较">Cglib 与 JDK动态代理的运行性能比较</a></li>
   </ul>
 </nav>
@@ -206,9 +210,7 @@
 <li>cglib是子类，private的方法照样不会出现在子类里，也不能被拦截</li>
 </ul>
 <h3 id="jdk-动态代理">JDK 动态代理</h3>
-<blockquote>
 <p>具体有如下四步骤:</p>
-</blockquote>
 <ol>
 <li>通过实现 InvocationHandler 接口创建自己的调用处理器；</li>
 <li>通过为 Proxy 类指定 ClassLoader 对象和一组 interface 来创建动态代理类；</li>
@@ -216,27 +218,21 @@
 <li>通过构造函数创建动态代理类实例，构造时调用处理器对象作为参数被传入。</li>
 </ol>
 <h4 id="示例">示例</h4>
-<blockquote>
-<p>创建业务接口</p>
-</blockquote>
+<h5 id="创建业务接口">创建业务接口</h5>
 <pre tabindex="0"><code>public interface UserService {
     /**
      * 需要增强的方法
      */
     void add();
 }
-</code></pre><blockquote>
-<p>创建业务接口 实现类</p>
-</blockquote>
+</code></pre><h5 id="创建业务接口-实现类">创建业务接口 实现类</h5>
 <pre tabindex="0"><code>public class UserServiceImpl implements UserService {
     @Override
     public void add() {
         System.out.println(&quot;-------------业务逻辑方法 add ------------&quot;);
     }
 }
-</code></pre><blockquote>
-<p>创建自定义的 InvocationHandler，用于对接口提供的方法进行增强</p>
-</blockquote>
+</code></pre><h5 id="创建自定义的-invocationhandler用于对接口提供的方法进行增强">创建自定义的 InvocationHandler，用于对接口提供的方法进行增强</h5>
 <pre tabindex="0"><code>public class MyInvocationHandler implements InvocationHandler {
     /**
      * 需要增强的对象
@@ -260,9 +256,7 @@
     }
 }
 
-</code></pre><blockquote>
-<p>测试类</p>
-</blockquote>
+</code></pre><h5 id="测试类">测试类</h5>
 <pre tabindex="0"><code>public class ProxyTest {
     @Test
     public void contextTest() {
@@ -278,9 +272,7 @@
         proxy.add();
     }
 }
-</code></pre><blockquote>
-<p>输出结果：</p>
-</blockquote>
+</code></pre><h5 id="输出结果">输出结果：</h5>
 <pre tabindex="0"><code>-------------方法执行前的增强逻辑 ------------
 -------------业务逻辑方法 add ------------
 -------------方法执行后的增强逻辑 ------------
@@ -296,7 +288,7 @@
 <p>代理类会实现我们的接口，并会实现我们接口中的方法。然后通过InvocationHandler的invoke方法去执行增强逻辑和原有方法逻辑。在invoke中可以使用反射去执行原有逻辑，并在方法执行前后加上自己的增强逻辑。</p>
 </blockquote>
 <h4 id="jdkdynamicaopproxy">JdkDynamicAopProxy</h4>
-<p>JdkDynamicAopProxy是Spring中JDK动态代理的实现，它也实现了InvocationHandler接口。核心方法：</p>
+<h5 id="jdkdynamicaopproxy是spring中jdk动态代理的实现它也实现了invocationhandler接口核心方法">JdkDynamicAopProxy是Spring中JDK动态代理的实现，它也实现了InvocationHandler接口。核心方法：</h5>
 <ol>
 <li>getProxy：获取代理对象，这个和上面的示例几乎是一样的</li>
 <li>invoke：实现了AOP的核心逻辑</li>
@@ -419,25 +411,19 @@
     ...
 }
 </code></pre><h3 id="gclib代理">GCLIB代理</h3>
-<blockquote>
-<p>cglib（Code Generation Library）是一个强大的,高性能,高质量的Code生成类库。它可以在运行期扩展Java类与实现Java接口。</p>
-</blockquote>
+<h4 id="cglibcode-generation-library是一个强大的高性能高质量的code生成类库它可以在运行期扩展java类与实现java接口">cglib（Code Generation Library）是一个强大的,高性能,高质量的Code生成类库。它可以在运行期扩展Java类与实现Java接口。</h4>
 <ul>
 <li>cglib封装了asm，可以在运行期动态生成新的class（子类）。</li>
 <li>cglib用于AOP，jdk中的proxy必须基于接口，cglib却没有这个限制。</li>
 </ul>
 <h4 id="示例-1">示例</h4>
-<blockquote>
-<p>需要代理的类</p>
-</blockquote>
+<h5 id="需要代理的类">需要代理的类</h5>
 <pre tabindex="0"><code>public class EnhancerDemo {
     public void test() {
         System.out.println(&quot;-------------业务逻辑方法 test ------------&quot;);
     }
 }
-</code></pre><blockquote>
-<p>MethodInterceptor的实现类（增强器）</p>
-</blockquote>
+</code></pre><h5 id="methodinterceptor的实现类增强器">MethodInterceptor的实现类（增强器）</h5>
 <pre tabindex="0"><code>import org.springframework.cglib.proxy.MethodInterceptor;
 import org.springframework.cglib.proxy.MethodProxy;
 import java.lang.reflect.Method;
@@ -450,9 +436,7 @@ public class MethodInterceptorImpl implements MethodInterceptor {
         return result;
     }
 }
-</code></pre><blockquote>
-<p>测试类</p>
-</blockquote>
+</code></pre><h5 id="测试类-1">测试类</h5>
 <pre tabindex="0"><code>public class EnhancerTest {
     @Test
     public void contextTest() {
@@ -465,9 +449,7 @@ public class MethodInterceptorImpl implements MethodInterceptor {
         System.out.println(proxy);
     }
 }
-</code></pre><blockquote>
-<p>执行结果</p>
-</blockquote>
+</code></pre><h5 id="执行结果">执行结果</h5>
 <pre tabindex="0"><code>-------------方法执行前的增强逻辑 ------------public void com.fcant.aop.cglib.EnhancerDemo.test()
 -------------业务逻辑方法 test ------------
 -------------方法执行后的增强逻辑 ------------public void com.fcant.aop.cglib.EnhancerDemo.test()
@@ -476,17 +458,17 @@ public class MethodInterceptorImpl implements MethodInterceptor {
 -------------方法执行后的增强逻辑 ------------public native int java.lang.Object.hashCode()
 -------------方法执行后的增强逻辑 ------------public java.lang.String java.lang.Object.toString()
 com.fcant.aop.cglib.EnhancerDemo$$EnhancerByCGLIB$$da6c48f9@7a187f14
-</code></pre><blockquote>
+</code></pre><ol>
+<li>
 <p>可以看到 System.out.println(porxy); 首先调用了 toString() 方法，然后又调用了 hashCode() ，生成的对象为 EnhancerDemo$$EnhancerByCGLIB$$da6c48f9@7a187f14 的实例，这个类是运行时由 CGLIB 产生。</p>
-</blockquote>
-<blockquote>
+</li>
+<li>
 <p>从上面的代码可以发现方法的执行会委托给MethodInterceptor的intercept方法。从而实现对方法的增强。</p>
-</blockquote>
+</li>
+</ol>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">由于 Cglib 是使用继承方式，所有final类是不能使用cglib代理的，会直接抛出异常，final方法也将不会被代理，因为不能覆盖，不会直接抛出异常
 </code></pre></div><h4 id="cglibaopproxy">CglibAopProxy</h4>
-<blockquote>
-<p>CglibAopProxy是Spring中Cglib动态代理的实现，在getProxy方法中完成了对Enhancer的创建和封装。在getProxy方法中getCallbacks(rootClass);方法会将拦截链封装成DynamicAdvisedInterceptor对象，并放到Cglib的回调函数中。源码如下：</p>
-</blockquote>
+<h5 id="cglibaopproxy是spring中cglib动态代理的实现在getproxy方法中完成了对enhancer的创建和封装在getproxy方法中getcallbacksrootclass方法会将拦截链封装成dynamicadvisedinterceptor对象并放到cglib的回调函数中源码如下">CglibAopProxy是Spring中Cglib动态代理的实现，在getProxy方法中完成了对Enhancer的创建和封装。在getProxy方法中getCallbacks(rootClass);方法会将拦截链封装成DynamicAdvisedInterceptor对象，并放到Cglib的回调函数中。源码如下：</h5>
 <pre tabindex="0"><code>@Override
 public Object getProxy(ClassLoader classLoader) {
     if (logger.isDebugEnabled()) {
@@ -596,18 +578,14 @@ private Callback[] getCallbacks(Class&lt;?&gt; rootClass) throws Exception {
 }
 
 </code></pre><h2 id="原理区别">原理区别</h2>
-<blockquote>
-<p>java动态代理是利用反射机制生成一个实现代理接口的匿名类，在调用具体方法前调用InvokeHandler来处理。而cglib动态代理是利用asm开源包，对代理对象类的class文件加载进来，通过修改其字节码生成子类来处理。</p>
-</blockquote>
+<h4 id="java动态代理是利用反射机制生成一个实现代理接口的匿名类在调用具体方法前调用invokehandler来处理而cglib动态代理是利用asm开源包对代理对象类的class文件加载进来通过修改其字节码生成子类来处理">java动态代理是利用反射机制生成一个实现代理接口的匿名类，在调用具体方法前调用InvokeHandler来处理。而cglib动态代理是利用asm开源包，对代理对象类的class文件加载进来，通过修改其字节码生成子类来处理。</h4>
 <ol>
 <li>如果目标对象实现了接口，默认情况下会采用JDK的动态代理实现AOP</li>
 <li>如果目标对象实现了接口，可以强制使用CGLIB实现AOP</li>
 <li>如果目标对象没有实现了接口，必须采用CGLIB库，Spring会自动在JDK动态代理和CGLIB之间转换</li>
 </ol>
 <h2 id="cglib-与-jdk动态代理的运行性能比较">Cglib 与 JDK动态代理的运行性能比较</h2>
-<blockquote>
 <p>结论：从 jdk6 到 jdk7、jdk8 ，动态代理的性能得到了显著的提升，尤其是JDK7和JDK8性能表现都比cglib好，而 cglib 的表现并未跟上，甚至可能会略微下降。所以建议尽量使用 JDK 的动态代理</p>
-</blockquote>
 
     </div>
 
