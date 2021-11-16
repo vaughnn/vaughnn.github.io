@@ -6,7 +6,25 @@
     <description>Recent content in Tags on Vaughn</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 14 Oct 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://vaughnn.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 15 Nov 2021 09:19:14 +0000</lastBuildDate><atom:link href="https://vaughnn.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>linux</title>
+      <link>https://vaughnn.github.io/tags/linux/</link>
+      <pubDate>Mon, 15 Nov 2021 09:19:14 +0000</pubDate>
+      
+      <guid>https://vaughnn.github.io/tags/linux/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>shell</title>
+      <link>https://vaughnn.github.io/tags/shell/</link>
+      <pubDate>Mon, 15 Nov 2021 09:19:14 +0000</pubDate>
+      
+      <guid>https://vaughnn.github.io/tags/shell/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>代理</title>
       <link>https://vaughnn.github.io/tags/%E4%BB%A3%E7%90%86/</link>
@@ -22,15 +40,6 @@
       <pubDate>Tue, 12 Oct 2021 11:22:44 +0000</pubDate>
       
       <guid>https://vaughnn.github.io/tags/api/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>shell</title>
-      <link>https://vaughnn.github.io/tags/shell/</link>
-      <pubDate>Wed, 01 Sep 2021 17:47:48 +0000</pubDate>
-      
-      <guid>https://vaughnn.github.io/tags/shell/</guid>
       <description></description>
     </item>
     
@@ -58,15 +67,6 @@
       <pubDate>Sat, 31 Jul 2021 14:25:32 +0000</pubDate>
       
       <guid>https://vaughnn.github.io/tags/nginx/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>linux</title>
-      <link>https://vaughnn.github.io/tags/linux/</link>
-      <pubDate>Tue, 20 Jul 2021 10:29:35 +0000</pubDate>
-      
-      <guid>https://vaughnn.github.io/tags/linux/</guid>
       <description></description>
     </item>
     

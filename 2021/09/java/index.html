@@ -9,8 +9,8 @@
   
   
   
-  <link rel="prev" href="https://vaughnn.github.io/2021/07/java/" />
-  <link rel="next" href="https://vaughnn.github.io/2021/09/java/" />
+  <link rel="prev" href="https://vaughnn.github.io/2021/09/java/" />
+  <link rel="next" href="https://vaughnn.github.io/2021/10/design/" />
   <link rel="canonical" href="https://vaughnn.github.io/2021/09/java/" />
   <link rel="apple-touch-icon" sizes="180x180" href="https://vaughnn.github.io/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="https://vaughnn.github.io/favicon-32x32.png">
@@ -22,10 +22,10 @@
   <title>
        
        
-           Jenkins前端项目部署 | Vaughn
+           启动Java应用程序shell | Vaughn
        
   </title>
-  <meta name="title" content="Jenkins前端项目部署 | Vaughn">
+  <meta name="title" content="启动Java应用程序shell | Vaughn">
     
   
   <link rel="stylesheet" href="https://vaughnn.github.io/font/iconfont.css">
@@ -44,9 +44,9 @@
          "@id": "https:\/\/vaughnn.github.io"
     },
     "articleSection" : "posts",
-    "name" : "Jenkins前端项目部署",
-    "headline" : "Jenkins前端项目部署",
-    "description" : "部署到远程机器需要下载插件 Publish Over SSH 下载完成需要重启Jenkins(在jenkins地址后添加\/restart) 在系统设置中添加账号密码 部署时候",
+    "name" : "启动Java应用程序shell",
+    "headline" : "启动Java应用程序shell",
+    "description" : "#!\/bin\/bash project=*.jar echo \u0026#34;拷贝文件\u0026#34; rm -rf \/data\/jar\/$project cp \/root\/jenkins\/workspace\/*\/target\/$project \/data\/jar echo \u0026#34;切换路径\u0026#34; cd \/data\/jar pid=`ps aux | grep java| grep $project | awk \u0026#39;{print $2}\u0026#39;` if [ -n \u0026#34;$pid\u0026#34; ] then kill -9 $pid echo \u0026#34;杀死存在",
     "inLanguage" : "zh-cn",
     "author" : "vaughn",
     "creator" : "vaughn",
@@ -54,11 +54,11 @@
     "accountablePerson" : "vaughn",
     "copyrightHolder" : "vaughn",
     "copyrightYear" : "2021",
-    "datePublished": "2021-09-01 13:21:42 \u002b0000 UTC",
-    "dateModified" : "2021-09-01 13:21:42 \u002b0000 UTC",
+    "datePublished": "2021-09-01 17:47:48 \u002b0000 UTC",
+    "dateModified" : "2021-09-01 17:47:48 \u002b0000 UTC",
     "url" : "https:\/\/vaughnn.github.io\/2021\/09\/java\/",
-    "wordCount" : "114",
-    "keywords" : [ "Jenkins", "Vaughn"]
+    "wordCount" : "145",
+    "keywords" : [ "Shell", "Vaughn"]
 }
 </script>
 
@@ -116,7 +116,7 @@
       		
 <article class="post-warp" itemscope itemtype="http://schema.org/Article">
     <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">Jenkins前端项目部署</h1>
+        <h1 class="post-title" itemprop="name headline">启动Java应用程序shell</h1>
         
         <div class="post-toc" id="post-toc">
     <h2 class="post-toc-title"></h2>
@@ -157,18 +157,18 @@
         <div class="post-meta">
                 Written by <a itemprop="name" href="https://vaughnn.github.io" rel="author">vaughn</a>
                 <span class="post-time">
-                on <time>2021-09-01 13:21:42</time>
+                on <time>2021-09-01 17:47:48</time>
                 </span>
                 in
                 <i class="iconfont icon-folder"></i>
                 <span class="post-category">
-                        <a href="https://vaughnn.github.io/categories/jenkins/"> Jenkins </a>
+                        <a href="https://vaughnn.github.io/categories/java/"> Java </a>
                         
                 </span>
                 
                 <div class="post-meta">
                     <span id="busuanzi_container_page_pv">|<span id="busuanzi_value_page_pv"></span>
-                    <span class="post-date">共114字</span>，阅读约
+                    <span class="post-date">共145字</span>，阅读约
                     <span class="more-meta"> 1 分钟</span>
                 </div>
         </div>
@@ -177,8 +177,6 @@
         
 
         
-            
-        
 
         
         
@@ -191,20 +189,31 @@
           
           
 
-          <p><img src="http://nasimobi-view.oss-cn-zhangjiakou.aliyuncs.com/app-icon/1634347569729.jpg" alt=""></p>
-<ol>
-<li>部署到远程机器需要下载插件 <a href="https://plugins.jenkins.io/publish-over-ssh/"><em>Publish Over SSH</em></a>
-下载完成需要重启Jenkins(在jenkins地址后添加/restart)</li>
-<li>在系统设置中添加账号密码</li>
-<li>部署时候添加一个选择如下图可部署到其它机器: <img src="http://nasimobi-view.oss-cn-zhangjiakou.aliyuncs.com/app-icon/126163435033pic.jpg" alt=""></li>
-<li>可增加提交代码自动部署</li>
-</ol>
-<pre tabindex="0"><code>npm install --unsafe-perm
-rm -rf ./dist/*
-npm run build
-rm -rf /data/wwwroot/dist/*
-mv ./dist/*  /data/wwwroot/dist/
-</code></pre>
+          <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#!/bin/bash
+</span><span style="color:#75715e"></span>project<span style="color:#f92672">=</span>*.jar
+echo <span style="color:#e6db74">&#34;拷贝文件&#34;</span>
+rm -rf /data/jar/$project
+cp  /root/jenkins/workspace/*/target/$project /data/jar
+echo <span style="color:#e6db74">&#34;切换路径&#34;</span>
+cd /data/jar
+ 
+pid<span style="color:#f92672">=</span><span style="color:#e6db74">`</span>ps aux | grep java| grep $project | awk <span style="color:#e6db74">&#39;{print $2}&#39;</span><span style="color:#e6db74">`</span>
+<span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> -n <span style="color:#e6db74">&#34;</span>$pid<span style="color:#e6db74">&#34;</span> <span style="color:#f92672">]</span>
+<span style="color:#66d9ef">then</span>
+   kill -9 $pid
+   echo <span style="color:#e6db74">&#34;杀死存在进程&#34;</span>
+<span style="color:#66d9ef">fi</span>
+BUILD_ID<span style="color:#f92672">=</span>dontKillMe 
+echo <span style="color:#e6db74">&#34;执行&#34;</span>
+<span style="color:#75715e">#nohup java -jar $project &gt; /dev/null  2&gt;&amp;1 &amp;</span>
+nohup java -Xms128m -Xmx256m -jar $project &gt; api.log  2&gt;&amp;<span style="color:#ae81ff">1</span> &amp;
+echo <span style="color:#e6db74">&#34;启动成功！&#34;</span>
+sleep <span style="color:#ae81ff">5</span>
+</code></pre></div><p>执行命令</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">clean  package  -Dmaven.test.skip<span style="color:#f92672">=</span>true
+clean  package -Pprod -U -Dmaven.test.skip<span style="color:#f92672">=</span>true
+sh -x /data/startup.sh *.jar <span style="color:#ae81ff">8080</span>
+</code></pre></div>
     </div>
 
     <div class="post-copyright">
@@ -234,8 +243,8 @@ mv ./dist/*  /data/wwwroot/dist/
             <section>
             <i class="iconfont icon-tag"></i>Tag(s):
             
-            <span class="tag"><a href="https://vaughnn.github.io/tags/jenkins/">
-                    #Jenkins</a></span>
+            <span class="tag"><a href="https://vaughnn.github.io/tags/shell/">
+                    #Shell</a></span>
             
             </section>
         
@@ -247,10 +256,10 @@ mv ./dist/*  /data/wwwroot/dist/
 
     <div class="post-nav">
         
-        <a href="https://vaughnn.github.io/2021/07/java/" class="prev" rel="prev" title="Nginx502,Java调试排错"><i class="iconfont icon-left"></i>&nbsp;Nginx502,Java调试排错</a>
+        <a href="https://vaughnn.github.io/2021/09/java/" class="prev" rel="prev" title="Jenkins前端项目部署"><i class="iconfont icon-left"></i>&nbsp;Jenkins前端项目部署</a>
         
         
-        <a href="https://vaughnn.github.io/2021/09/java/" class="next" rel="next" title="启动Java应用程序shell">启动Java应用程序shell&nbsp;<i class="iconfont icon-right"></i></a>
+        <a href="https://vaughnn.github.io/2021/10/design/" class="next" rel="next" title="API接口鉴权安全设计">API接口鉴权安全设计&nbsp;<i class="iconfont icon-right"></i></a>
         
     </div>
 
@@ -314,9 +323,8 @@ mv ./dist/*  /data/wwwroot/dist/
 
 
     
-     <link href="//lib.baomitu.com/lightgallery/1.6.11/css/lightgallery.min.css" rel="stylesheet">  
-      
-     <script src="https://vaughnn.github.io/js/vendor_gallery.min.js" async="" ></script>
+    
+    <script src="https://vaughnn.github.io/js/vendor_no_gallery.min.js" async=""></script>
     
   
 

@@ -6,7 +6,16 @@
     <description>Recent content in linux on Vaughn</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 20 Jul 2021 10:29:35 +0000</lastBuildDate><atom:link href="https://vaughnn.github.io/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 15 Nov 2021 09:19:14 +0000</lastBuildDate><atom:link href="https://vaughnn.github.io/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Linux服务器日常巡检脚本</title>
+      <link>https://vaughnn.github.io/2021/11/%E8%BF%90%E7%BB%B4/</link>
+      <pubDate>Mon, 15 Nov 2021 09:19:14 +0000</pubDate>
+      
+      <guid>https://vaughnn.github.io/2021/11/%E8%BF%90%E7%BB%B4/</guid>
+      <description>#主机信息每日巡检 IPADDR=$(ifconfig eth0 | grep &amp;#39;inet addr&amp;#39; | awk -F &amp;#39;[ :]&amp;#39; &amp;#39;{print $13}&amp;#39;) #环境变量PATH没设好，在cron里执行时有很多命令会找不到 export PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin source /etc/profile [ $(id -u) -gt 0 ] &amp;amp;&amp;amp; echo &amp;#34;</description>
+    </item>
+    
     <item>
       <title>Linux启动Java程序jar包Shell脚本</title>
       <link>https://vaughnn.github.io/2021/07/%E8%BF%90%E7%BB%B4/</link>
