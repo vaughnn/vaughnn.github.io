@@ -17,6 +17,15 @@
     </item>
     
     <item>
+      <title>Jenkins前端项目部署</title>
+      <link>https://vaughnn.github.io/2021/10/java/</link>
+      <pubDate>Thu, 28 Oct 2021 13:21:42 +0000</pubDate>
+      
+      <guid>https://vaughnn.github.io/2021/10/java/</guid>
+      <description>部署到远程机器需要下载插件 Publish Over SSH 下载完成需要重启Jenkins(在jenkins地址后添加/restart) 在系统设置中添加账号密码 部署时候</description>
+    </item>
+    
+    <item>
       <title>Cglib与JDK动态代理</title>
       <link>https://vaughnn.github.io/2021/10/java/</link>
       <pubDate>Thu, 14 Oct 2021 00:00:00 +0000</pubDate>
@@ -41,15 +50,6 @@
       
       <guid>https://vaughnn.github.io/2021/09/java/</guid>
       <description>#!/bin/bash project=*.jar echo &amp;#34;拷贝文件&amp;#34; rm -rf /data/jar/$project cp /root/jenkins/workspace/*/target/$project /data/jar echo &amp;#34;切换路径&amp;#34; cd /data/jar pid=`ps aux | grep java| grep $project | awk &amp;#39;{print $2}&amp;#39;` if [ -n &amp;#34;$pid&amp;#34; ] then kill -9 $pid echo &amp;#34;杀死存在</description>
-    </item>
-    
-    <item>
-      <title>Jenkins前端项目部署</title>
-      <link>https://vaughnn.github.io/2021/09/java/</link>
-      <pubDate>Wed, 01 Sep 2021 13:21:42 +0000</pubDate>
-      
-      <guid>https://vaughnn.github.io/2021/09/java/</guid>
-      <description>部署到远程机器需要下载插件 Publish Over SSH 下载完成需要重启Jenkins(在jenkins地址后添加/restart) 在系统设置中添加账号密码 部署时候</description>
     </item>
     
     <item>
