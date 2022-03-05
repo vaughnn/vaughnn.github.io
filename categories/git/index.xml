@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Git on Vaughn</title>
+    <link>https://vaughnn.github.io/categories/git/</link>
+    <description>Recent content in Git on Vaughn</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 05 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://vaughnn.github.io/categories/git/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Git详解(常用命令)</title>
+      <link>https://vaughnn.github.io/2022/03/git/</link>
+      <pubDate>Sat, 05 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://vaughnn.github.io/2022/03/git/</guid>
+      <description>日常一直使用，为了遇到的某些git问题直接查找文档比较方便一点，总结了下git常用命令，以及原理。 找到一个很好的学习git的网站:https</description>
+    </item>
+    
+  </channel>
+</rss>

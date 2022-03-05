@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="vaughn">
+  
+  
+  
+  <link rel="prev" href="https://vaughnn.github.io/2022/02/java/" />
+  
+  <link rel="canonical" href="https://vaughnn.github.io/2022/03/git/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="https://vaughnn.github.io/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://vaughnn.github.io/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://vaughnn.github.io/favicon-16x16.png">
+  <link rel="manifest" href="https://vaughnn.github.io/site.webmanifest">
+  <link rel="mask-icon" href="https://vaughnn.github.io/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           Git详解(常用命令) | Vaughn
+       
+  </title>
+  <meta name="title" content="Git详解(常用命令) | Vaughn">
+    
+  
+  <link rel="stylesheet" href="https://vaughnn.github.io/font/iconfont.css">
+  <link rel="stylesheet" href="https://vaughnn.github.io/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/vaughnn.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "Git详解(常用命令)",
+    "headline" : "Git详解(常用命令)",
+    "description" : "日常一直使用，为了遇到的某些git问题直接查找文档比较方便一点，总结了下git常用命令，以及原理。 找到一个很好的学习git的网站:https",
+    "inLanguage" : "zh-cn",
+    "author" : "vaughn",
+    "creator" : "vaughn",
+    "publisher": "vaughn",
+    "accountablePerson" : "vaughn",
+    "copyrightHolder" : "vaughn",
+    "copyrightYear" : "2022",
+    "datePublished": "2022-03-05 00:00:00 \u002b0000 UTC",
+    "dateModified" : "2022-03-05 00:00:00 \u002b0000 UTC",
+    "url" : "https:\/\/vaughnn.github.io\/2022\/03\/git\/",
+    "wordCount" : "1947",
+    "keywords" : [ "Git", "Vaughn"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://vaughnn.github.io">Vaughn</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="https://vaughnn.github.io/posts/" title="">主页</a>
+                
+                <a class="menu-item" href="https://vaughnn.github.io/categories/" title="">分类</a>
+                
+                <a class="menu-item" href="https://vaughnn.github.io/tags/" title="">标签</a>
+                
+                <a class="menu-item" href="https://vaughnn.github.io/about/" title="关于">关于</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://vaughnn.github.io">Vaughn</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="https://vaughnn.github.io/posts/" title="">主页</a>
+                
+                <a class="menu-item" href="https://vaughnn.github.io/categories/" title="">分类</a>
+                
+                <a class="menu-item" href="https://vaughnn.github.io/tags/" title="">标签</a>
+                
+                <a class="menu-item" href="https://vaughnn.github.io/about/" title="关于">关于</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">Git详解(常用命令)</h1>
+        
+        <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title"></h2>
+    
+    <div class="post-toc-content always-active">
+        <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+</div>
+<script type="text/javascript">
+    window.onload = function () {
+        var fix = $('.post-toc');
+        var end = $('.post-comment');
+        var fixTop = fix.offset().top, fixHeight = fix.height();
+        var endTop, miss;
+        var offsetTop = fix[0].offsetTop;
+        $(window).scroll(function () {
+            var docTop = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
+            if (end.length > 0) {
+                endTop = end.offset().top;
+                miss = endTop - docTop - fixHeight;
+            }
+            if (fixTop < docTop) {
+                fix.css({ 'position': 'fixed' });
+                if ((end.length > 0) && (endTop < (docTop + fixHeight))) {
+                    fix.css({ top: miss });
+                } else {
+                    fix.css({ top: 0 });
+                }
+            } else {
+                fix.css({ 'position': 'absolute' });
+                fix.css({ top: offsetTop });
+            }
+        })
+    }
+</script>
+
+        
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://vaughnn.github.io" rel="author">vaughn</a>
+                <span class="post-time">
+                on <time>2022-03-05 00:00:00</time>
+                </span>
+                in
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://vaughnn.github.io/categories/git/"> Git </a>
+                        
+                </span>
+                
+                <div class="post-meta">
+                    <span id="busuanzi_container_page_pv">|<span id="busuanzi_value_page_pv"></span>
+                    <span class="post-date">共1947字</span>，阅读约
+                    <span class="more-meta"> 4 分钟</span>
+                </div>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+            
+        
+
+        
+        
+
+          
+          
+          
+
+          
+          
+          
+
+          <blockquote>
+<blockquote>
+<p>日常一直使用，为了遇到的某些git问题直接查找文档比较方便一点，总结了下git常用命令，以及原理。</p>
+</blockquote>
+</blockquote>
+<p>找到一个很好的学习git的网站:https://learngitbranching.js.org
+它的界面如下图:
+<img src="http://nasimobi-view.oss-cn-zhangjiakou.aliyuncs.com/articles/git.png" alt=""></p>
+<h4 id="1-git操作流程">1. Git操作流程</h4>
+<h5 id="11-代码提交和同步代码">1.1 代码提交和同步代码</h5>
+<p><img src="http://nasimobi-view.oss-cn-zhangjiakou.aliyuncs.com/articles/git_1.png" alt=""></p>
+<h5 id="12-代码撤销和撤销同步">1.2 代码撤销和撤销同步</h5>
+<p><img src="http://nasimobi-view.oss-cn-zhangjiakou.aliyuncs.com/articles/git_2.png" alt=""></p>
+<h4 id="2常用命令--代码提交和同步代码">2.常用命令 -代码提交和同步代码</h4>
+<ul>
+<li>第零步: 工作区与仓库保持一致</li>
+<li>第一步: 文件增删改，变为已修改状态</li>
+<li>第二步: git add ，变为已暂存状态</li>
+</ul>
+<pre tabindex="0"><code>$ git status
+$ git add --all # 当前项目下的所有更改
+$ git add .  # 当前目录下的所有更改
+$ git add xx/xx.py xx/xx.java  # 添加某几个文件
+</code></pre><ul>
+<li>第三步: git commit，变为已提交状态</li>
+</ul>
+<pre tabindex="0"><code>#这一步是提交到本地仓库
+$ git commit -m&quot;&lt;这里写commit的描述&gt;&quot; 
+</code></pre><ul>
+<li>第四步: git push，变为已推送状态</li>
+</ul>
+<blockquote>
+<p>注意 现在的github默认分支是<strong>main</strong>分支,gitee或者codeup还是master</p>
+</blockquote>
+<pre tabindex="0"><code>$ git push -u origin master # 第一次需要关联上
+$ git push # 之后再推送就不用指明应该推送的远程分支了
+$ git branch # 可以查看本地仓库的分支
+$ git branch -a # 可以查看本地仓库和本地远程仓库(远程仓库的本地镜像)的所有分支
+</code></pre><blockquote>
+<p>在某个分支下，我最常用的操作如下</p>
+</blockquote>
+<pre tabindex="0"><code>$ git status
+$ git add -a
+$ git status
+$ git commit -m 'xxx'
+$ git pull --rebase
+$ git push origin xxbranch
+</code></pre><h4 id="3常用命令--代码撤销和撤销同步">3.常用命令 -代码撤销和撤销同步</h4>
+<h5 id="31-已修改但未暂存">3.1 已修改，但未暂存</h5>
+<pre tabindex="0"><code>$ git diff # 列出所有的修改
+$ git diff xx/xx.java xx/xx1.java # 列出某(几)个文件的修改
+
+$ git checkout # 撤销项目下所有的修改
+$ git checkout . # 撤销当前文件夹下所有的修改
+$ git checkout xx/xx.java xx/xx1.java # 撤销某几个文件的修改
+$ git clean -f # untracked状态，撤销新增的文件
+$ git clean -df # untracked状态，撤销新增的文件和文件夹
+
+# Untracked files:
+#  (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
+#
+#	xx.java
+  
+</code></pre><h5 id="32-已暂存未提交">3.2 已暂存，未提交</h5>
+<blockquote>
+<p>这个时候已经执行过git add，但未执行git commit，但是用git diff已经看不到任何修改。 因为git diff检查的是工作区与暂存区之间的差异。</p>
+</blockquote>
+<pre tabindex="0"><code>$ git diff --cached # 这个命令显示暂存区和本地仓库的差异
+
+$ git reset # 暂存区的修改恢复到工作区
+$ git reset --soft # 与git reset等价，回到已修改状态，修改的内容仍然在工作区中
+$ git reset --hard # 回到未修改状态，清空暂存区和工作区
+  
+</code></pre><blockquote>
+<p>git reset &ndash;hard 操作等价于 git reset 和 git checkout 2步操作</p>
+</blockquote>
+<h5 id="33-已提交未推送">3.3 已提交，未推送</h5>
+<blockquote>
+<p>执行完commit之后，会在仓库中生成一个版本号(hash值)，标志这次提交。之后任何时候，都可以借助这个hash值回退到这次提交。</p>
+</blockquote>
+<pre tabindex="0"><code>$ git diff &lt;branch-name1&gt; &lt;branch-name2&gt; # 比较2个分支之间的差异
+$ git diff master origin/master # 查看本地仓库与本地远程仓库的差异
+
+$ git reset --hard origin/master # 回退与本地远程仓库一致
+$ git reset --hard HEAD^ # 回退到本地仓库上一个版本
+$ git reset --hard &lt;hash code&gt; # 回退到任意版本
+$ git reset --soft/git reset # 回退且回到已修改状态，修改仍保留在工作区中。
+</code></pre><h5 id="34-已推送到远程">3.4 已推送到远程</h5>
+<pre tabindex="0"><code>$ git push -f orgin master # 强制覆盖远程分支
+$ git push -f # 如果之前已经用 -u 关联过，则可省略分支名
+</code></pre><blockquote>
+<p>慎用，一般情况下，本地分支比远程要新，所以可以直接推送到远程，但有时推送到远程后发现有问题，进行了版本回退，旧版本或者分叉版本推送到远程，需要添加 -f参数，表示强制覆盖。</p>
+</blockquote>
+<h4 id="4-其它常用命令">4. 其它常用命令</h4>
+<ul>
+<li>关联联远程仓库</li>
+</ul>
+<pre tabindex="0"><code>$ git init
+$ git remote add &lt;name&gt; &lt;git-repo-url&gt;
+# 例如 git remote add origin https://github.com/xxxxxx是远程仓库的名称，通常为 origin
+</code></pre><ul>
+<li>关联多个远程仓库</li>
+</ul>
+<pre tabindex="0"><code>$ git remote add &lt;name&gt; &lt;another-git-repo-url&gt;
+# 例如 git remote add coding https://coding.net/xxxxxx
+</code></pre><ul>
+<li>忘了关联了哪些仓库或者地址</li>
+</ul>
+<pre tabindex="0"><code>$ git remote -v
+</code></pre><h4 id="5-分支">5. 分支</h4>
+<ul>
+<li>如果你想新建分支并切换</li>
+</ul>
+<pre tabindex="0"><code>$ git checkout -b &lt;new-branch-name&gt;
+# 例如 git checkout -b dev
+# 如果仅新建，不切换，则去掉参数 -b
+</code></pre><ul>
+<li>看看当前有哪些分支</li>
+</ul>
+<pre tabindex="0"><code>$ git branch
+# * dev
+#   master # 标*号的代表当前所在的分支
+</code></pre><ul>
+<li>看看当前本地&amp;远程有哪些分支</li>
+</ul>
+<pre tabindex="0"><code>$ git branch -a
+# * dev
+#   master
+#   remotes/origin/master
+</code></pre><ul>
+<li>切换到现有的分支</li>
+</ul>
+<pre tabindex="0"><code>$ git checkout master
+</code></pre><ul>
+<li>你想把dev分支合并到master分支</li>
+</ul>
+<pre tabindex="0"><code>$ git merge &lt;branch-name&gt;
+# 例如 git merge dev
+</code></pre><ul>
+<li>把本地master分支推送到远程去</li>
+</ul>
+<pre tabindex="0"><code>$ git push origin master
+# 你可以使用git push -u origin master将本地分支与远程分支关联，之后仅需要使用git push即可。
+</code></pre><ul>
+<li>远程分支被别人更新了，你需要更新代码</li>
+</ul>
+<pre tabindex="0"><code>$ git pull origin &lt;branch-name&gt;
+# 之前如果push时使用过-u，那么就可以省略为git pull
+</code></pre><ul>
+<li>本地有修改，能不能先git pull</li>
+</ul>
+<pre tabindex="0"><code>$ git stash # 工作区修改暂存
+$ git pull  # 更新分支
+$ git stash pop # 暂存修改恢复到工作区
+</code></pre><ul>
+<li>撤销操作</li>
+</ul>
+<pre tabindex="0"><code>1. 恢复暂存区文件到工作区
+    $ git checkout &lt;file-name&gt;
+2. 恢复暂存区的所有文件到工作区
+    $ git checkout .
+3. 重置暂存区的某文件，与上一次commit保持一致，但工作区不变
+    $ git reset &lt;file-name&gt;
+4. 重置暂存区与工作区，与上一次commit保持一致
+    $ git reset --hard &lt;file-name&gt;
+    # 如果是回退版本(commit)，那么file，变成commit的hash码就好了。
+5. 去掉某个commit
+    $ git revert &lt;commit-hash&gt;
+    # 实质是新建了一个与原来完全相反的commit，抵消了原来commit的效果
+6. reset回退错误恢复
+    $ git reflog #查看最近操作记录
+    $ git reset --hard HEAD{5} #恢复到前五笔操作
+    $ git pull origin backend-log #再次拉取代码
+</code></pre><h4 id="6-配置属于你的git">6. 配置属于你的Git</h4>
+<p>基本上我们都会使用这几个</p>
+<pre tabindex="0"><code>Git 全局设置:
+    git config --global user.name &quot;xx&quot;
+    git config --global user.email &quot;xxx&quot;
+
+创建 git 仓库:
+    mkdir fs12
+    cd fs12
+    git init 
+    touch README.md
+    git add README.md
+    git commit -m &quot;first commit&quot;
+    git remote add origin https://gitee.com/xxx/fs12.git
+    git push -u origin &quot;master&quot;
+已有仓库?
+    cd existing_git_repo
+    git remote add origin https://gitee.com/xxx/fs12.git
+    git push -u origin &quot;master&quot;
+</code></pre>
+    </div>
+
+    <div class="post-copyright">
+            
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>vaughn </span>
+                </p>
+            
+
+            
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://vaughnn.github.io/2022/03/git/>https://vaughnn.github.io/2022/03/git/</span>
+            </p>
+            
+            
+            <p class="copyright-item lincese">
+                How far are you from me,O Fruit? I am hidden in your heart,O Flower.
+            </p>
+            
+    </div>
+
+
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s):
+            
+            <span class="tag"><a href="https://vaughnn.github.io/tags/git/">
+                    #Git</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> ·
+                <span><a href="https://vaughnn.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://vaughnn.github.io/2022/02/java/" class="prev" rel="prev" title="Java内存模型"><i class="iconfont icon-left"></i>&nbsp;Java内存模型</a>
+        
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+        
+<div id="gitalk-container"></div>
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<script>
+    const gitalk = new Gitalk({
+        clientID: 'c5728414aa682c1e3857',
+        clientSecret: '8c906f0037f05cb689be4eefe1cf83c49fd3863a',
+        repo: 'vaughnn.github.io',
+        owner: 'vaughnn',
+        admin: ['vaughnn'],
+        id: location.pathname, 
+        distractionFreeMode: false 
+    });
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) !== -1) {
+            document.getElementById('gitalk-container').innerHTML = 'Gitalk comments not available by default when the website is previewed locally.';
+            return;
+        }
+        gitalk.render('gitalk-container');
+    })();
+</script>
+
+
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2016 - 2022</span>
+        
+
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://vaughnn.github.io">vaughn</a> | </span>
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span>
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+     <link href="//lib.baomitu.com/lightgallery/1.6.11/css/lightgallery.min.css" rel="stylesheet">  
+      
+     <script src="https://vaughnn.github.io/js/vendor_gallery.min.js" async="" ></script>
+    
+  
+
+
+
+
+     </div>
+  </body>
+</html>
