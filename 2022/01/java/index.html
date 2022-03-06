@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="vaughn">
+  
+  
+  
+  <link rel="prev" href="https://vaughnn.github.io/2021/11/%E8%BF%90%E7%BB%B4/" />
+  <link rel="next" href="https://vaughnn.github.io/2022/02/java/" />
+  <link rel="canonical" href="https://vaughnn.github.io/2022/01/java/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="https://vaughnn.github.io/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://vaughnn.github.io/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://vaughnn.github.io/favicon-16x16.png">
+  <link rel="manifest" href="https://vaughnn.github.io/site.webmanifest">
+  <link rel="mask-icon" href="https://vaughnn.github.io/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           Java并发知识体系 | Vaughn
+       
+  </title>
+  <meta name="title" content="Java并发知识体系 | Vaughn">
+    
+  
+  <link rel="stylesheet" href="https://vaughnn.github.io/font/iconfont.css">
+  <link rel="stylesheet" href="https://vaughnn.github.io/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/vaughnn.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "Java并发知识体系",
+    "headline" : "Java并发知识体系",
+    "description" : "Java 并发相关知识体系详解，包含理论基础，线程基础，synchronized，volatile，final关键字, JUC框架等内容。 知识体系脑图",
+    "inLanguage" : "zh-cn",
+    "author" : "vaughn",
+    "creator" : "vaughn",
+    "publisher": "vaughn",
+    "accountablePerson" : "vaughn",
+    "copyrightHolder" : "vaughn",
+    "copyrightYear" : "2022",
+    "datePublished": "2022-01-18 10:32:44 \u002b0000 UTC",
+    "dateModified" : "2022-01-18 10:32:44 \u002b0000 UTC",
+    "url" : "https:\/\/vaughnn.github.io\/2022\/01\/java\/",
+    "wordCount" : "5443",
+    "keywords" : [ "Java并发知识体系", "Vaughn"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://vaughnn.github.io">Vaughn</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="https://vaughnn.github.io/posts/" title="">主页</a>
+                
+                <a class="menu-item" href="https://vaughnn.github.io/categories/" title="">分类</a>
+                
+                <a class="menu-item" href="https://vaughnn.github.io/tags/" title="">标签</a>
+                
+                <a class="menu-item" href="https://vaughnn.github.io/about/" title="关于">关于</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://vaughnn.github.io">Vaughn</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="https://vaughnn.github.io/posts/" title="">主页</a>
+                
+                <a class="menu-item" href="https://vaughnn.github.io/categories/" title="">分类</a>
+                
+                <a class="menu-item" href="https://vaughnn.github.io/tags/" title="">标签</a>
+                
+                <a class="menu-item" href="https://vaughnn.github.io/about/" title="关于">关于</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">Java并发知识体系</h1>
+        
+        <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title"></h2>
+    
+    <div class="post-toc-content always-active">
+        <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+</div>
+<script type="text/javascript">
+    window.onload = function () {
+        var fix = $('.post-toc');
+        var end = $('.post-comment');
+        var fixTop = fix.offset().top, fixHeight = fix.height();
+        var endTop, miss;
+        var offsetTop = fix[0].offsetTop;
+        $(window).scroll(function () {
+            var docTop = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
+            if (end.length > 0) {
+                endTop = end.offset().top;
+                miss = endTop - docTop - fixHeight;
+            }
+            if (fixTop < docTop) {
+                fix.css({ 'position': 'fixed' });
+                if ((end.length > 0) && (endTop < (docTop + fixHeight))) {
+                    fix.css({ top: miss });
+                } else {
+                    fix.css({ top: 0 });
+                }
+            } else {
+                fix.css({ 'position': 'absolute' });
+                fix.css({ top: offsetTop });
+            }
+        })
+    }
+</script>
+
+        
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://vaughnn.github.io" rel="author">vaughn</a>
+                <span class="post-time">
+                on <time>2022-01-18 10:32:44</time>
+                </span>
+                in
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://vaughnn.github.io/categories/java%E5%B9%B6%E5%8F%91%E7%9F%A5%E8%AF%86%E4%BD%93%E7%B3%BB/"> Java并发知识体系 </a>
+                        
+                </span>
+                
+                <div class="post-meta">
+                    <span id="busuanzi_container_page_pv">|<span id="busuanzi_value_page_pv"></span>
+                    <span class="post-date">共5443字</span>，阅读约
+                    <span class="more-meta"> 11 分钟</span>
+                </div>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+            
+        
+
+        
+        
+
+          
+          
+          
+
+          
+          
+          
+
+          <blockquote>
+<p>Java 并发相关知识体系详解，包含理论基础，线程基础，synchronized，volatile，final关键字, JUC框架等内容。</p>
+</blockquote>
+<p>知识体系脑图
+<img src="http://nasimobi-view.oss-cn-zhangjiakou.aliyuncs.com/articles/base_juc.png" alt=""></p>
+<h4 id="1-java-并发---知识体系">1. Java 并发 - 知识体系</h4>
+<h4 id="2-java-并发---理论基础">2. Java 并发 - 理论基础</h4>
+<h5 id="21-带着bat大厂的面试问题去理解">2.1 带着BAT大厂的面试问题去理解</h5>
+<blockquote>
+<p>常见互联网面试题中会出现如下问题，带着这些问题我们理解Java的并发理论基础</p>
+</blockquote>
+<ul>
+<li>多线程的出现是要解决什么问题的?</li>
+<li>线程不安全是指什么?举例说明</li>
+<li>并发出现线程不安全的本质什么? 可见性，原子性和有序性。 - Java是怎么解决并发问题的?</li>
+<li>3个关键字，JMM和8个Happens-Before</li>
+<li>线程安全是不是非真即假? 不是</li>
+<li>线程安全有哪些实现思路?</li>
+<li>如何理解并发和并行的区别?</li>
+</ul>
+<h5 id="22-为什么需要多线程">2.2 为什么需要多线程</h5>
+<blockquote>
+<p>众所周知，CPU、内存、I/O 设备的速度是有极大差异的，为了合理利用 CPU 的高性能，平衡这三者的速度差异，计算机体系结构、操作系统、编译程序都做出了贡献，主要体现为:</p>
+</blockquote>
+<ul>
+<li>CPU增加了缓存，以均衡与内存的速度差异；#导致<strong>可见性</strong>问题</li>
+<li>操作系统增加了进程、线程，以分时复用 CPU，进而均衡 CPU 与 I/O 设备的速度差异；#导致<strong>原子性</strong>问题</li>
+<li>编译程序优化指令执行次序，使得缓存能够得到更加合理地利用。#导致<strong>有序性</strong>问题</li>
+</ul>
+<h5 id="23-线程不安全示例">2.3 线程不安全示例</h5>
+<p>如果多个线程对同一个共享数据进行访问而不采取同步操作的话，那么操作的结果是不一致的。
+以下代码演示了 1000 个线程同时对 cnt 执行自增操作，操作结束之后它的值有可能小于 1000。</p>
+<pre tabindex="0"><code>public class ThreadUnsafeExample {
+
+    private int cnt = 0;
+
+    public void add() {
+        cnt++;
+    }
+
+    public int get() {
+        return cnt;
+    }
+}
+  
+public static void main(String[] args) throws InterruptedException {
+    final int threadSize = 1000;
+    ThreadUnsafeExample example = new ThreadUnsafeExample();
+    final CountDownLatch countDownLatch = new CountDownLatch(threadSize);
+    ExecutorService executorService = Executors.newCachedThreadPool();
+    for (int i = 0; i &lt; threadSize; i++) {
+        executorService.execute(() -&gt; {
+            example.add();
+            countDownLatch.countDown();
+        });
+    }
+    countDownLatch.await();
+    executorService.shutdown();
+    System.out.println(example.get());
+}
+
+996 // 结果总是小于1000
+
+</code></pre><h5 id="24-并发出现问题的根源-并发三要素">2.4 并发出现问题的根源: 并发三要素</h5>
+<h6 id="--可见性-cpu缓存引起">- 可见性: CPU缓存引起</h6>
+<p>可见性：一个线程对共享变量的修改，另外一个线程能够立刻看到。
+example:</p>
+<pre tabindex="0"><code>//线程1执行的代码
+int i = 0;
+i = 10;
+ 
+//线程2执行的代码
+j = i;
+</code></pre><p>假若执行线程1的是CPU1，执行线程2的是CPU2。由上面的分析可知，当线程1执行i=10这句时，会先把i的初始值加载到CPU1的高速缓存中，然后赋值为10，那么在CPU1的高速缓存当中i的值变为10了，却没有立即写入到主存当中。</p>
+<p>此时线程2执行 j=i，它会先去主存读取i的值并加载到CPU2的缓存当中，注意此时内存当中i的值还是0，那么就会使得j的值为0，而不是10.</p>
+<p>这就是可见性问题，线程1对变量i修改了之后，线程2没有立即看到线程1修改的值。</p>
+<h6 id="--原子性-分时复用引起">- 原子性: 分时复用引起</h6>
+<p>要么全部执行并且执行的过程不会被任何因素打断，要么就都不执行。</p>
+<p>经典的转账问题：比如从账户A向账户B转1000元，那么必然包括2个操作：从账户A减去1000元，往账户B加上1000元。 试想一下，如果这2个操作不具备原子性，会造成什么样的后果。假如从账户A减去1000元之后，操作突然中止。然后又从B取出了500元，取出500元之后，再执行 往账户B加上1000元 的操作。这样就会导致账户A虽然减去了1000元，但是账户B没有收到这个转过来的1000元。</p>
+<p>所以这2个操作必须要具备原子性才能保证不出现一些意外的问题。</p>
+<h6 id="--有序性-重排序引起">- 有序性: 重排序引起</h6>
+<p>有序性：即程序执行的顺序按照代码的先后顺序执行。举个简单的例子，看下面这段代码：</p>
+<pre tabindex="0"><code>int i = 0;              
+boolean flag = false;
+i = 1;                //语句1  
+flag = true;          //语句2
+</code></pre><p>上面代码定义了一个int型变量，定义了一个boolean类型变量，然后分别对两个变量进行赋值操作。从代码顺序上看，语句1是在语句2前面的，那么JVM在真正执行这段代码的时候会保证语句1一定会在语句2前面执行吗? 不一定，为什么呢? 这里可能会发生指令重排序（Instruction Reorder）。</p>
+<p>在执行程序时为了提高性能，编译器和处理器常常会对指令做重排序。重排序分三种类型：</p>
+<ul>
+<li>编译器优化的重排序。编译器在不改变单线程程序语义的前提下，可以重新安排语句的执行顺序。</li>
+<li>指令级并行的重排序。现代处理器采用了指令级并行技术（Instruction-Level Parallelism， ILP）来将多条指令重叠执行。如果不存在数据依赖性，处理器可以改变语句对应机器指令的执行顺序。</li>
+<li>内存系统的重排序。由于处理器使用缓存和读/写缓冲区，这使得加载和存储操作看上去可能是在乱序执行。</li>
+</ul>
+<p>从 java 源代码到最终实际执行的指令序列，会分别经历下面三种重排序：
+<img src="http://nasimobi-view.oss-cn-zhangjiakou.aliyuncs.com/articles/paixu.png" alt=""></p>
+<p>上述的 1 属于编译器重排序，2和3属于处理器重排序。这些重排序都可能会导致多线程程序出现内存可见性问题。对于编译器，JMM 的编译器重排序规则会禁止特定类型的编译器重排序（不是所有的编译器重排序都要禁止）。对于处理器重排序，JMM 的处理器重排序规则会要求java编译器在生成指令序列时，插入特定类型的内存屏障（memory barriers，intel 称之为 memory fence）指令，通过内存屏障指令来禁止特定类型的处理器重排序（不是所有的处理器重排序都要禁止）。</p>
+<h5 id="25-java是怎么解决并发问题的-jmmjava内存模型">2.5 JAVA是怎么解决并发问题的: JMM(Java内存模型)</h5>
+<p>Java 内存模型是个很复杂的规范，<a href="https://www.pdai.tech/md/java/jvm/java-jvm-jmm.html">参考</a></p>
+<h6 id="关键字-volatilesynchronized-和-final">关键字: volatile、synchronized 和 final</h6>
+<blockquote>
+<p>后续单独说这三个关键字</p>
+</blockquote>
+<h6 id="happens-before-原则">Happens-Before 原则</h6>
+<blockquote>
+<p>上面提到了可以用 volatile 和 synchronized 来保证有序性。除此之外，JVM 还规定了先行发生原则，让一个操作无需控制就能先于另一个操作完成。</p>
+</blockquote>
+<ul>
+<li>程序次序规则:一个线程内,按照代码顺序,书写在前面的操作先行发生于书写在后面的操作</li>
+<li>锁定规则:一个unLock操作先行发生于后面对同一个锁的lock操作</li>
+<li>volatile变量规则:对一个变量的写操作先行发生于后面对这个变量的读操作</li>
+<li>传递规则：如果操作A先行发生于操作B，而操作B又先行发生于操作C，则可以得出操作A先行发生于操作C</li>
+<li>线程启动规则：Thread对象的start()方法先行发生于此线程的每个一个动作</li>
+<li>线程中断规则：对线程interrupt()方法的调用先行发生于被中断线程的代码检测到中断事件的发生</li>
+<li>线程终结规则：线程中所有的操作都先行发生于线程的终止检测，我们可以通过Thread.join()方法结束、Thread.isAlive()的返回值手段检测到线程已经终止执行</li>
+<li>对象终结规则：一个对象的初始化完成先行发生于他的finalize()方法的开始</li>
+</ul>
+<h5 id="26-线程安全-不是一个非真即假的命题">2.6 线程安全: 不是一个非真即假的命题</h5>
+<p>一个类在可以被多个线程安全调用时就是线程安全的。</p>
+<p>线程安全不是一个非真即假的命题，可以将共享数据按照安全程度的强弱顺序分成以下五类: 不可变、绝对线程安全、相对线程安全、线程兼容和线程对立。</p>
+<h6 id="--不可变">- 不可变</h6>
+<p>不可变(Immutable)的对象一定是线程安全的，不需要再采取任何的线程安全保障措施。只要一个不可变的对象被正确地构建出来，永远也不会看到它在多个线程之中处于不一致的状态。</p>
+<p>多线程环境下，应当尽量使对象成为不可变，来满足线程安全。</p>
+<p>不可变的类型:</p>
+<ul>
+<li>final 关键字修饰的基本数据类型</li>
+<li>String 枚举类型</li>
+<li>Number 部分子类，如 Long 和 Double 等数值包装类型，BigInteger 和 BigDecimal 等大数据类型。但同为 Number 的原子类 AtomicInteger 和 AtomicLong 则是可变的。</li>
+<li>对于集合类型，可以使用Collections.unmodifiableXXX() 方法来获取一个不可变的集合。</li>
+</ul>
+<pre tabindex="0"><code>public class ImmutableExample {
+    public static void main(String[] args) {
+        Map&lt;String, Integer&gt; map = new HashMap&lt;&gt;();
+        Map&lt;String, Integer&gt; unmodifiableMap = Collections.unmodifiableMap(map);
+        unmodifiableMap.put(&quot;a&quot;, 1);
+    }
+}
+
+Exception in thread &quot;main&quot; java.lang.UnsupportedOperationException
+    at java.util.Collections$UnmodifiableMap.put(Collections.java:1457)
+    at ImmutableExample.main(ImmutableExample.java:9)
+    
+Collections.unmodifiableXXX() 先对原始的集合进行拷贝，需要对集合进行修改的方法都直接抛出异常。
+
+public V put(K key, V value) {
+    throw new UnsupportedOperationException();
+}
+</code></pre><h6 id="--绝对线程安全">- 绝对线程安全</h6>
+<p>不管运行时环境如何，调用者都不需要任何额外的同步措施。</p>
+<h6 id="--相对线程安全">- 相对线程安全</h6>
+<p>相对线程安全需要保证对这个对象单独的操作是线程安全的，在调用的时候不需要做额外的保障措施。但是对于一些特定顺序的连续调用，就可能需要在调用端使用额外的同步手段来保证调用的正确性。</p>
+<p>在 Java 语言中，大部分的线程安全类都属于这种类型，例如 Vector、HashTable、Collections的synchronizedCollection() 方法包装的集合等。</p>
+<p>对于下面的代码，如果删除元素的线程删除了 Vector 的一个元素，而获取元素的线程试图访问一个已经被删除的元素，那么就会抛出 ArrayIndexOutOfBoundsException。</p>
+<pre tabindex="0"><code>public class VectorUnsafeExample {
+    private static Vector&lt;Integer&gt; vector = new Vector&lt;&gt;();
+
+    public static void main(String[] args) {
+        while (true) {
+            for (int i = 0; i &lt; 100; i++) {
+                vector.add(i);
+            }
+            ExecutorService executorService = Executors.newCachedThreadPool();
+            executorService.execute(() -&gt; {
+                for (int i = 0; i &lt; vector.size(); i++) {
+                    vector.remove(i);
+                }
+            });
+            executorService.execute(() -&gt; {
+                for (int i = 0; i &lt; vector.size(); i++) {
+                    vector.get(i);
+                }
+            });
+            executorService.shutdown();
+        }
+    }
+}
+
+Exception in thread &quot;Thread-159738&quot; java.lang.ArrayIndexOutOfBoundsException: Array index out of range: 3
+    at java.util.Vector.remove(Vector.java:831)
+    at VectorUnsafeExample.lambda$main$0(VectorUnsafeExample.java:14)
+    at VectorUnsafeExample$$Lambda$1/713338599.run(Unknown Source)
+    at java.lang.Thread.run(Thread.java:745)
+
+如果要保证上面的代码能正确执行下去，就需要对删除元素和获取元素的代码进行同步。
+
+executorService.execute(() -&gt; {
+    synchronized (vector) {
+        for (int i = 0; i &lt; vector.size(); i++) {
+            vector.remove(i);
+        }
+    }
+});
+executorService.execute(() -&gt; {
+    synchronized (vector) {
+        for (int i = 0; i &lt; vector.size(); i++) {
+            vector.get(i);
+        }
+    }
+});
+  
+</code></pre><h6 id="--线程兼容">- 线程兼容</h6>
+<p>线程兼容是指对象本身并不是线程安全的，但是可以通过在调用端正确地使用同步手段来保证对象在并发环境中可以安全地使用，我们平常说一个类不是线程安全的，绝大多数时候指的是这一种情况。Java API 中大部分的类都是属于线程兼容的，如与前面的 Vector 和 HashTable 相对应的集合类 ArrayList 和 HashMap 等.</p>
+<h6 id="--线程对立">- 线程对立</h6>
+<p>线程对立是指无论调用端是否采取了同步措施，都无法在多线程环境中并发使用的代码。由于 Java 语言天生就具备多线程特性，线程对立这种排斥多线程的代码是很少出现的，而且通常都是有害的，应当尽量避免。</p>
+<h5 id="27-线程安全的实现方法">2.7 线程安全的实现方法</h5>
+<h6 id="--互斥同步">- 互斥同步</h6>
+<p>synchronized 和 ReentrantLock。</p>
+<h6 id="--非阻塞同步">- 非阻塞同步</h6>
+<p>互斥同步最主要的问题就是线程阻塞和唤醒所带来的性能问题，因此这种同步也称为阻塞同步。</p>
+<p>互斥同步属于一种悲观的并发策略，总是认为只要不去做正确的同步措施，那就肯定会出现问题。无论共享数据是否真的会出现竞争，它都要进行加锁(这里讨论的是概念模型，实际上虚拟机会优化掉很大一部分不必要的加锁)、用户态核心态转换、维护锁计数器和检查是否有被阻塞的线程需要唤醒等操作。</p>
+<ul>
+<li>CAS</li>
+</ul>
+<p>随着硬件指令集的发展，我们可以使用基于冲突检测的乐观并发策略: 先进行操作，如果没有其它线程争用共享数据，那操作就成功了，否则采取补偿措施(不断地重试，直到成功为止)。这种乐观的并发策略的许多实现都不需要将线程阻塞，因此这种同步操作称为非阻塞同步。</p>
+<p>乐观锁需要操作和冲突检测这两个步骤具备原子性，这里就不能再使用互斥同步来保证了，只能靠硬件来完成。硬件支持的原子性操作最典型的是: 比较并交换(Compare-and-Swap，CAS)。CAS 指令需要有 3 个操作数，分别是内存地址 V、旧的预期值 A 和新值 B。当执行操作时，只有当 V 的值等于 A，才将 V 的值更新为 B。</p>
+<ul>
+<li>AtomicInteger
+J.U.C 包里面的整数原子类 AtomicInteger，其中的 compareAndSet() 和 getAndIncrement() 等方法都使用了 Unsafe 类的 CAS 操作。 以下代码使用了 AtomicInteger 执行了自增的操作。</li>
+</ul>
+<pre tabindex="0"><code>private AtomicInteger cnt = new AtomicInteger();
+
+public void add() {
+    cnt.incrementAndGet();
+}
+</code></pre><p>以下代码是 incrementAndGet() 的源码，它调用了 unsafe 的 getAndAddInt() 。</p>
+<pre tabindex="0"><code>public final int incrementAndGet() {
+    return unsafe.getAndAddInt(this, valueOffset, 1) + 1;
+}
+</code></pre><p>以下代码是 getAndAddInt()源码，var1指示对象内存地址，var2指示该字段相对对象内存地址的偏移，var4指示操作需要加的数值，这里为1。通过getIntVolatile(var1, var2) 得到旧的预期值，通过调用 compareAndSwapInt()来进行CAS比较，如果该字段内存地址中的值等于var5，那么就更新内存地址为 var1+var2的变量为var5+var4。</p>
+<p>可以看到 getAndAddInt()在一个循环中进行，发生冲突的做法是不断的进行重试。</p>
+<pre tabindex="0"><code>public final int getAndAddInt(Object var1, long var2, int var4) {
+    int var5;
+    do {
+        var5 = this.getIntVolatile(var1, var2);
+    } while(!this.compareAndSwapInt(var1, var2, var5, var5 + var4));
+
+    return var5;
+}
+
+</code></pre><ul>
+<li>ABA
+如果一个变量初次读取的时候是 A 值，它的值被改成了 B，后来又被改回为 A，那 CAS 操作就会误认为它从来没有被改变过。
+J.U.C 包提供了一个带有标记的原子引用类 AtomicStampedReference 来解决这个问题，它可以通过控制变量值的版本来保证 CAS 的正确性。大部分情况下 ABA 问题不会影响程序并发的正确性，如果需要解决 ABA 问题，改用传统的互斥同步可能会比原子类更高效。
+CAS, Unsafe和原子类详细分析后面单独出一篇详解</li>
+</ul>
+<h6 id="--无同步方案">- 无同步方案</h6>
+<p>要保证线程安全，并不是一定就要进行同步。如果一个方法本来就不涉及共享数据，那它自然就无须任何同步措施去保证正确性。</p>
+<p><strong>栈封闭</strong>
+多个线程访问同一个方法的局部变量时，不会出现线程安全问题，因为局部变量存储在虚拟机栈中，属于线程私有的。</p>
+<pre tabindex="0"><code>import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+public class StackClosedExample {
+    public void add() {
+        int cnt = 0;
+        for (int i = 0; i &lt; 100; i++) {
+            cnt++;
+        }
+        System.out.println(cnt);
+    }
+}
+
+
+public static void main(String[] args) {
+    StackClosedExample example = new StackClosedExample();
+    ExecutorService executorService = Executors.newCachedThreadPool();
+    executorService.execute(() -&gt; example.add());
+    executorService.execute(() -&gt; example.add());
+    executorService.shutdown();
+}
+100
+100
+</code></pre><p><strong>线程本地存储</strong>(Thread Local Storage)</p>
+<p>如果一段代码中所需要的数据必须与其他代码共享，那就看看这些共享数据的代码是否能保证在同一个线程中执行。如果能保证，我们就可以把共享数据的可见范围限制在同一个线程之内，这样，无须同步也能保证线程之间不出现数据争用的问题。</p>
+<p>符合这种特点的应用并不少见，大部分使用消费队列的架构模式(如“生产者-消费者”模式)都会将产品的消费过程尽量在一个线程中消费完。其中最重要的一个应用实例就是经典 Web 交互模型中的“一个请求对应一个服务器线程”(Thread-per-Request)的处理方式，这种处理方式的广泛应用使得很多 Web 服务端应用都可以使用线程本地存储来解决线程安全问题。</p>
+<p>可以使用 java.lang.ThreadLocal类来实现线程本地存储功能。</p>
+<p>ThreadLocal 从理论上讲并不是用来解决多线程并发问题的，因为根本不存在多线程竞争。</p>
+<p>在一些场景 (尤其是使用线程池) 下，由于 ThreadLocal.ThreadLocalMap 的底层数据结构导致 ThreadLocal 有内存泄漏的情况，应该尽可能在每次使用 ThreadLocal 后手动调用 remove()，以避免出现 ThreadLocal 经典的内存泄漏甚至是造成自身业务混乱的风险。</p>
+<p><strong>可重入代码(Reentrant Code)</strong>
+这种代码也叫做纯代码(Pure Code)，可以在代码执行的任何时刻中断它，转而去执行另外一段代码(包括递归调用它本身)，而在控制权返回后，原来的程序不会出现任何错误。 可重入代码有一些共同的特征，例如不依赖存储在堆上的数据和公用的系统资源、用到的状态量都由参数中传入、不调用非可重入的方法等。</p>
+
+    </div>
+
+    <div class="post-copyright">
+            
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>vaughn </span>
+                </p>
+            
+
+            
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://vaughnn.github.io/2022/01/java/>https://vaughnn.github.io/2022/01/java/</span>
+            </p>
+            
+            
+            <p class="copyright-item lincese">
+                How far are you from me,O Fruit? I am hidden in your heart,O Flower.
+            </p>
+            
+    </div>
+
+
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s):
+            
+            <span class="tag"><a href="https://vaughnn.github.io/tags/java%E5%B9%B6%E5%8F%91%E7%9F%A5%E8%AF%86%E4%BD%93%E7%B3%BB/">
+                    #Java并发知识体系</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> ·
+                <span><a href="https://vaughnn.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://vaughnn.github.io/2021/11/%E8%BF%90%E7%BB%B4/" class="prev" rel="prev" title="Linux服务器日常巡检脚本"><i class="iconfont icon-left"></i>&nbsp;Linux服务器日常巡检脚本</a>
+        
+        
+        <a href="https://vaughnn.github.io/2022/02/java/" class="next" rel="next" title="Java内存模型">Java内存模型&nbsp;<i class="iconfont icon-right"></i></a>
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+        
+<div id="gitalk-container"></div>
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<script>
+    const gitalk = new Gitalk({
+        clientID: 'c5728414aa682c1e3857',
+        clientSecret: '8c906f0037f05cb689be4eefe1cf83c49fd3863a',
+        repo: 'vaughnn.github.io',
+        owner: 'vaughnn',
+        admin: ['vaughnn'],
+        id: location.pathname, 
+        distractionFreeMode: false 
+    });
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) !== -1) {
+            document.getElementById('gitalk-container').innerHTML = 'Gitalk comments not available by default when the website is previewed locally.';
+            return;
+        }
+        gitalk.render('gitalk-container');
+    })();
+</script>
+
+
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2016 - 2022</span>
+        
+
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://vaughnn.github.io">vaughn</a> | </span>
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span>
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+     <link href="//lib.baomitu.com/lightgallery/1.6.11/css/lightgallery.min.css" rel="stylesheet">  
+      
+     <script src="https://vaughnn.github.io/js/vendor_gallery.min.js" async="" ></script>
+    
+  
+
+
+
+
+     </div>
+  </body>
+</html>

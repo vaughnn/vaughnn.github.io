@@ -26,6 +26,15 @@
     </item>
     
     <item>
+      <title>Java并发知识体系</title>
+      <link>https://vaughnn.github.io/2022/01/java/</link>
+      <pubDate>Tue, 18 Jan 2022 10:32:44 +0000</pubDate>
+      
+      <guid>https://vaughnn.github.io/2022/01/java/</guid>
+      <description>Java 并发相关知识体系详解，包含理论基础，线程基础，synchronized，volatile，final关键字, JUC框架等内容。 知识体系脑图</description>
+    </item>
+    
+    <item>
       <title>Linux服务器日常巡检脚本</title>
       <link>https://vaughnn.github.io/2021/11/%E8%BF%90%E7%BB%B4/</link>
       <pubDate>Mon, 15 Nov 2021 09:19:14 +0000</pubDate>
