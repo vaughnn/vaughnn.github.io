@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noodp"/>
+  <meta name="author" content="vaughn">
+  
+  
+  
+  <link rel="prev" href="https://vaughnn.github.io/2022/03/git/" />
+  
+  <link rel="canonical" href="https://vaughnn.github.io/2022/05/java/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="https://vaughnn.github.io/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://vaughnn.github.io/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://vaughnn.github.io/favicon-16x16.png">
+  <link rel="manifest" href="https://vaughnn.github.io/site.webmanifest">
+  <link rel="mask-icon" href="https://vaughnn.github.io/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <title>
+       
+       
+           Java文件读写 | Vaughn
+       
+  </title>
+  <meta name="title" content="Java文件读写 | Vaughn">
+    
+  
+  <link rel="stylesheet" href="https://vaughnn.github.io/font/iconfont.css">
+  <link rel="stylesheet" href="https://vaughnn.github.io/css/main.min.css">
+
+
+  
+  
+ 
+
+<script type="application/ld+json">
+ "@context" : "http://schema.org",
+    "@type" : "BlogPosting",
+    "mainEntityOfPage": {
+         "@type": "WebPage",
+         "@id": "https:\/\/vaughnn.github.io"
+    },
+    "articleSection" : "posts",
+    "name" : "Java文件读写",
+    "headline" : "Java文件读写",
+    "description" : "1. 字节流和字符流选择 字节流：字节流读取的时候，读到一个字节就返回一个字节； 主要用于读取图片，MP3，AVI视频文件。 字符流：字符流使用了字节",
+    "inLanguage" : "zh-cn",
+    "author" : "vaughn",
+    "creator" : "vaughn",
+    "publisher": "vaughn",
+    "accountablePerson" : "vaughn",
+    "copyrightHolder" : "vaughn",
+    "copyrightYear" : "2022",
+    "datePublished": "2022-05-31 10:35:44 \u002b0000 UTC",
+    "dateModified" : "2022-05-31 10:35:44 \u002b0000 UTC",
+    "url" : "https:\/\/vaughnn.github.io\/2022\/05\/java\/",
+    "wordCount" : "1384",
+    "keywords" : [ "Java文件读写", "Vaughn"]
+}
+</script>
+
+</head>
+
+  
+
+
+  <body class="">
+    <div class="wrapper">
+        <nav class="navbar">
+    <div class="container">
+        <div class="navbar-header header-logo">
+        	<a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://vaughnn.github.io">Vaughn</a>
+        </div>
+        <div class="menu navbar-right">
+                
+                
+                <a class="menu-item" href="https://vaughnn.github.io/posts/" title="">主页</a>
+                
+                <a class="menu-item" href="https://vaughnn.github.io/categories/" title="">分类</a>
+                
+                <a class="menu-item" href="https://vaughnn.github.io/tags/" title="">标签</a>
+                
+                <a class="menu-item" href="https://vaughnn.github.io/about/" title="关于">关于</a>
+                
+        </div>
+    </div>
+</nav>
+<nav class="navbar-mobile" id="nav-mobile" style="display: none">
+     <div class="container">
+        <div class="navbar-header">
+            <div>  <a href="javascript:void(0);" class="theme-switch"><i class="iconfont icon-xihuan"></i></a>&nbsp;<a href="https://vaughnn.github.io">Vaughn</a></div>
+            <div class="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+     
+          <div class="menu" id="mobile-menu">
+                
+                
+                <a class="menu-item" href="https://vaughnn.github.io/posts/" title="">主页</a>
+                
+                <a class="menu-item" href="https://vaughnn.github.io/categories/" title="">分类</a>
+                
+                <a class="menu-item" href="https://vaughnn.github.io/tags/" title="">标签</a>
+                
+                <a class="menu-item" href="https://vaughnn.github.io/about/" title="关于">关于</a>
+                
+        </div>
+    </div>
+</nav>
+    	 <main class="main">
+          <div class="container">
+      		
+<article class="post-warp" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">Java文件读写</h1>
+        
+        <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title"></h2>
+    
+    <div class="post-toc-content always-active">
+        <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+</div>
+<script type="text/javascript">
+    window.onload = function () {
+        var fix = $('.post-toc');
+        var end = $('.post-comment');
+        var fixTop = fix.offset().top, fixHeight = fix.height();
+        var endTop, miss;
+        var offsetTop = fix[0].offsetTop;
+        $(window).scroll(function () {
+            var docTop = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
+            if (end.length > 0) {
+                endTop = end.offset().top;
+                miss = endTop - docTop - fixHeight;
+            }
+            if (fixTop < docTop) {
+                fix.css({ 'position': 'fixed' });
+                if ((end.length > 0) && (endTop < (docTop + fixHeight))) {
+                    fix.css({ top: miss });
+                } else {
+                    fix.css({ top: 0 });
+                }
+            } else {
+                fix.css({ 'position': 'absolute' });
+                fix.css({ top: offsetTop });
+            }
+        })
+    }
+</script>
+
+        
+        <div class="post-meta">
+                Written by <a itemprop="name" href="https://vaughnn.github.io" rel="author">vaughn</a>
+                <span class="post-time">
+                on <time>2022-05-31 10:35:44</time>
+                </span>
+                in
+                <i class="iconfont icon-folder"></i>
+                <span class="post-category">
+                        <a href="https://vaughnn.github.io/categories/java%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99/"> Java文件读写 </a>
+                        
+                </span>
+                
+                <div class="post-meta">
+                    <span id="busuanzi_container_page_pv">|<span id="busuanzi_value_page_pv"></span>
+                    <span class="post-date">共1384字</span>，阅读约
+                    <span class="more-meta"> 3 分钟</span>
+                </div>
+        </div>
+    </header>
+    <div class="post-content">
+        
+
+        
+
+        
+        
+
+          
+          
+          
+
+          
+          
+          
+
+          <h4 id="1-字节流和字符流选择">1. 字节流和字符流选择</h4>
+<blockquote>
+<p>字节流：字节流读取的时候，读到一个字节就返回一个字节；  主要用于读取图片，MP3，AVI视频文件。</p>
+</blockquote>
+<blockquote>
+<p>字符流：字符流使用了字节流读到一个或多个字节，如读取中文时，就会一次读取2个字节。只要是处理纯文本数据，就要优先考虑使用字符流。</p>
+</blockquote>
+<h4 id="2-处理流和节点流">2. 处理流和节点流</h4>
+<h5 id="21-节点流">2.1 节点流：</h5>
+<blockquote>
+<p>和操作系统紧密连接的流。该层的与文件输入输出的操作都比较原始，没有进过优化，功能比较单一。
+（FileReader，FileWriter和FileInputStream，FileOutStream都是输入节点流。）</p>
+</blockquote>
+<h5 id="22-处理流">2.2 处理流：</h5>
+<blockquote>
+<p>该层流是对节点流的封装，对节点流中进行优化，加入缓冲器，提供更加丰富的API等。我们一般都使用处理流，在创建处理流对象的时候一般都需要节点流对象作为其构造参数。
+（BufferedInPutStream，BufferedOutPutStream和BufferedWriter，BufferedReader）</p>
+</blockquote>
+<h4 id="3-文件读取">3. 文件读取</h4>
+<h5 id="31-节点流fileinputstream读取字节流">3.1 节点流FileInputStream读取字节流</h5>
+<pre tabindex="0"><code>
+public static void readFileByBytes(String fileName) {  
+    // 一般先创建file对象  
+    FileInputStream fileInput = null;  
+    try {  
+        File file = new File(fileName);  
+        if (!file.exists()) {  
+            file.createNewFile();  
+        }  
+        byte[] buffer = new byte[1024];  
+        fileInput = new FileInputStream(file);  
+        int byteread = 0;  
+        // byteread表示一次读取到buffers中的数量。  
+        while ((byteread = fileInput.read(buffer)) != -1) {  
+            System.out.write(buffer, 0, byteread);  
+        }  
+  
+    } catch (Exception e) {  
+        // TODO: handle exception  
+    } finally {
+        try {  
+            if (fileInput != null) {  
+                fileInput.close();  
+            }  
+        } catch (IOException e) {  
+            // TODO Auto-generated catch block  
+            e.printStackTrace();  
+        }  
+  
+    }
+}
+</code></pre><h5 id="32-节点流filereader读取字符流">3.2 节点流FileReader读取字符流</h5>
+<pre tabindex="0"><code>public static void readFileByChars(String fileName) {  
+        FileReader reader = null;  
+        try {  
+            File file = new File(fileName);  
+            if (!file.exists()) {  
+                file.createNewFile();  
+            }  
+            reader = new FileReader(file);  
+            char[] buffer = new char[1024];  
+            int charread = 0;  
+            while ((charread = reader.read(buffer)) != -1) {  
+                System.out.print(buffer);  
+            }  
+        } catch (IOException e) {  
+            // TODO: handle exception  
+  
+        } finally {  
+  
+            try {  
+                if (reader != null) {  
+                    reader.close();  
+                }  
+            } catch (IOException e) {  
+                // TODO Auto-generated catch block  
+                e.printStackTrace();  
+            }  
+        }  
+  
+    }  
+</code></pre><h5 id="33-文件的读取通过bufferedreader读取数据">3.3 文件的读取通过BufferedReader读取数据</h5>
+<pre tabindex="0"><code>public static void readByBufferedReader(String fileName) {  
+        try {  
+            File file = new File(fileName);  
+            // 读取文件，并且以utf-8的形式写出去  
+            BufferedReader bufread;  
+            String read;  
+            //new InputStreamReader(file) 也可以
+            FileReader reader = new FileReader(file);
+            bufread = new BufferedReader(reader);  
+            while ((read = bufread.readLine()) != null) {  
+                System.out.println(read);  
+            }  
+            bufread.close();  
+        } catch (FileNotFoundException ex) {  
+            ex.printStackTrace();  
+        } catch (IOException ex) {  
+            ex.printStackTrace();  
+        }  
+    }  
+</code></pre><h4 id="4-文件写入">4. 文件写入</h4>
+<h5 id="41-字节流fileoutputstream">4.1 字节流FileOutputStream</h5>
+<pre tabindex="0"><code>public void writeByFileOutputStream() {  
+  
+        FileOutputStream fop = null;  
+        File file;  
+        String content = &quot;This is the text content&quot;;  
+        try {  
+            file = new File(&quot;c:/newfile.txt&quot;);  
+            fop = new FileOutputStream(file);  
+            // if file doesnt exists, then create it  
+            if (!file.exists()) {  
+                file.createNewFile();  
+            }  
+            // get the content in bytes  
+            byte[] contentInBytes = content.getBytes();  
+  
+            fop.write(contentInBytes);  
+            fop.flush();  
+            fop.close();  
+  
+        } catch (IOException e) {  
+            e.printStackTrace();  
+        } finally {  
+            try {  
+                if (fop != null) {  
+                    fop.close();  
+                }  
+            } catch (IOException e) {  
+                e.printStackTrace();  
+            }  
+        }  
+    }  
+</code></pre><h5 id="42-向文件中写数据filereader注意使用filereaderpathtrue可以往文件后面追加内容否则就直接覆盖了">4.2 向文件中写数据（FileReader）【注意使用FileReader（“path”，true）可以往文件后面追加内容，否则就直接覆盖了】</h5>
+<pre tabindex="0"><code>public static void writeByFileReader() {  
+        try {  
+            String data = &quot; This content will append to the end of the file&quot;;  
+  
+            File file = new File(&quot;javaio-appendfile.txt&quot;);  
+            // if file doesnt exists, then create it  
+            if (!file.exists()) {  
+                file.createNewFile();  
+            }  
+  
+            // true = append file  
+            FileWriter fileWritter = new FileWriter(file.getName(), true);  
+            fileWritter.write(data);  
+            fileWritter.close();  
+  
+        } catch (IOException e) {  
+            e.printStackTrace();  
+        }  
+    }  
+</code></pre><h5 id="43-采用bufferedwriter向文件中写数据">4.3 采用BufferedWriter向文件中写数据</h5>
+<pre tabindex="0"><code>public static void writeByBufferedReader() {  
+        try {  
+            String content = &quot;This is the content to write into file&quot;;  
+            File file = new File(&quot;/users/mkyong/filename.txt&quot;);  
+            // if file doesnt exists, then create it  
+            if (!file.exists()) {  
+                file.createNewFile();  
+            }  
+            FileWriter fw = new FileWriter(file, true);  
+            BufferedWriter bw = new BufferedWriter(fw);  
+            bw.write(content);  
+            bw.flush();  
+            bw.close();  
+  
+        } catch (IOException e) {  
+            e.printStackTrace();  
+        }  
+    }  
+</code></pre><h4 id="5-总结">5. 总结</h4>
+<p>一般使用io来操作文件比较多一些，一般都喜欢用BufferedReader和BufferedWriter，使用它们的一般流程是，先创建File对象（可以对路径和文件进行更多的操作），然后通过File对象创建FileReader（FileWriter）【当然在这里也可以通过创建InputStreamReader（new InputStream）来获取reader对象，看个人爱好】，然后通过FileReader（FileWriter）获得BufferedReader（BufferedWriter）对象。对于读入文件，还可以使用Scanner对读取的文件进行操作，这个比较方便，Scanner也是处理流，因此也是需要节点流作为其参数的。</p>
+
+    </div>
+
+    <div class="post-copyright">
+            
+            <p class="copyright-item">
+                <span>Author:</span>
+                <span>vaughn </span>
+                </p>
+            
+
+            
+            <p class="copyright-item">
+                    <span>Link:</span>
+                    <a href=https://vaughnn.github.io/2022/05/java/>https://vaughnn.github.io/2022/05/java/</span>
+            </p>
+            
+            
+            <p class="copyright-item lincese">
+                How far are you from me,O Fruit? I am hidden in your heart,O Flower.
+            </p>
+            
+    </div>
+
+
+    <div class="post-tags">
+        
+            <section>
+            <i class="iconfont icon-tag"></i>Tag(s):
+            
+            <span class="tag"><a href="https://vaughnn.github.io/tags/java%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99/">
+                    #Java文件读写</a></span>
+            
+            </section>
+        
+        <section>
+                <a href="javascript:window.history.back();">back</a></span> ·
+                <span><a href="https://vaughnn.github.io">home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+        
+        <a href="https://vaughnn.github.io/2022/03/git/" class="prev" rel="prev" title="Git详解(常用命令)"><i class="iconfont icon-left"></i>&nbsp;Git详解(常用命令)</a>
+        
+        
+    </div>
+
+    <div class="post-comment">
+          
+                 
+          
+        
+<div id="gitalk-container"></div>
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<script>
+    const gitalk = new Gitalk({
+        clientID: 'c5728414aa682c1e3857',
+        clientSecret: '8c906f0037f05cb689be4eefe1cf83c49fd3863a',
+        repo: 'vaughnn.github.io',
+        owner: 'vaughnn',
+        admin: ['vaughnn'],
+        id: location.pathname, 
+        distractionFreeMode: false 
+    });
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) !== -1) {
+            document.getElementById('gitalk-container').innerHTML = 'Gitalk comments not available by default when the website is previewed locally.';
+            return;
+        }
+        gitalk.render('gitalk-container');
+    })();
+</script>
+
+
+    </div>
+</article>
+          </div>
+		   </main>
+      <footer class="footer">
+    <div class="copyright">
+        &copy;
+        
+        <span itemprop="copyrightYear">2016 - 2022</span>
+        
+
+         
+            <span class="author" itemprop="copyrightHolder"><a href="https://vaughnn.github.io">vaughn</a> | </span>
+         
+
+         
+		  <span>Powered by <a href="https://gohugo.io/" target="_blank" rel="external nofollow">Hugo</a> & <a href="https://github.com/liuzc/leaveit" target="_blank" rel="external nofollow">LeaveIt</a></span>
+    </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    <script src="https://vaughnn.github.io/js/vendor_no_gallery.min.js" async=""></script>
+    
+  
+
+
+
+
+     </div>
+  </body>
+</html>

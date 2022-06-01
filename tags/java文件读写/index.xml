@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Java文件读写 on Vaughn</title>
+    <link>https://vaughnn.github.io/tags/java%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99/</link>
+    <description>Recent content in Java文件读写 on Vaughn</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 31 May 2022 10:35:44 +0000</lastBuildDate><atom:link href="https://vaughnn.github.io/tags/java%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Java文件读写</title>
+      <link>https://vaughnn.github.io/2022/05/java/</link>
+      <pubDate>Tue, 31 May 2022 10:35:44 +0000</pubDate>
+      
+      <guid>https://vaughnn.github.io/2022/05/java/</guid>
+      <description>1. 字节流和字符流选择 字节流：字节流读取的时候，读到一个字节就返回一个字节； 主要用于读取图片，MP3，AVI视频文件。 字符流：字符流使用了字节</description>
+    </item>
+    
+  </channel>
+</rss>
