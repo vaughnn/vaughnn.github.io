@@ -7,8 +7,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/vaughnn.github.io/img/fluid.png">
-  <link rel="icon" href="/vaughnn.github.io/img/fluid.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
@@ -19,18 +19,18 @@
     <meta name="description" content="Java反射机制是在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法；对于任意一个对象，都能够调用它的任意一个方法和属性；这种动态获取的信息以及动态调用对象的法的功能称为java语言的反射机制。  反射机制：具有操作字节码文件的能力  java.lang.Class ：保留一个类的全部信息 java.util.reflect.Constructor：保存了一个类当中的构造方法的所有信息">
 <meta property="og:type" content="article">
 <meta property="og:title" content="jdk动态代理，cglib">
-<meta property="og:url" content="https://vaughnn/vaughnn.github.io/posts/6bee818d/index.html">
+<meta property="og:url" content="https://vaughnn.github.io/posts/6bee818d/index.html">
 <meta property="og:site_name" content="Vaughnn">
 <meta property="og:description" content="Java反射机制是在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法；对于任意一个对象，都能够调用它的任意一个方法和属性；这种动态获取的信息以及动态调用对象的法的功能称为java语言的反射机制。  反射机制：具有操作字节码文件的能力  java.lang.Class ：保留一个类的全部信息 java.util.reflect.Constructor：保存了一个类当中的构造方法的所有信息">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://vaughnn/vaughnn.github.io/img/fangzi-he.jpg">
+<meta property="og:image" content="https://vaughnn.github.io/img/fangzi-he.jpg">
 <meta property="article:published_time" content="2023-01-11T16:01:00.000Z">
 <meta property="article:modified_time" content="2024-02-10T05:38:08.860Z">
 <meta property="article:author" content="Vaughnn">
 <meta property="article:tag" content="Java">
 <meta property="article:tag" content="代理">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://vaughnn/vaughnn.github.io/img/fangzi-he.jpg">
+<meta name="twitter:image" content="https://vaughnn.github.io/img/fangzi-he.jpg">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -60,12 +60,12 @@
 <link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
 
 
-<link  rel="stylesheet" href="/vaughnn.github.io/css/main.css" />
+<link  rel="stylesheet" href="/css/main.css" />
 
 
-  <link id="highlight-css" rel="stylesheet" href="/vaughnn.github.io/css/highlight.css" />
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
   
-    <link id="highlight-css-dark" rel="stylesheet" href="/vaughnn.github.io/css/highlight-dark.css" />
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
   
 
 
@@ -74,15 +74,15 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"vaughnn","root":"/vaughnn.github.io/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"","loop":false,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/vaughnn.github.io/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"vaughnn.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"","loop":false,"scope":["home"]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
       Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
     }
   </script>
-  <script  src="/vaughnn.github.io/js/utils.js" ></script>
-  <script  src="/vaughnn.github.io/js/color-schema.js" ></script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
   
 
 
@@ -99,7 +99,7 @@
 <div class="header-inner" style="height: 70vh;">
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
-    <a class="navbar-brand" href="/vaughnn.github.io/">
+    <a class="navbar-brand" href="/">
       <strong>Vaughnn</strong>
     </a>
 
@@ -118,7 +118,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/vaughnn.github.io/" target="_self">
+              <a class="nav-link" href="/" target="_self">
                 <i class="iconfont icon-home-fill"></i>
                 <span>首页</span>
               </a>
@@ -130,7 +130,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/vaughnn.github.io/archives/" target="_self">
+              <a class="nav-link" href="/archives/" target="_self">
                 <i class="iconfont icon-archive-fill"></i>
                 <span>归档</span>
               </a>
@@ -142,7 +142,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/vaughnn.github.io/categories/" target="_self">
+              <a class="nav-link" href="/categories/" target="_self">
                 <i class="iconfont icon-category-fill"></i>
                 <span>分类</span>
               </a>
@@ -154,7 +154,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/vaughnn.github.io/tags/" target="_self">
+              <a class="nav-link" href="/tags/" target="_self">
                 <i class="iconfont icon-tags-fill"></i>
                 <span>标签</span>
               </a>
@@ -166,7 +166,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/vaughnn.github.io/about/" target="_self">
+              <a class="nav-link" href="/about/" target="_self">
                 <i class="iconfont icon-user-fill"></i>
                 <span>关于</span>
               </a>
@@ -196,7 +196,7 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/vaughnn.github.io/img/default.png') no-repeat center center; background-size: cover;">
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
@@ -361,7 +361,7 @@
     
       <span class="category-chain">
         
-  <a href="/vaughnn.github.io/categories/%E7%A8%8B%E5%BA%8F%E4%BA%BA%E7%94%9F/" class="category-chain-item">程序人生</a>
+  <a href="/categories/%E7%A8%8B%E5%BA%8F%E4%BA%BA%E7%94%9F/" class="category-chain-item">程序人生</a>
   
   
 
@@ -376,9 +376,9 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/vaughnn.github.io/tags/Java/" class="print-no-link">#Java</a>
+        <a href="/tags/Java/" class="print-no-link">#Java</a>
       
-        <a href="/vaughnn.github.io/tags/%E4%BB%A3%E7%90%86/" class="print-no-link">#代理</a>
+        <a href="/tags/%E4%BB%A3%E7%90%86/" class="print-no-link">#代理</a>
       
     </div>
   
@@ -391,7 +391,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>jdk动态代理，cglib</div>
-      <div>https://vaughnn/vaughnn.github.io/posts/6bee818d/</div>
+      <div>https://vaughnn.github.io/posts/6bee818d/</div>
     </div>
     <div class="license-meta">
       
@@ -444,7 +444,7 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/vaughnn.github.io/posts/34b8fc37/" title="基于spring的Redis Sentinel读写分离Slave连接池">
+                      <a href="/posts/34b8fc37/" title="基于spring的Redis Sentinel读写分离Slave连接池">
                         <span class="hidden-mobile">基于spring的Redis Sentinel读写分离Slave连接池</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
@@ -598,15 +598,15 @@
 
 <script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
 <script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
-<script  src="/vaughnn.github.io/js/events.js" ></script>
-<script  src="/vaughnn.github.io/js/plugins.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
 
 
 
 
 
   
-    <script  src="/vaughnn.github.io/js/img-lazyload.js" ></script>
+    <script  src="/js/img-lazyload.js" ></script>
   
 
 
@@ -705,7 +705,7 @@
 
   <script>Fluid.plugins.imageCaption();</script>
 
-  <script  src="/vaughnn.github.io/js/local-search.js" ></script>
+  <script  src="/js/local-search.js" ></script>
 
   <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
@@ -715,7 +715,7 @@
 
 <!-- 主题的启动项，将它保持在最底部 -->
 <!-- the boot of the theme, keep it at the bottom -->
-<script  src="/vaughnn.github.io/js/boot.js" ></script>
+<script  src="/js/boot.js" ></script>
 
 
   
