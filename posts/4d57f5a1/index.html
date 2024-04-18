@@ -16,26 +16,27 @@
   <meta name="author" content="vaughnn">
   <meta name="keywords" content="">
   
-    <meta name="description" content="上周预约了周六保养车，典型i人，起来早，趁人少，八点四十就到4s店了，罕见的开车没有听歌，路上脑子里一直冒出两个字，“感恩”。   不知道如何描述这两个字，我们感恩老师，感恩父母，感恩生活，又或者我们感恩一只猫，一直狗，一件物品，一个蓝牙音箱，又或者感恩某个时刻灵光一现的思绪，在某个特定的场景下，它们给我们的生活上，情绪上，思想上带了变化，所以我们感恩它们。可能它们中有一些没有生命，没有思想，又">
+    <meta name="description" content="背景 一次解析域名后，只有带www的能访问，不带直接访问域名竟然访问不通，一直以为是自己nginx配置错误问题，升级版本，降低版本重新使用已有正确的访问，发现都不正确，前后折腾了快两个小时，这对经验丰富的我来讲有点不可思议，静下心来，重新捋了一遍头绪，最后发现解析时候没有假如@解析。于是重温DNS解析过程，有了这篇文章   借助某云的一个图，在这需要添加@解析，才能使用不带www或者其他一级域名的">
 <meta property="og:type" content="article">
-<meta property="og:title" content="碎碎念">
-<meta property="og:url" content="https://vaughnn.github.io/posts/f3404829/index.html">
+<meta property="og:title" content="DNS解析中@与www访问">
+<meta property="og:url" content="https://vaughnn.github.io/posts/4d57f5a1/index.html">
 <meta property="og:site_name" content="Vaughnn">
-<meta property="og:description" content="上周预约了周六保养车，典型i人，起来早，趁人少，八点四十就到4s店了，罕见的开车没有听歌，路上脑子里一直冒出两个字，“感恩”。   不知道如何描述这两个字，我们感恩老师，感恩父母，感恩生活，又或者我们感恩一只猫，一直狗，一件物品，一个蓝牙音箱，又或者感恩某个时刻灵光一现的思绪，在某个特定的场景下，它们给我们的生活上，情绪上，思想上带了变化，所以我们感恩它们。可能它们中有一些没有生命，没有思想，又">
+<meta property="og:description" content="背景 一次解析域名后，只有带www的能访问，不带直接访问域名竟然访问不通，一直以为是自己nginx配置错误问题，升级版本，降低版本重新使用已有正确的访问，发现都不正确，前后折腾了快两个小时，这对经验丰富的我来讲有点不可思议，静下心来，重新捋了一遍头绪，最后发现解析时候没有假如@解析。于是重温DNS解析过程，有了这篇文章   借助某云的一个图，在这需要添加@解析，才能使用不带www或者其他一级域名的">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://vaughnn.github.io/img/fengjing/jiguang.jpg">
-<meta property="article:published_time" content="2024-03-16T01:21:58.000Z">
-<meta property="article:modified_time" content="2024-03-19T01:18:46.619Z">
+<meta property="og:image" content="https://vaughnn.github.io/img/zhuanjiao.jpg">
+<meta property="article:published_time" content="2024-04-18T13:21:35.000Z">
+<meta property="article:modified_time" content="2024-04-18T13:34:33.612Z">
 <meta property="article:author" content="vaughnn">
-<meta property="article:tag" content="碎碎念">
+<meta property="article:tag" content="DNS">
+<meta property="article:tag" content="域名">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://vaughnn.github.io/img/fengjing/jiguang.jpg">
+<meta name="twitter:image" content="https://vaughnn.github.io/img/zhuanjiao.jpg">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>碎碎念 - Vaughnn</title>
+  <title>DNS解析中@与www访问 - Vaughnn</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -195,13 +196,13 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/img/fengjing/jiguang.jpg') no-repeat center center; background-size: cover;">
+     style="background: url('/img/zhuanjiao.jpg') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">碎碎念</span>
+            <span id="subtitle">DNS解析中@与www访问</span>
           
         </div>
 
@@ -212,8 +213,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-03-16 09:21" pubdate>
-          2024-03-16 09:21:58
+        <time datetime="2024-04-18 21:21" pubdate>
+          2024-04-18 21:21:35
         </time>
       </span>
     
@@ -224,7 +225,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          223 字
+          884 字
         
       </span>
     
@@ -235,7 +236,7 @@
         
         
         
-          2 分钟
+          8 分钟
         
       </span>
     
@@ -280,12 +281,12 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">碎碎念</h1>
+            <h1 id="seo-header">DNS解析中@与www访问</h1>
             
               <p id="updated-time" class="note note-info" style="display: none">
                 
                   
-                    本文最后更新于 2024-03-19T09:18:46+08:00
+                    本文最后更新于 2024-04-18T21:34:33+08:00
                   
                   
 
@@ -295,12 +296,44 @@
             
               <div class="markdown-body">
                 
-                <blockquote>
-<p>上周预约了周六保养车，典型i人，起来早，趁人少，八点四十就到4s店了，罕见的开车没有听歌，路上脑子里一直冒出两个字，“感恩”。</p>
+                <h4 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h4><blockquote>
+<p>一次解析域名后，只有带www的能访问，不带直接访问域名竟然访问不通，一直以为是自己nginx配置错误问题，升级版本，降低版本重新使用已有正确的访问，发现都不正确，前后折腾了快两个小时，这对经验丰富的我来讲有点不可思议，静下心来，重新捋了一遍头绪，最后发现解析时候没有假如@解析。于是重温DNS解析过程，有了这篇文章</p>
 </blockquote>
 <blockquote>
-<p>不知道如何描述这两个字，我们感恩老师，感恩父母，感恩生活，又或者我们感恩一只猫，一直狗，一件物品，一个蓝牙音箱，又或者感恩某个时刻灵光一现的思绪，在某个特定的场景下，它们给我们的生活上，情绪上，思想上带了变化，所以我们感恩它们。可能它们中有一些没有生命，没有思想，又或者即便它们什么都是，意义上是我们自己赋予它们的，想想竟然是我们自己与自己的思想情绪在对话。有一点可悲，亦有一点有趣。</p>
+<p>借助某云的一个图，在这需要添加@解析，才能使用不带www或者其他一级域名的访问<br><img src="/img/dns.jpg" srcset="/img/loading.gif" lazyload></p>
 </blockquote>
+<blockquote>
+<p>在 DNS（域名系统）中，根域名、www 子域名、和 @ 代表的顶级域名（也称为裸域名）解析的机制以及访问一个网站的原理涉及多个步骤，包括 DNS 查询、服务器请求和响应、以及 DNS 配置等</p>
+</blockquote>
+<h4 id="1-DNS-查询过程"><a href="#1-DNS-查询过程" class="headerlink" title="1. DNS 查询过程"></a>1. DNS 查询过程</h4><blockquote>
+<p>当用户在浏览器中输入一个域名（例如 google.com 或 <a target="_blank" rel="noopener" href="http://www.google.com)时,浏览器首先会发起/">www.google.com）时，浏览器首先会发起</a> DNS 查询来将该域名转换为 IP 地址。这个过程通常分为以下几个步骤：</p>
+</blockquote>
+<ol>
+<li>递归查询：浏览器的操作系统会通过递归 DNS 解析器进行查询。递归 DNS 解析器会向根 DNS 服务器、顶级域 DNS 服务器、以及权威 DNS 服务器逐层查询以找到域名对应的 IP 地址。</li>
+<li>权威 DNS 服务器：权威 DNS 服务器是负责管理特定域名 DNS 记录的服务器。当递归解析器向权威 DNS 服务器查询时，它将得到对应域名的 A 记录、CNAME 记录、或其他记录，从而确定该域名指向的 IP 地址。</li>
+</ol>
+<h4 id="2-DNS-配置"><a href="#2-DNS-配置" class="headerlink" title="2. DNS 配置"></a>2. DNS 配置</h4><blockquote>
+<p>DNS 记录通常包括多种类型，如 A 记录、CNAME 记录、MX 记录等，这些记录用于将域名映射到各种目标（如 IP 地址、其他域名、或邮件服务器）。其中：</p>
+</blockquote>
+<ol>
+<li>A 记录：A 记录将域名映射到一个 IPv4 地址。例如：@ IN A 192.168.1.1 将 example.com 映射到 IP 地址 192.168.1.1。</li>
+<li>CNAME 记录：CNAME 记录将一个域名映射到另一个域名。例如：www IN CNAME google.com 将 <a target="_blank" rel="noopener" href="http://www.google.com/">www.google.com</a> 映射到 google.com。</li>
+<li>MX 记录：MX 记录用于指定邮件服务器。例如：@ IN MX 10 mail.example.com 指定 example.com 的邮件服务器为 mail.example.com。</li>
+<li>TXT 记录: 比如刚申请的证书，需要验证会让 解析_dnsauth在域名上面</li>
+<li>以及其他</li>
+</ol>
+<h4 id="3-网站访问过程"><a href="#3-网站访问过程" class="headerlink" title="3. 网站访问过程"></a>3. 网站访问过程</h4><blockquote>
+<p>一旦 DNS 解析成功，将域名转换为 IP 地址，浏览器会通过 HTTP（或 HTTPS）协议向该 IP 地址发送请求。以下是网站访问过程的详细说明：</p>
+</blockquote>
+<ol>
+<li>HTTP 请求：浏览器通过 IP 地址向目标服务器发送 HTTP 请求，包括请求方法（GET、POST 等）和请求 URL。</li>
+<li>服务器响应：服务器收到请求后，执行相应的处理，并通过 HTTP 响应返回给浏览器。响应包括状态代码、响应头、和响应体（即网页内容）。</li>
+<li>页面呈现：浏览器接收到服务器的响应后，将网页内容呈现给用户。</li>
+</ol>
+<h4 id="4-DNS-配置的影响"><a href="#4-DNS-配置的影响" class="headerlink" title="4. DNS 配置的影响"></a>4. DNS 配置的影响</h4><blockquote>
+<p>正确配置 DNS 记录和服务器设置对于确保域名解析和网站访问的成功至关重要。例如：</p>
+</blockquote>
+<p>在 DNS 配置中，确保根域名（@）和 www 子域名都正确指向相同或适当的 IP 地址或主机。<br>确保 CNAME 记录或 A 记录配置正确，防止域名解析错误。</p>
 
                 
               </div>
@@ -319,7 +352,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E7%99%BE%E6%80%81%E4%BA%BA%E7%94%9F/" class="category-chain-item">百态人生</a>
+  <a href="/categories/%E7%A8%8B%E5%BA%8F%E4%BA%BA%E7%94%9F/" class="category-chain-item">程序人生</a>
   
   
 
@@ -334,7 +367,9 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E7%A2%8E%E7%A2%8E%E5%BF%B5/" class="print-no-link">#碎碎念</a>
+        <a href="/tags/DNS/" class="print-no-link">#DNS</a>
+      
+        <a href="/tags/%E5%9F%9F%E5%90%8D/" class="print-no-link">#域名</a>
       
     </div>
   
@@ -346,8 +381,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>碎碎念</div>
-      <div>https://vaughnn.github.io/posts/f3404829/</div>
+      <div>DNS解析中@与www访问</div>
+      <div>https://vaughnn.github.io/posts/4d57f5a1/</div>
     </div>
     <div class="license-meta">
       
@@ -359,13 +394,13 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年3月16日</div>
+          <div>2024年4月18日</div>
         </div>
       
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2024年3月19日</div>
+          <div>2024年4月18日</div>
         </div>
       
       
@@ -396,18 +431,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/posts/4d57f5a1/" title="DNS解析中@与www访问">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">DNS解析中@与www访问</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/posts/e9488b72/" title="记一次go中httpClient优化">
-                        <span class="hidden-mobile">记一次go中httpClient优化</span>
+                      <a href="/posts/f3404829/" title="碎碎念">
+                        <span class="hidden-mobile">碎碎念</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
