@@ -17,8 +17,8 @@
   <meta name="keywords" content="">
   
     <meta property="og:type" content="website">
-<meta property="og:title" content="归档">
-<meta property="og:url" content="https://vaughnn.github.io/archives/2024/02/index.html">
+<meta property="og:title" content="Vaughnn">
+<meta property="og:url" content="https://vaughnn.github.io/page/2/index.html">
 <meta property="og:site_name" content="Vaughnn">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:author" content="vaughnn">
@@ -28,7 +28,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>归档 - Vaughnn</title>
+  <title>Vaughnn</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -82,7 +82,7 @@
   <header>
     
 
-<div class="header-inner" style="height: 60vh;">
+<div class="header-inner" style="height: 100vh;">
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
@@ -182,19 +182,23 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/img/zhuanjiao.jpg') no-repeat center center; background-size: cover;">
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">归档</span>
+            <span id="subtitle" data-typed-text="An elegant Material-Design theme for Hexo"></span>
           
         </div>
 
         
       </div>
 
+      
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
       
     </div>
   </div>
@@ -208,36 +212,88 @@
     
       <div class="container nopadding-x-md">
         <div id="board"
-          >
+          style="margin-top: 0">
           
           <div class="container">
             <div class="row">
               <div class="col-12 col-md-10 m-auto">
                 
 
-<div class="list-group">
-  <p class="h4">共计 11 篇文章</p>
-  <hr>
-  
-  
+
+  <div class="row mx-auto index-card">
     
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/posts/64c22c62/" target="_self">
+          <img src="/img/shuihua.jpg" srcset="/img/loading.gif" lazyload alt="Redis过期策略">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/posts/64c22c62/" target="_self">
+          Redis过期策略
+        </a>
+      </h2>
+
       
-      <p class="h5">2024</p>
-    
-    <a href="/posts/fc339164/" class="list-group-item list-group-item-action">
-      <time>02-28</time>
-      <div class="list-group-item-title">2024年2月28日夜-年终总结与自说自话</div>
-    </a>
+      <a class="index-excerpt " href="/posts/64c22c62/" target="_self">
+        <div>
+          Redis删除策略 定时删除，惰性删除，定期删除
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2019-10-13 10:00" pubdate>
+              2019-10-13
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
   
     
-    <a href="/posts/e1a0a640/" class="list-group-item list-group-item-action">
-      <time>02-20</time>
-      <div class="list-group-item-title">element ui table合并行,并下载表格数据</div>
-    </a>
+      <span class="category-chain">
+        
+  <a href="/categories/%E7%A8%8B%E5%BA%8F%E4%BA%BA%E7%94%9F/" class="category-chain-item">程序人生</a>
   
-</div>
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Redis/">#Redis</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
 
 
+
+  <nav aria-label="navigation">
+    <span class="pagination" id="pagination">
+      <a class="extend prev" rel="prev" href="/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    </span>
+  </nav>
 
 
 
@@ -338,6 +394,61 @@
 <script  src="/js/events.js" ></script>
 <script  src="/js/plugins.js" ></script>
 
+
+    <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+    <script>
+      (function (window, document) {
+        var typing = Fluid.plugins.typing;
+        var subtitle = document.getElementById('subtitle');
+        if (!subtitle || !typing) {
+          return;
+        }
+        var text = subtitle.getAttribute('data-typed-text');
+          
+        jQuery.ajax({
+          type: 'GET',
+          url: 'https://v1.hitokoto.cn/',
+          headers: {},
+          dataType: 'json',
+          success: function (result) {
+            var apiText;
+            if (result) {
+              <!--var keys = 'hitokoto'.split(',');-->
+              <!--console.log("11111",result)-->
+              <!--if (result instanceof Array) {-->
+              <!--  result = result[0];-->
+              <!--}-->
+              <!--for (const k of keys) {-->
+              <!--  var value = result[k];-->
+              <!--  if (typeof value === 'string') {-->
+              <!--    apiText = value;-->
+              <!--    break;-->
+              <!--  } else if (value instanceof Object) {-->
+              <!--    result = value;-->
+              <!--  }-->
+              <!--}-->
+              hitokoto = result["hitokoto"]
+              from = result["from"]
+              from_who = result["from_who"]
+              if (!from_who) {
+                from_who = ""
+              } else {
+                from_who = "-" + from_who
+              }
+              apiText = hitokoto + "<br> " + "<span style='font-size: 20px;text-align: right'> - " + from + from_who + "<span>"
+            }
+            apiText ? typing(apiText) : typing(text);
+          },
+          error: function (xhr, status, error) {
+            if (error) {
+              console.error('Failed to request https://v1.hitokoto.cn/:', error);
+            }
+            typing(text);
+          }
+        })
+          
+      })(window, document);
+    </script>
 
 
 
