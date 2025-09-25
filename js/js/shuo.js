@@ -19,7 +19,7 @@ if (document.getElementById('shuo-app')) {
       const fetchShuoData = async (page, size) => {
         loading.value = true;
         try {
-          const response = await fetch('http://localhost:9001/userMessage/page', {
+          const response = await fetch('http://47.109.158.56:9001/prod-api/userMessage/page', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
