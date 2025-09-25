@@ -1,0 +1,105 @@
+/* 页面整体样式 */
+.shuo-page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  font-family: "Microsoft Yahei", sans-serif;
+}
+
+/* 说说项样式 */
+.shuo-item {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
+}
+
+.shuo-item:hover {
+  transform: translateY(-3px);
+}
+
+/* 说说头部（头像、作者信息） */
+.shuo-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 1rem;
+  border: 2px solid #42b983;
+}
+
+.author-info {
+  flex: 1;
+}
+
+.author-name {
+  font-weight: 600;
+  color: #333333;
+  margin-bottom: 0.25rem;
+}
+
+.create-time {
+  font-size: 0.875rem;
+  color: #777777;
+}
+
+/* 说说内容 */
+.shuo-content {
+  color: #333333;
+  line-height: 1.6;
+  padding-bottom: 0.5rem;
+}
+
+/* 分页样式 */
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  gap: 0.5rem;
+}
+
+.page-btn {
+  padding: 0.5rem 1rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  background-color: #ffffff;
+  color: #333333;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.page-btn:hover:not(.page-btn.disabled) {
+  background-color: #42b983;
+  color: white;
+  border-color: #42b983;
+}
+
+.page-btn.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* 响应式适配 */
+@media (max-width: 768px) {
+  .shuo-page {
+    padding: 1rem 0.5rem;
+  }
+
+  .shuo-item {
+    padding: 1rem;
+  }
+
+  .avatar {
+    width: 40px;
+    height: 40px;
+  }
+}

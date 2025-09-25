@@ -17,8 +17,8 @@
   <meta name="keywords" content="">
   
     <meta property="og:type" content="website">
-<meta property="og:title" content="归档">
-<meta property="og:url" content="https://vaughnn.github.io/archives/2025/03/index.html">
+<meta property="og:title" content="分类">
+<meta property="og:url" content="https://vaughnn.github.io/categories/index.html.bak2">
 <meta property="og:site_name" content="Vaughnn">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:author" content="vaughnn">
@@ -28,7 +28,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>归档 - Vaughnn</title>
+  <title>分类 - Vaughnn</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -227,13 +227,13 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/img/zhuanjiao.jpg') no-repeat center center; background-size: cover;">
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">归档</span>
+            <span id="subtitle">分类</span>
           
         </div>
 
@@ -260,24 +260,188 @@
               <div class="col-12 col-md-10 m-auto">
                 
 
-<div class="list-group">
-  <p class="h4">共计 12 篇文章</p>
-  <hr>
+
+
+
+
+<div class="category-list">
   
   
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="程序人生"
+        id="heading-34a84119a95ee3c8b5b5b96adc62df7f" role="tab" data-toggle="collapse" href="#collapse-34a84119a95ee3c8b5b5b96adc62df7f"
+        aria-expanded="false"
+      >
+        程序人生
+        <span class="list-group-count"></span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+        <a href="/categories/%E7%A8%8B%E5%BA%8F%E4%BA%BA%E7%94%9F/" class="category-count col-2 col-md-1 col-xm-1">
+          <i class="iconfont icon-articles"></i>
+          <span>9</span>
+        </a>
+      
+      <div class="category-collapse collapse " id="collapse-34a84119a95ee3c8b5b5b96adc62df7f"
+           role="tabpanel" aria-labelledby="heading-34a84119a95ee3c8b5b5b96adc62df7f">
+        
+        
+          
+  <div class="category-post-list">
+    
     
       
-      <p class="h5">2025</p>
+      
+        <a href="/posts/6d34a0a6/" title="用python批量申请https证书"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">用python批量申请https证书</span>
+        </a>
+      
     
-    <a href="/posts/65fc003a/" class="list-group-item list-group-item-action">
-      <time>03-16</time>
-      <div class="list-group-item-title">2025年3月-去记录2024的流水账</div>
-    </a>
+      
+      
+        <a href="/posts/270c6601/" title="树结构"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">树结构</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/4d57f5a1/" title="DNS解析中@与www访问"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">DNS解析中@与www访问</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/e9488b72/" title="记一次go中httpClient优化"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">记一次go中httpClient优化</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/e1a0a640/" title="element ui table合并行,并下载表格数据"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">element ui table合并行,并下载表格数据</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/6bee818d/" title="jdk动态代理，cglib"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">jdk动态代理，cglib</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/34b8fc37/" title="基于spring的Redis Sentinel读写分离Slave连接池"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">基于spring的Redis Sentinel读写分离Slave连接池</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/12240755/" title="CommandLineRunner、ApplicationRunner、ApplicationListener @PostConstruct"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">CommandLineRunner、ApplicationRunner、ApplicationListener @PostConstruct</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/64c22c62/" title="Redis过期策略"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">Redis过期策略</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div class="category row nomargin-x">
+      <a class="category-item collapsed
+          list-group-item category-item-action col-10 col-md-11 col-xm-11" title="百态人生"
+        id="heading-8baf55da8b3d5748d94718d7eb391bd2" role="tab" data-toggle="collapse" href="#collapse-8baf55da8b3d5748d94718d7eb391bd2"
+        aria-expanded="false"
+      >
+        百态人生
+        <span class="list-group-count"></span>
+        <i class="iconfont icon-arrowright"></i>
+      </a>
+      
+        <a href="/categories/%E7%99%BE%E6%80%81%E4%BA%BA%E7%94%9F/" class="category-count col-2 col-md-1 col-xm-1">
+          <i class="iconfont icon-articles"></i>
+          <span>3</span>
+        </a>
+      
+      <div class="category-collapse collapse " id="collapse-8baf55da8b3d5748d94718d7eb391bd2"
+           role="tabpanel" aria-labelledby="heading-8baf55da8b3d5748d94718d7eb391bd2">
+        
+        
+          
+  <div class="category-post-list">
+    
+    
+      
+      
+        <a href="/posts/65fc003a/" title="2025年3月-去记录2024的流水账"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">2025年3月-去记录2024的流水账</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/f3404829/" title="碎碎念"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">碎碎念</span>
+        </a>
+      
+    
+      
+      
+        <a href="/posts/fc339164/" title="2024年2月28日夜-年终总结与自说自话"
+           class="list-group-item list-group-item-action
+           ">
+          <span class="category-post">2024年2月28日夜-年终总结与自说自话</span>
+        </a>
+      
+    
+  </div>
+
+        
+      </div>
+    </div>
   
 </div>
-
-
-
 
 
               </div>

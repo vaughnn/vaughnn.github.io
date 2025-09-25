@@ -16,11 +16,15 @@
   <meta name="author" content="vaughnn">
   <meta name="keywords" content="">
   
-    <meta property="og:type" content="website">
-<meta property="og:title" content="友链">
-<meta property="og:url" content="https://vaughnn.github.io/links/index.html">
+    <meta name="description" content="正在努力加载说说...">
+<meta property="og:type" content="website">
+<meta property="og:title" content=" ">
+<meta property="og:url" content="https://vaughnn.github.io/yiyan/index.html">
 <meta property="og:site_name" content="Vaughnn">
+<meta property="og:description" content="正在努力加载说说...">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-09-05T06:17:53.000Z">
+<meta property="article:modified_time" content="2025-09-25T09:13:15.639Z">
 <meta property="article:author" content="vaughnn">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -28,7 +32,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>友链 - Vaughnn</title>
+  <title>  - Vaughnn</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -54,6 +58,12 @@
     <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
   
 
+
+
+  
+<link rel="stylesheet" href="/css/css/shuo.css">
+<link rel="stylesheet" href="/css/lib/element-plus.css">
+<link rel="stylesheet" href="/css/lib/element-plus-dark.css">
 
 
 
@@ -109,7 +119,7 @@
   <header>
     
 
-<div class="header-inner" style="height: 60vh;">
+<div class="header-inner" style="height: 30vh;">
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
@@ -186,6 +196,18 @@
             </li>
           
         
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/yiyan/" target="_self">
+                <i class="iconfont icon-docker"></i>
+                <span>一言</span>
+              </a>
+            </li>
+          
+        
         
           <li class="nav-item" id="search-btn">
             <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
@@ -209,13 +231,13 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+     style="background: url('/img/mao.jpeg') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle">友情链接</span>
+            <span id="subtitle"> </span>
           
         </div>
 
@@ -242,65 +264,75 @@
               <div class="col-12 col-md-10 m-auto">
                 
 
-<div class="row links">
+<article class="page-content">
   
-    
-    <div class="card col-lg-4 col-md-6 col-sm-12">
-      <a href="https://hexo.fluid-dev.com/" class="card-body hover-with-bg" target="_blank" rel="noopener">
-        <div class="card-content">
-          
-            <div class="link-avatar my-auto">
-              <img src="/img/favicon.png" srcset="/img/loading.gif" lazyload alt="Fluid Blog"
-                   onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
-            </div>
-          
-          <div class="link-text">
-            <div class="link-title">Fluid Blog</div>
-            <div class="link-intro">主题博客</div>
-          </div>
+
+    <!-- Vue 应用的根节点 -->
+    <div id="shuo-app" class="shuo-page" v-cloak>
+
+        <!-- 加载状态 -->
+        <div v-if="loading" style="text-align: center; padding: 3rem;">
+            正在努力加载说说...
         </div>
-      </a>
-    </div>
-  
-    
-    <div class="card col-lg-4 col-md-6 col-sm-12">
-      <a href="https://hexo.fluid-dev.com/docs/" class="card-body hover-with-bg" target="_blank" rel="noopener">
-        <div class="card-content">
-          
-            <div class="link-avatar my-auto">
-              <img src="/img/favicon.png" srcset="/img/loading.gif" lazyload alt="Fluid Docs"
-                   onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
-            </div>
-          
-          <div class="link-text">
-            <div class="link-title">Fluid Docs</div>
-            <div class="link-intro">主题使用指南</div>
-          </div>
+
+        <!-- 说说列表 -->
+        <div v-else>
+            <el-card v-for="item in shuoList" :key="item.id" class="shuo-item-card">
+                <template #header>
+                    <div class="card-header">
+                        <!-- 这里是修改点 -->
+                        <el-avatar :size="40" :src="item.avatar"></el-avatar>
+
+                        <div class="author-info-vue">
+                            <span class="author-name-vue">{{ item.nickName }}</span>
+                            <!-- 下面的结构有变动 -->
+                            <div class="create-time-vue">
+                                {{ item.createTime }} {{ capitalizeFirstLetter(item.browserName) }} /{{
+                                item.browserVersion }} {{ item.deviceBrand }} {{ item.deviceModel }} {{ capitalizeFirstLetter(item.platform) }}
+                                {{ capitalizeFirstLetter(item.osVersion) }}
+                            </div>
+                        </div>
+                    </div>
+                </template>
+                <!-- 说说内容 -->
+                <div v-if="item.content" class="shuo-content-vue">{{ item.content }}</div>
+
+                <!-- 图片网格 -->
+                <div v-if="item.images && item.images.length > 0" class="image-grid"
+                     :class="'grid-count-' + item.images.length">
+                    <el-image
+                            v-for="(imgUrl, index) in item.images"
+                            :key="imgUrl"
+                            :src="imgUrl"
+                            :preview-src-list="item.images"
+                            :initial-index="index"
+                            fit="cover"
+                            lazy
+                    ></el-image>
+                </div>
+                <div v-if="item.locationName" class="location-vue">
+                    <span>📍</span> {{ item.locationName }}  {{ item.ip }}
+                </div>
+            </el-card>
         </div>
-      </a>
-    </div>
-  
-    
-    <div class="card col-lg-4 col-md-6 col-sm-12">
-      <a href="https://github.com/fluid-dev/hexo-theme-fluid" class="card-body hover-with-bg" target="_blank" rel="noopener">
-        <div class="card-content">
-          
-            <div class="link-avatar my-auto">
-              <img src="/img/favicon.png" srcset="/img/loading.gif" lazyload alt="Fluid Repo"
-                   onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
-            </div>
-          
-          <div class="link-text">
-            <div class="link-title">Fluid Repo</div>
-            <div class="link-intro">主题 GitHub 仓库</div>
-          </div>
+
+        <!-- 分页组件 -->
+        <div class="pagination-vue">
+            <el-pagination
+                    background
+                    layout="prev, pager, next"
+                    :total="totalItems"
+                    :page-size="pageSize"
+                    :current-page="currentPage"
+                    @current-change="handlePageChange"
+            />
         </div>
-      </a>
     </div>
-  
-</div>
 
 
+  
+
+</article>
 
 
 
@@ -417,6 +449,12 @@
   <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
+
+
+  
+<script src="/js/lib/vue.global.prod.js"></script>
+<script src="/js/lib/element-plus.full.js"></script>
+<script src="/js/js/shuo.js"></script>
 
 
 

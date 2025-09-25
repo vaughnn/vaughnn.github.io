@@ -1,0 +1,140 @@
+/* source/css/shuo.css */
+
+/* v-cloak 解决闪烁问题 */
+[v-cloak] {
+  display: none;
+}
+
+/* 页面整体布局 */
+.shuo-page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+/* Element Card 卡片间距 */
+.shuo-item-card {
+  margin-bottom: 1.5rem;
+}
+
+/* 卡片头部样式 */
+.card-header {
+  display: flex;
+  align-items: flex-start;
+}
+
+.author-info-vue {
+  margin-left: 0.8rem; /* 稍微缩小与头像的距离 */
+  display: flex;
+  flex-direction: column;
+}
+
+.author-name-vue {
+  font-weight: 600;
+  color: #333;
+  /* 为用户名和下面的元信息之间增加一点距离 */
+  margin-bottom: 0.25rem;
+}
+
+.create-time-vue {
+  font-size: 0.8rem;
+  color: #888;
+  /* 移除这里的底部大间距，因为它导致了过多的空白 */
+  /* margin-bottom: 1rem;  <-- 移除或注释掉此行 */
+}
+
+/*
+  新增：专门用于处理 User Agent 的样式
+  目的是让这个过长的技术信息不影响整体布局
+*/
+.user-agent-vue {
+  font-size: 0.75rem; /* 让它比时间更小一点 */
+  color: #aaa; /* 使用更浅的颜色，弱化显示 */
+  margin-top: 0.2rem; /* 与上面的时间稍微隔开 */
+
+  /* 以下三行是实现单行省略号效果的关键 */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* 说说内容样式 */
+.shuo-content-vue {
+  line-height: 1.7;
+  color: #555;
+  /* 将原本在 create-time-vue 的间距移到这里，确保头部和内容有合适的距离 */
+  padding-top: 0;
+  margin-top: 0.5rem;
+}
+
+
+/* 分页组件居中 */
+.pagination-vue {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+/* --- 新增：地点信息样式 --- */
+.location-vue {
+  font-size: 0.8rem; /* 设置合适的字体大小 */
+  color: #888; /* 使用灰色字体，使其不那么突出 */
+  margin-top: 1rem; /* 与上方的内容或图片保持一定间距 */
+  padding-top: 0.5rem; /* 为顶部增加一点内边距 */
+  border-top: 1px solid #f0f2f5; /* 在上方添加一条浅色分割线，增加精致感 */
+  display: flex; /* 使用 flex 布局，方便图标和文字对齐 */
+  align-items: center; /* 垂直居中对齐图标和文字 */
+}
+
+.location-vue span {
+  margin-right: 0.4rem; /* 让图标和文字之间有一点距离 */
+}
+
+/* --- 新增图片网格样式 --- */
+
+.image-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px; /* 图片之间的间距 */
+  margin-top: 1rem;
+}
+
+.image-grid .el-image {
+  border-radius: 6px;
+  cursor: pointer;
+  overflow: hidden; /* 确保圆角生效 */
+  background-color: #f0f2f5;
+  aspect-ratio: 1 / 1; /* 保持图片为正方形 */
+}
+
+/* 默认三列布局 (适用于 3, 5, 6, 7, 8, 9 张图) */
+.image-grid .el-image {
+  flex-basis: calc(33.333% - 6px); /* 减去部分间距以适应容器 */
+  width: calc(33.333% - 6px);
+}
+
+/* --- 特殊图片数量的布局 --- */
+
+/* 1 张图时，让它大一点 */
+.grid-count-1 .el-image {
+  flex-basis: auto;
+  width: auto;
+  max-width: 60%;
+  max-height: 280px;
+  aspect-ratio: auto; /* 取消正方形限制 */
+}
+
+/* 2 或 4 张图时，使用两列布局 */
+.grid-count-2 .el-image,
+.grid-count-4 .el-image {
+  flex-basis: calc(50% - 4px);
+  width: calc(50% - 4px);
+}
+
+
+/* --- 响应式适配 --- */
+@media (max-width: 768px) {
+  /* 移动端单张图片可以更大 */
+  .grid-count-1 .el-image {
+    max-width: 80%;
+  }
+}
