@@ -1,6 +1,6 @@
 // 确保只在说说页面执行
 if (document.getElementById('shuo-app')) {
-  const { createApp, ref, onMounted } = Vue;
+  const {createApp, ref, onMounted} = Vue;
 
   const App = {
     setup() {
@@ -19,7 +19,8 @@ if (document.getElementById('shuo-app')) {
       const fetchShuoData = async (page, size) => {
         loading.value = true;
         try {
-          const response = await fetch('http://47.109.158.56:9001/prod-api/userMessage/page', {
+          // const response = await fetch('http://47.109.158.56:9001/prod-api/userMessage/page', {
+          const response = await fetch('http://localhost:9001/prod-api/userMessage/page', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
@@ -61,7 +62,7 @@ if (document.getElementById('shuo-app')) {
       };
 
 
-       // --- 新增代码在这里 ---
+      // --- 新增代码在这里 ---
       /**
        * 1. 定义首字母大写的方法
        * @param {string} str - 需要格式化的字符串
@@ -82,7 +83,7 @@ if (document.getElementById('shuo-app')) {
       const handlePageChange = (newPage) => {
         currentPage.value = newPage;
         fetchShuoData(newPage, pageSize.value);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.scrollTo({top: 0, behavior: 'smooth'});
       };
 
 
